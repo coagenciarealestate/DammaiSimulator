@@ -81,6 +81,10 @@
   .month-switch h2 { font-weight: 400; font-size: 20px; min-width: 190px; text-align: center; }
   .round-btn { width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(244,231,203,.12); color: var(--marfil); font-size: 16px; cursor: pointer; transition: .25s; }
   .round-btn:hover { background: var(--marfil); color: var(--negro-tinta); }
+  .month-meta { margin-top: 18px; font-family: var(--sans); font-size: 13px; color: rgba(244,231,203,.8); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .month-meta .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--oro-oliva); box-shadow: 0 0 10px var(--oro-oliva); }
+  .month-meta.closed .dot { background: var(--champan); box-shadow: none; }
+  .month-meta.future .dot { background: transparent; border: 1px solid var(--champan); box-shadow: none; }
   .today-link { display: block; margin-top: 12px; background: none; border: 0; color: var(--champan); font: 500 13px var(--sans); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
 
   /* placa de vidrio oscura con el anillo */
@@ -165,6 +169,13 @@
   .item time { font-family: var(--sans); font-size: 13px; color: var(--muted); }
   .del { background: none; border: 0; color: var(--muted); font-size: 22px; cursor: pointer; border-radius: 10px; height: 36px; }
   .del:hover { color: var(--sanguina); background: rgba(139,54,28,.08); }
+  .confirm { grid-column: 3 / -1; display: flex; gap: 8px; justify-content: flex-end; align-items: center; font-family: var(--sans); font-size: 13px; }
+  .confirm button { border: 0; border-radius: 999px; padding: 8px 14px; font: 600 12px var(--sans); cursor: pointer; }
+  .confirm .yes { background: var(--sanguina); color: #fff; }
+  .confirm .no { background: rgba(104,92,75,.14); color: var(--text); }
+  button:focus-visible, input:focus-visible, select:focus-visible, .col:focus-visible { outline: 2px solid var(--oliva); outline-offset: 2px; }
+  .hero button:focus-visible { outline-color: var(--marfil); }
+  @media (prefers-reduced-motion: reduce) { *, *::before { transition: none !important; animation: none !important; } }
   .empty { text-align: center; color: var(--negro-tinta); padding: 36px; border-radius: 20px; font-style: italic; font-size: 18px; }
 
   /* ---------- histórico ---------- */
@@ -179,9 +190,9 @@
   .col:hover .m { color: var(--text); }
 
   footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 32px 0 44px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-  .ghost-btn { background: none; border: 1px solid rgba(18,18,18,.3); color: var(--text); padding: 10px 18px; border-radius: 999px; font: 500 13px var(--sans); cursor: pointer; transition: .2s; }
-  .ghost-btn:hover { background: var(--negro-tinta); color: var(--marfil); }
-  footer .tools { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sync { font-family: var(--sans); font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .sync::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--champan); }
+  .sync.live::before { background: var(--oliva); }
 
   /* ---------- responsive ---------- */
   @media (max-width: 920px) {
@@ -202,6 +213,7 @@
     .item { grid-template-columns: 36px 1fr 36px; row-gap: 8px; padding: 14px; }
     .item .tag, .item time { grid-column: 2; justify-self: start; }
     .item .del { grid-row: 1; grid-column: 3; }
+    .confirm { grid-column: 1 / -1; justify-content: flex-start; }
     .history { gap: 8px; height: 210px; }
     .col .val { font-size: 14px; }
     .col .m { font-size: 10px; letter-spacing: .06em; }
@@ -231,7 +243,8 @@
           <h2 id="monthLabel">—</h2>
           <button class="round-btn" id="next" aria-label="Mes siguiente">→</button>
         </div>
-        <button class="today-link" id="today">Volver al mes actual</button>
+        <div class="month-meta" id="monthMeta"><span class="dot"></span><span id="monthMetaText"></span></div>
+        <button class="today-link" id="today" hidden>Volver al mes actual</button>
       </div>
 
       <div class="gauge-plate">
@@ -265,7 +278,7 @@
         <div class="stats">
           <div class="stat"><b class="hl" id="sDone">0</b><span>Realizados</span></div>
           <div class="stat"><b id="sLeft">18</b><span>Disponibles</span></div>
-          <div class="stat"><b id="sTotal">18</b><span>Total mes</span></div>
+          <div class="stat"><b id="sDays">—</b><span id="sDaysLabel">Días restantes</span></div>
         </div>
         <div class="slots" id="slots"></div>
       </div>
@@ -315,17 +328,14 @@
       <div class="divider"></div>
       <span>La Casa del Marketing Inmobiliario</span>
     </div>
-    <div class="tools">
-      <button class="ghost-btn" id="exportBtn">Exportar datos</button>
-      <button class="ghost-btn" id="importBtn">Importar datos</button>
-      <input type="file" id="importFile" accept="application/json" hidden>
-    </div>
+    <div class="sync" id="sync">Conectando…</div>
   </footer>
 </main>
 
+
 <script>
   const MONTHLY_TOTAL = 18;
-  const STORE_KEY = "co-hl-contenidos-v1";
+  const LOCAL_KEY = "co-hl-contenidos-v1";
   const TYPES = [
     { name: "Reel", color: "#4b511e" },
     { name: "Carrusel", color: "#9f9d5f" },
@@ -336,34 +346,33 @@
   const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   const $ = (id) => document.getElementById(id);
   const colorOf = (t) => (TYPES.find((x) => x.name === t) || TYPES[2]).color;
-
-  // ---------- datos ----------
-  // { "2026-09": [{ id, title, type, date }] }
-  let data = load();
-  let view = new Date(); view.setDate(1);
-
-  function load() {
-    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch { return {}; }
-  }
-  function save() {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch {}
-  }
-  const keyOf = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-  const itemsOf = (k) => data[k] || [];
+  const pad = (n) => String(n).padStart(2, "0");
+  const keyOf = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}`;
+  const isoOf = (d) => `${keyOf(d)}-${pad(d.getDate())}`;
+  const daysIn = (d) => new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  // ---------- estado ----------
+  // Cada contenido: { id, title, type, date: "AAAA-MM-DD" }. El mes sale de la fecha.
+  let items = [];
+  let store = null;          // adaptador de guardado (compartido o local)
+  let canWrite = true;
+  let loaded = false;
+  let pendingDelete = null;
+  let today = new Date();
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
 
   $("fType").innerHTML = TYPES.map((t) => `<option>${t.name}</option>`).join("");
 
   // ---------- anillo de 18 segmentos ----------
-  const R = 84, GAP = 2.2; // grados de separación
+  const R = 84, GAP = 2.2;
   const pt = (deg) => {
     const a = (deg - 90) * Math.PI / 180;
     return `${(100 + R * Math.cos(a)).toFixed(2)} ${(100 + R * Math.sin(a)).toFixed(2)}`;
   };
   $("segments").innerHTML = Array.from({ length: MONTHLY_TOTAL }, (_, i) => {
     const step = 360 / MONTHLY_TOTAL;
-    const a0 = i * step + GAP / 2, a1 = (i + 1) * step - GAP / 2;
-    return `<path class="seg" d="M ${pt(a0)} A ${R} ${R} 0 0 1 ${pt(a1)}"/>`;
+    return `<path class="seg" d="M ${pt(i * step + GAP / 2)} A ${R} ${R} 0 0 1 ${pt((i + 1) * step - GAP / 2)}"/>`;
   }).join("");
   const segs = [...document.querySelectorAll(".seg")];
 
@@ -379,63 +388,97 @@
     requestAnimationFrame(step);
   }
 
-  // ---------- render ----------
-  function render(justAdded = false) {
-    const k = keyOf(view);
-    const items = itemsOf(k).slice().sort((a, b) => a.date.localeCompare(b.date));
-    const done = items.length;
-    const pct = Math.round((done / MONTHLY_TOTAL) * 100);
+  const monthItems = (k) => items.filter((x) => x.date.slice(0, 7) === k).sort((a, b) => a.date.localeCompare(b.date) || String(a.createdAt).localeCompare(String(b.createdAt)));
+  // -1 mes pasado, 0 mes en curso, 1 mes futuro
+  const phaseOf = (d) => Math.sign(d.getFullYear() * 12 + d.getMonth() - (today.getFullYear() * 12 + today.getMonth()));
 
-    $("monthLabel").textContent = `${MONTHS[view.getMonth()]} ${view.getFullYear()}`;
-    segs.forEach((s, i) => {
-      s.style.transitionDelay = `${i * 35}ms`;
-      s.classList.toggle("on", i < done);
-    });
+  // ---------- render ----------
+  function render(justAdded = null) {
+    today = new Date();
+    const k = keyOf(view);
+    const list = monthItems(k);
+    const done = list.length;
+    const pct = Math.round((Math.min(done, MONTHLY_TOTAL) / MONTHLY_TOTAL) * 100);
+    const phase = phaseOf(view);
+    const monthName = MONTHS[view.getMonth()];
+    const next = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+
+    $("monthLabel").textContent = `${monthName} ${view.getFullYear()}`;
+    $("today").hidden = phase === 0;
+
+    // anillo
+    segs.forEach((s, i) => { s.style.transitionDelay = `${i * 35}ms`; s.classList.toggle("on", i < done); });
     animateNumber(pct);
     $("countLabel").textContent = `${done} de ${MONTHLY_TOTAL} contenidos`;
 
+    // estado del mes
+    const left = daysIn(view) - today.getDate();
+    const meta = $("monthMeta");
+    meta.className = "month-meta" + (phase < 0 ? " closed" : phase > 0 ? " future" : "");
+    $("monthMetaText").textContent =
+      phase === 0 ? (left === 0 ? `Hoy cierra ${monthName.toLowerCase()} · mañana arranca el conteo de ${MONTHS[next.getMonth()].toLowerCase()}`
+                                : `Mes en curso · ${left === 1 ? "falta 1 día" : `faltan ${left} días`} para cerrar · el 1 de ${MONTHS[next.getMonth()].toLowerCase()} arranca de cero`)
+      : phase < 0 ? `Mes cerrado · se usaron ${done} de ${MONTHLY_TOTAL} contenidos`
+      : `Este mes empieza el 1 de ${monthName.toLowerCase()}`;
+
     const st = $("status");
     st.classList.toggle("full", done >= MONTHLY_TOTAL);
-    st.textContent = done >= MONTHLY_TOTAL ? "Paquete completo"
+    st.textContent = !loaded ? "Cargando…"
+      : done >= MONTHLY_TOTAL ? "Paquete completo"
+      : phase < 0 ? `Cerró con ${MONTHLY_TOTAL - done} sin usar`
       : done === 0 ? "Sin contenidos aún"
       : `Quedan ${MONTHLY_TOTAL - done} contenidos`;
 
+    // cifras
     $("sDone").textContent = done;
     $("sLeft").textContent = Math.max(0, MONTHLY_TOTAL - done);
-    $("sTotal").textContent = MONTHLY_TOTAL;
+    $("sDays").textContent = phase === 0 ? left : phase < 0 ? 0 : daysIn(view);
+    $("sDaysLabel").textContent = phase === 0 ? "Días para cerrar" : phase < 0 ? "Mes cerrado" : "Días del mes";
 
     $("slots").innerHTML = Array.from({ length: MONTHLY_TOTAL }, (_, i) => {
-      const cls = i < done ? "slot done" + (justAdded && i === done - 1 ? " pop" : "") : "slot";
-      return `<div class="${cls}" title="${i < done ? esc(items[i].title) : "Disponible"}">${i + 1}</div>`;
+      const it = list[i];
+      const cls = it ? "slot done" + (it.id === justAdded ? " pop" : "") : "slot";
+      return `<div class="${cls}" title="${it ? esc(it.title) : "Disponible"}">${i + 1}</div>`;
     }).join("");
 
     $("bytype").innerHTML = TYPES.map((t) => {
-      const n = items.filter((x) => x.type === t.name).length;
+      const n = list.filter((x) => x.type === t.name).length;
       return `<div class="type-row"><span>${t.name}</span><div class="bar"><i style="width:${(n / MONTHLY_TOTAL) * 100}%;background:${t.color}"></i></div><b>${n}</b></div>`;
     }).join("");
-    $("legendTotal").textContent = `${pct}% del paquete de ${MONTHLY_TOTAL} piezas utilizado en ${MONTHS[view.getMonth()].toLowerCase()}.`;
+    $("legendTotal").textContent = `${pct}% del paquete de ${MONTHLY_TOTAL} piezas usado en ${monthName.toLowerCase()} ${view.getFullYear()}.`;
 
-    $("list").innerHTML = items.length
-      ? items.map((x, i) => `
+    // lista
+    $("list").innerHTML = !loaded
+      ? `<div class="empty glass">Cargando contenidos…</div>`
+      : list.length
+      ? list.map((x, i) => `
           <div class="item glass">
-            <span class="n">${String(i + 1).padStart(2, "0")}</span>
+            <span class="n">${pad(i + 1)}</span>
             <span class="t">${esc(x.title)}</span>
-            <span class="tag" style="background:${colorOf(x.type)}">${esc(x.type)}</span>
-            <time>${new Date(x.date + "T12:00").toLocaleDateString("es-CO", { day: "2-digit", month: "short" })}</time>
-            <button class="del" data-id="${x.id}" aria-label="Eliminar">×</button>
+            ${pendingDelete === x.id
+              ? `<div class="confirm"><span>¿Eliminar este contenido?</span><button class="yes" data-yes="${esc(x.id)}">Eliminar</button><button class="no" data-no>Cancelar</button></div>`
+              : `<span class="tag" style="background:${colorOf(x.type)}">${esc(x.type)}</span>
+                 <time>${new Date(x.date + "T12:00").toLocaleDateString("es-CO", { day: "2-digit", month: "short" })}</time>
+                 ${canWrite ? `<button class="del" data-id="${esc(x.id)}" aria-label="Eliminar ${esc(x.title)}">×</button>` : "<span></span>"}`}
           </div>`).join("")
-      : `<div class="empty glass">Aún no hay contenidos registrados este mes.</div>`;
+      : `<div class="empty glass">${phase > 0 ? "Este mes todavía no empieza." : `No hay contenidos registrados en ${monthName.toLowerCase()}.`}</div>`;
 
+    // formulario: la fecha queda dentro del mes que se está viendo, nunca después de hoy
     const full = done >= MONTHLY_TOTAL;
-    $("addBtn").disabled = full;
+    const maxDate = phase === 0 ? isoOf(today) : `${k}-${pad(daysIn(view))}`;
+    const fDate = $("fDate");
+    fDate.min = `${k}-01`;
+    fDate.max = maxDate;
+    if (!fDate.value || fDate.value < fDate.min || fDate.value > fDate.max) fDate.value = maxDate;
+    const blocked = !canWrite || full || phase > 0 || !loaded;
+    $("form").hidden = !canWrite;
+    [...$("form").elements].forEach((el) => (el.disabled = blocked));
     const note = $("note");
-    note.className = "form-note" + (full ? " warn" : "");
-    note.textContent = full ? "Se completaron los 18 contenidos de este mes." : "";
-
-    // fecha por defecto dentro del mes visible
-    const today = new Date();
-    const def = keyOf(today) === k ? today : view;
-    $("fDate").value = `${k}-${String(def.getDate()).padStart(2, "0")}`;
+    note.className = "form-note" + (full && canWrite ? " warn" : "");
+    note.textContent = !canWrite ? "Tienes acceso de solo lectura a este conteo."
+      : full ? `Se completaron los ${MONTHLY_TOTAL} contenidos de ${monthName.toLowerCase()}.`
+      : phase > 0 ? `Podrás registrar contenidos desde el 1 de ${monthName.toLowerCase()}.`
+      : "";
 
     renderHistory();
   }
@@ -444,77 +487,122 @@
     const cols = [];
     for (let i = 5; i >= 0; i--) {
       const d = new Date(view.getFullYear(), view.getMonth() - i, 1);
-      const n = itemsOf(keyOf(d)).length;
-      const pct = Math.round((n / MONTHLY_TOTAL) * 100);
+      const n = monthItems(keyOf(d)).length;
+      const pct = Math.round((Math.min(n, MONTHLY_TOTAL) / MONTHLY_TOTAL) * 100);
       cols.push(`
-        <div class="col ${i === 0 ? "current" : ""}" data-y="${d.getFullYear()}" data-m="${d.getMonth()}" title="${n} de ${MONTHLY_TOTAL}">
+        <div class="col ${i === 0 ? "current" : ""}" role="button" tabindex="0" data-y="${d.getFullYear()}" data-m="${d.getMonth()}" aria-label="${MONTHS[d.getMonth()]} ${d.getFullYear()}: ${n} de ${MONTHLY_TOTAL}">
           <span class="val">${pct}%</span>
-          <div class="bar-v"><i style="height:${Math.min(pct, 100)}%"></i></div>
+          <div class="bar-v"><i style="height:${pct}%"></i></div>
           <span class="m">${MONTHS[d.getMonth()].slice(0, 3)}</span>
         </div>`);
     }
     $("history").innerHTML = cols.join("");
   }
 
+  // ---------- guardado ----------
+  // Compartido (base de datos del artifact) cuando está disponible; si no, en este navegador.
+  function localStore() {
+    const read = () => {
+      try {
+        const raw = JSON.parse(localStorage.getItem(LOCAL_KEY)) || [];
+        return Array.isArray(raw) ? raw : Object.values(raw).flat(); // formato viejo: { "AAAA-MM": [...] }
+      } catch { return []; }
+    };
+    const write = (arr) => { try { localStorage.setItem(LOCAL_KEY, JSON.stringify(arr)); } catch {} };
+    let cb = () => {};
+    return {
+      shared: false,
+      subscribe(fn) { cb = fn; fn(read()); },
+      async add(item) { const a = read(); a.push(item); write(a); cb(a); },
+      async remove(id) { const a = read().filter((x) => x.id !== id); write(a); cb(a); },
+    };
+  }
+  function dbStore(db) {
+    const coll = db.collection("contenidos");
+    return {
+      shared: true,
+      subscribe(fn, onError) {
+        coll.onSnapshot((snap) => fn(snap.docs.map((d) => ({ ...d.data(), id: d.id }))), onError);
+      },
+      add(item) { const { id, ...body } = item; return coll.doc(id).set(body); },
+      remove(id) { return coll.doc(id).delete(); },
+    };
+  }
+
+  function setSync(text, live) {
+    $("sync").textContent = text;
+    $("sync").classList.toggle("live", !!live);
+  }
+
+  function handleWriteError(e) {
+    if (e && e.code === "invalid_argument") { canWrite = false; render(); return; }
+    const note = $("note");
+    note.className = "form-note warn";
+    note.textContent = e && e.code === "quota_exceeded"
+      ? "La base de datos está llena. Borra contenidos antiguos para registrar nuevos."
+      : "No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.";
+  }
+
+  async function start() {
+    render();
+    let db = null, user = null;
+    if (window.claude && typeof window.claude.use === "function") {
+      [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+    }
+    if (user && typeof user.can === "function") {
+      const w = await user.can("data.write");
+      if (w === false) canWrite = false;
+    }
+    store = db ? dbStore(db) : localStore();
+    setSync(store.shared ? "Sincronizado · todo el equipo ve el mismo conteo" : "Guardado solo en este navegador", store.shared);
+    store.subscribe((arr) => {
+      items = arr.filter((x) => x && typeof x.date === "string" && typeof x.title === "string");
+      loaded = true;
+      render(lastAdded);
+      lastAdded = null;
+    }, () => setSync("Sin conexión con el conteo compartido. Recarga la página.", false));
+  }
+  let lastAdded = null;
+
   // ---------- eventos ----------
-  $("form").addEventListener("submit", (e) => {
+  $("form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (!store) return;
     const title = $("fTitle").value.trim();
     const date = $("fDate").value;
     if (!title || !date) return;
     const k = date.slice(0, 7);
-    if (itemsOf(k).length >= MONTHLY_TOTAL) {
-      $("note").className = "form-note warn";
-      $("note").textContent = "Ese mes ya tiene sus 18 contenidos completos.";
-      return;
-    }
-    (data[k] = itemsOf(k)).push({ id: Date.now().toString(36), title, type: $("fType").value, date });
-    save();
+    if (k !== keyOf(view)) return;
+    if (monthItems(k).length >= MONTHLY_TOTAL) { render(); return; }
+    const item = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), title, type: $("fType").value, date, createdAt: new Date().toISOString() };
     $("fTitle").value = "";
-    const [y, m] = k.split("-").map(Number);
-    view = new Date(y, m - 1, 1);
-    render(true);
+    lastAdded = item.id;
+    try { await store.add(item); } catch (err) { $("fTitle").value = title; handleWriteError(err); }
   });
 
-  $("list").addEventListener("click", (e) => {
-    const btn = e.target.closest(".del");
-    if (!btn) return;
-    const k = keyOf(view);
-    const item = itemsOf(k).find((x) => x.id === btn.dataset.id);
-    if (!item || !confirm(`¿Eliminar "${item.title}"?`)) return;
-    data[k] = itemsOf(k).filter((x) => x.id !== item.id);
-    save(); render();
+  $("list").addEventListener("click", async (e) => {
+    const del = e.target.closest(".del");
+    if (del) { pendingDelete = del.dataset.id; render(); return; }
+    if (e.target.closest("[data-no]")) { pendingDelete = null; render(); return; }
+    const yes = e.target.closest("[data-yes]");
+    if (yes) {
+      pendingDelete = null;
+      try { await store.remove(yes.dataset.yes); } catch (err) { handleWriteError(err); render(); }
+    }
   });
 
-  $("history").addEventListener("click", (e) => {
-    const col = e.target.closest(".col");
-    if (!col) return;
-    view = new Date(+col.dataset.y, +col.dataset.m, 1); render();
-  });
+  const goTo = (d) => { view = new Date(d.getFullYear(), d.getMonth(), 1); pendingDelete = null; $("fDate").value = ""; render(); };
+  const openCol = (el) => { const col = el.closest(".col"); if (col) goTo(new Date(+col.dataset.y, +col.dataset.m, 1)); };
+  $("history").addEventListener("click", (e) => openCol(e.target));
+  $("history").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCol(e.target); } });
+  $("prev").onclick = () => goTo(new Date(view.getFullYear(), view.getMonth() - 1, 1));
+  $("next").onclick = () => goTo(new Date(view.getFullYear(), view.getMonth() + 1, 1));
+  $("today").onclick = () => goTo(new Date());
 
-  $("prev").onclick = () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); render(); };
-  $("next").onclick = () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render(); };
-  $("today").onclick = () => { view = new Date(); view.setDate(1); render(); };
+  // si la página queda abierta al cambiar de día o de mes, se actualiza sola
+  setInterval(() => { if (keyOf(new Date()) !== keyOf(today) || new Date().getDate() !== today.getDate()) render(); }, 60000);
 
-  // respaldo: exportar / importar JSON
-  $("exportBtn").onclick = () => {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "contenidos-hl.json" });
-    a.click(); URL.revokeObjectURL(a.href);
-  };
-  $("importBtn").onclick = () => $("importFile").click();
-  $("importFile").onchange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    try {
-      const parsed = JSON.parse(await file.text());
-      if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) throw 0;
-      data = parsed; save(); render();
-    } catch { alert("El archivo no es válido."); }
-    e.target.value = "";
-  };
-
-  render();
+  start();
 </script>
 </body>
 </html>
