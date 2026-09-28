@@ -179,7 +179,11 @@
   .empty { text-align: center; color: var(--negro-tinta); padding: 36px; border-radius: 20px; font-style: italic; font-size: 18px; }
 
   /* ---------- histórico ---------- */
-  .history { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; height: 260px; }
+  .history-scroll { overflow-x: auto; }
+  .history { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(56px, 1fr); gap: 16px; height: 260px; }
+  .contract { font-family: var(--sans); font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+  .contract b { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 20px; color: var(--oliva); }
+  .round-btn:disabled { opacity: .3; cursor: not-allowed; background: rgba(244,231,203,.12); color: var(--marfil); }
   .col { display: flex; flex-direction: column; align-items: center; gap: 10px; height: 100%; justify-content: flex-end; cursor: pointer; }
   .col .val { font-size: 18px; color: var(--muted); }
   .col .bar-v { width: 100%; max-width: 76px; flex: 1; position: relative; border-radius: 18px; overflow: hidden; background: rgba(104,92,75,.1); }
@@ -214,7 +218,7 @@
     .item .tag, .item time { grid-column: 2; justify-self: start; }
     .item .del { grid-row: 1; grid-column: 3; }
     .confirm { grid-column: 1 / -1; justify-content: flex-start; }
-    .history { gap: 8px; height: 210px; }
+    .history { gap: 8px; height: 210px; grid-auto-columns: minmax(44px, 1fr); }
     .col .val { font-size: 14px; }
     .col .m { font-size: 10px; letter-spacing: .06em; }
   }
@@ -235,7 +239,7 @@
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <div class="label">Plan mensual · 18 contenidos</div>
+        <div class="label">Contrato desde julio 2026 · 18 contenidos al mes</div>
         <h1>Contenidos <em>HL</em><br>Inmobiliaria</h1>
         <p>Cada pieza producida llena la gráfica del mes. Así vemos cuánto del paquete se ha usado y cuánto queda disponible.</p>
         <div class="month-switch">
@@ -314,11 +318,12 @@
 
   <section class="section">
     <div class="section-head">
-      <h2 class="section-title">Histórico <em>seis meses</em></h2>
+      <h2 class="section-title">Histórico <em>del contrato</em></h2>
       <span class="label">Toca un mes para verlo</span>
     </div>
     <div class="glass card">
-      <div class="history" id="history"></div>
+      <p class="contract" id="contract"></p>
+      <div class="history-scroll"><div class="history" id="history"></div></div>
     </div>
   </section>
 
@@ -361,6 +366,8 @@
   let pendingDelete = null;
   let today = new Date();
   let view = new Date(today.getFullYear(), today.getMonth(), 1);
+  const CONTRACT_START = new Date(2026, 6, 1); // julio 2026, inicio del contrato con HL
+  const monthIndex = (d) => d.getFullYear() * 12 + d.getMonth();
 
   $("fType").innerHTML = TYPES.map((t) => `<option>${t.name}</option>`).join("");
 
@@ -405,6 +412,7 @@
 
     $("monthLabel").textContent = `${monthName} ${view.getFullYear()}`;
     $("today").hidden = phase === 0;
+    $("prev").disabled = monthIndex(view) <= monthIndex(CONTRACT_START);
 
     // anillo
     segs.forEach((s, i) => { s.style.transitionDelay = `${i * 35}ms`; s.classList.toggle("on", i < done); });
@@ -485,8 +493,11 @@
 
   function renderHistory() {
     const cols = [];
-    for (let i = 5; i >= 0; i--) {
-      const d = new Date(view.getFullYear(), view.getMonth() - i, 1);
+    // desde julio 2026 hasta el mes en curso (o el mes que se esté viendo, si es posterior)
+    const last = Math.max(monthIndex(today), monthIndex(view));
+    for (let m = monthIndex(CONTRACT_START); m <= last; m++) {
+      const d = new Date(Math.floor(m / 12), m % 12, 1);
+      const i = m === monthIndex(view) ? 0 : 1;
       const n = monthItems(keyOf(d)).length;
       const pct = Math.round((Math.min(n, MONTHLY_TOTAL) / MONTHLY_TOTAL) * 100);
       cols.push(`
@@ -497,6 +508,12 @@
         </div>`);
     }
     $("history").innerHTML = cols.join("");
+
+    // acumulado del contrato: meses iniciados hasta hoy
+    const months = monthIndex(today) - monthIndex(CONTRACT_START) + 1;
+    const used = items.filter((x) => { const [y, mo] = x.date.split("-").map(Number); const mi = y * 12 + mo - 1; return mi >= monthIndex(CONTRACT_START) && mi <= monthIndex(today); }).length;
+    const total = months * MONTHLY_TOTAL;
+    $("contract").innerHTML = `Desde julio 2026 · ${months} ${months === 1 ? "mes" : "meses"} de contrato: <b>${used} de ${total}</b> contenidos (${Math.round((used / total) * 100)}%)`;
   }
 
   // ---------- guardado ----------
@@ -591,7 +608,7 @@
     }
   });
 
-  const goTo = (d) => { view = new Date(d.getFullYear(), d.getMonth(), 1); pendingDelete = null; $("fDate").value = ""; render(); };
+  const goTo = (d) => { if (monthIndex(d) < monthIndex(CONTRACT_START)) d = CONTRACT_START; view = new Date(d.getFullYear(), d.getMonth(), 1); pendingDelete = null; $("fDate").value = ""; render(); };
   const openCol = (el) => { const col = el.closest(".col"); if (col) goTo(new Date(+col.dataset.y, +col.dataset.m, 1)); };
   $("history").addEventListener("click", (e) => openCol(e.target));
   $("history").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCol(e.target); } });
