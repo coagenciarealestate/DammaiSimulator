@@ -219,6 +219,10 @@
   .cta:disabled { opacity: .45; cursor: not-allowed; }
   .msg { min-height: 22px; margin: 14px 6px 0; font-size: 13px; color: var(--bronze); }
   .msg.warn { color: var(--sanguine); font-weight: 600; }
+  .unlock { display: grid; grid-template-columns: 1fr minmax(0, 260px) auto; gap: 14px; align-items: end; padding: clamp(18px, 2.6vw, 26px); }
+  .unlock p { font-family: var(--display); font-size: 21px; line-height: 1.2; }
+  .unlock p small { display: block; font-family: var(--ui); font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .lock-out { background: none; border: 0; padding: 0; margin: 12px 6px 0; font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
   .list { margin-top: 18px; padding: 8px clamp(14px, 2.4vw, 28px); }
   .row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto 34px; gap: 18px; align-items: center; padding: 16px 0; }
@@ -285,6 +289,7 @@
     .row .chip, .row time { grid-column: 2; }
     .row .x { grid-row: 1; grid-column: 3; }
     .confirm { grid-column: 1 / -1; justify-content: flex-start; }
+    .unlock { grid-template-columns: 1fr; }
     .history { gap: 10px; height: 230px; grid-auto-columns: minmax(46px, 1fr); }
     .col .v { font-size: 17px; }
     .col .m { letter-spacing: .08em; font-size: 10px; }
@@ -363,6 +368,13 @@
 
     <section>
       <div class="head"><h2 class="title">Registrar <em>contenido</em></h2></div>
+      <form id="unlock" class="glass unlock" hidden>
+        <p>¿Eres del equipo C&amp;O?<small>Ingresa la clave del equipo para registrar contenidos en este dispositivo.</small></p>
+        <label><span class="label">Clave del equipo</span>
+          <input class="field" id="fKey" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="cta" id="unlockBtn" type="submit">Desbloquear</button>
+      </form>
       <form id="form" class="glass" autocomplete="off" hidden>
         <label><span class="label">Nombre del contenido</span>
           <input class="field" id="fTitle" required maxlength="90" placeholder="Ej. Reel recorrido apartamento Chicó">
@@ -376,6 +388,7 @@
         <button class="cta" id="addBtn" type="submit">Sumar contenido</button>
       </form>
       <p class="msg" id="msg"></p>
+      <button class="lock-out" id="lockOut" hidden>Cerrar sesión de edición en este dispositivo</button>
       <div class="glass list" id="list"></div>
     </section>
 
@@ -404,6 +417,8 @@
   const MONTHLY_TOTAL = 18;
   const CONTRACT_START = new Date(2026, 6, 1); // julio 2026
   const LOCAL_KEY = "co-hl-contenidos-v2";
+  const API = "/api/contenidos";          // servicio de guardado en Netlify
+  const KEY_STORE = "co-hl-clave";
   const STASH_KEY = "co-hl-after-save";
   const TYPES = [
     { name: "Reel", color: "#4b511e" },
@@ -438,6 +453,7 @@
   let art = null;
   let canWrite = null;      // null mientras se confirma el permiso
   let saving = false;
+  let editKey = "";
   let pendingDelete = null;
   let msg = { text: "", warn: false };
   let pop = null;
@@ -562,12 +578,14 @@
     $("addBtn").textContent = saving ? "Guardando…" : "Sumar contenido";
     const m = $("msg");
     m.className = "msg" + (msg.warn ? " warn" : "");
-    m.textContent = msg.text || (canWrite === false ? "Vista de solo lectura: el conteo se actualiza cuando C&O registra contenidos." : "");
+    m.textContent = msg.text || (canWrite === false && mode === "artifact" ? "Vista de solo lectura: el conteo se actualiza cuando C&O registra contenidos." : "");
+    $("unlock").hidden = !(mode === "remote" && canWrite !== true);
+    $("lockOut").hidden = !(mode === "remote" && canWrite === true);
 
     // pie
     const sync = $("sync");
-    sync.classList.toggle("live", mode === "artifact");
-    sync.textContent = mode === "artifact" ? "Conteo compartido · todos los que abren el link ven lo mismo"
+    sync.classList.toggle("live", mode === "artifact" || mode === "remote");
+    sync.textContent = mode === "artifact" || mode === "remote" ? "Conteo compartido · todos los que abren el link ven lo mismo"
       : mode === "local" ? "Archivo local · se guarda solo en este navegador" : "Cargando…";
 
     renderHistory();
@@ -604,8 +622,33 @@
       + '</body></html>';
   }
 
-  async function commit(nextItems, focusKey, popId) {
+  async function commit(op, nextItems, focusKey, popId) {
     msg = { text: "", warn: false };
+    if (mode === "remote") {
+      const prev = items, prevView = view;
+      items = nextItems; saving = true;
+      if (focusKey) { const [y, m] = focusKey.split("-").map(Number); view = new Date(y, m - 1, 1); }
+      pop = popId; render();
+      try {
+        const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...op, key: editKey }) });
+        if (r.status === 401) {
+          items = prev; view = prevView; lock();
+          msg = { text: "La clave del equipo cambió. Vuelve a ingresarla para registrar contenidos.", warn: true };
+        } else if (!r.ok) {
+          const j = await r.json().catch(() => ({}));
+          items = prev; view = prevView;
+          msg = { text: j.error || "No se pudo guardar. Inténtalo de nuevo.", warn: true };
+        } else {
+          const j = await r.json();
+          items = clean(j.items);
+        }
+      } catch {
+        items = prev; view = prevView;
+        msg = { text: "No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.", warn: true };
+      }
+      saving = false; render();
+      return;
+    }
     if (mode === "local") {
       items = nextItems;
       try { localStorage.setItem(LOCAL_KEY, JSON.stringify(items)); } catch {}
@@ -645,7 +688,7 @@
     if (monthItems(k).length >= MONTHLY_TOTAL) { msg = { text: `${MONTHS[m - 1]} ya tiene sus ${MONTHLY_TOTAL} contenidos completos.`, warn: true }; render(); return; }
     const item = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), title, type: $("fType").value, date, createdAt: new Date().toISOString() };
     $("fTitle").value = "";
-    commit([...items, item], k, item.id);
+    commit({ action: "add", item }, [...items, item], k, item.id);
   });
 
   $("list").addEventListener("click", (e) => {
@@ -653,7 +696,7 @@
     if (x) { pendingDelete = x.dataset.id; render(); return; }
     if (e.target.closest("[data-no]")) { pendingDelete = null; render(); return; }
     const yes = e.target.closest("[data-yes]");
-    if (yes) { pendingDelete = null; commit(items.filter((i) => i.id !== yes.dataset.yes)); }
+    if (yes) { pendingDelete = null; commit({ action: "delete", id: yes.dataset.yes }, items.filter((i) => i.id !== yes.dataset.yes)); }
   });
 
   const goTo = (d) => {
@@ -672,10 +715,59 @@
   // si la página queda abierta al cambiar de día, se actualiza sola
   setInterval(() => { if (isoOf(new Date()) !== isoOf(today)) render(); }, 60000);
 
+  // ---------- Netlify: clave del equipo y actualización automática ----------
+  async function refresh() {
+    if (saving) return;
+    try {
+      const r = await fetch(API, { cache: "no-store" });
+      if (!r.ok) return;
+      const j = await r.json();
+      if (!saving && Array.isArray(j.items) && JSON.stringify(j.items) !== JSON.stringify(items)) { items = clean(j.items); render(); }
+    } catch {}
+  }
+  function lock() {
+    editKey = ""; canWrite = false;
+    try { localStorage.removeItem(KEY_STORE); } catch {}
+  }
+  $("unlock").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const key = $("fKey").value.trim();
+    if (!key) return;
+    $("unlockBtn").disabled = true;
+    try {
+      const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "check", key }) });
+      if (r.ok) {
+        editKey = key; canWrite = true; msg = { text: "", warn: false };
+        try { localStorage.setItem(KEY_STORE, key); } catch {}
+        $("fKey").value = "";
+      } else msg = { text: "Esa clave no es correcta.", warn: true };
+    } catch { msg = { text: "No se pudo verificar la clave. Revisa tu conexión.", warn: true }; }
+    $("unlockBtn").disabled = false;
+    render();
+  });
+  $("lockOut").addEventListener("click", () => { lock(); render(); });
+
   // ---------- arranque ----------
   async function start() {
     render();
     const c = window.claude;
+    if ((!c || typeof c.use !== "function") && /^https?:$/.test(location.protocol)) {
+      // publicado en Netlify: el conteo vive en el servicio de guardado
+      try {
+        const r = await fetch(API, { cache: "no-store" });
+        if (r.ok) {
+          const j = await r.json();
+          mode = "remote";
+          if (Array.isArray(j.items)) items = clean(j.items);
+          try { editKey = localStorage.getItem(KEY_STORE) || ""; } catch {}
+          canWrite = !!editKey;
+          render();
+          setInterval(refresh, 20000);
+          document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
+          return;
+        }
+      } catch {}
+    }
     if (!c || typeof c.use !== "function") {
       // abierto como archivo: guarda en este navegador
       mode = "local"; canWrite = true;
