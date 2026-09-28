@@ -131,6 +131,9 @@
   .slot.done { border: 0; color: var(--marfil); font-style: italic;
     background: radial-gradient(circle at 30% 25%, #7c8236, var(--oliva) 60%, #33380f);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 6px 14px -6px rgba(75,81,30,.7); }
+  .slot.done.sched { background: repeating-linear-gradient(135deg, rgba(75,81,30,.16) 0 6px, rgba(75,81,30,.06) 6px 12px); border: 1px solid var(--oliva); color: var(--oliva); box-shadow: none; }
+  .sched { color: var(--oliva); font-weight: 600; }
+  .slots-legend { margin-top: 14px; font-family: var(--sans); font-size: 12px; color: var(--muted); min-height: 16px; }
   .slot.pop { animation: pop .55s ease; }
   @keyframes pop { 0% { transform: scale(.6); } 60% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
@@ -280,11 +283,12 @@
     <div class="grid">
       <div class="glass card">
         <div class="stats">
-          <div class="stat"><b class="hl" id="sDone">0</b><span>Realizados</span></div>
+          <div class="stat"><b class="hl" id="sDone">0</b><span>Usados</span></div>
           <div class="stat"><b id="sLeft">18</b><span>Disponibles</span></div>
           <div class="stat"><b id="sDays">—</b><span id="sDaysLabel">Días restantes</span></div>
         </div>
         <div class="slots" id="slots"></div>
+        <p class="slots-legend" id="slotsLegend"></p>
       </div>
       <div class="glass card">
         <span class="label">Distribución por formato</span>
@@ -445,9 +449,12 @@
 
     $("slots").innerHTML = Array.from({ length: MONTHLY_TOTAL }, (_, i) => {
       const it = list[i];
-      const cls = it ? "slot done" + (it.id === justAdded ? " pop" : "") : "slot";
+      const cls = it ? "slot done" + (it.date > isoOf(today) ? " sched" : "") + (it.id === justAdded ? " pop" : "") : "slot";
       return `<div class="${cls}" title="${it ? esc(it.title) : "Disponible"}">${i + 1}</div>`;
     }).join("");
+
+    const scheduled = list.filter((x) => x.date > isoOf(today)).length;
+    $("slotsLegend").textContent = scheduled ? `${done - scheduled} ${done - scheduled === 1 ? "publicado" : "publicados"} · ${scheduled} ${scheduled === 1 ? "programado" : "programados"} (casillas rayadas)` : "";
 
     $("bytype").innerHTML = TYPES.map((t) => {
       const n = list.filter((x) => x.type === t.name).length;
@@ -466,26 +473,27 @@
             ${pendingDelete === x.id
               ? `<div class="confirm"><span>¿Eliminar este contenido?</span><button class="yes" data-yes="${esc(x.id)}">Eliminar</button><button class="no" data-no>Cancelar</button></div>`
               : `<span class="tag" style="background:${colorOf(x.type)}">${esc(x.type)}</span>
-                 <time>${new Date(x.date + "T12:00").toLocaleDateString("es-CO", { day: "2-digit", month: "short" })}</time>
+                 <time>${x.date > isoOf(today) ? '<span class="sched">Programado · </span>' : ""}${new Date(x.date + "T12:00").toLocaleDateString("es-CO", { day: "2-digit", month: "short" })}</time>
                  ${canWrite ? `<button class="del" data-id="${esc(x.id)}" aria-label="Eliminar ${esc(x.title)}">×</button>` : "<span></span>"}`}
           </div>`).join("")
-      : `<div class="empty glass">${phase > 0 ? "Este mes todavía no empieza." : `No hay contenidos registrados en ${monthName.toLowerCase()}.`}</div>`;
+      : `<div class="empty glass">No hay contenidos registrados en ${monthName.toLowerCase()}.</div>`;
 
     // formulario: la fecha queda dentro del mes que se está viendo, nunca después de hoy
     const full = done >= MONTHLY_TOTAL;
-    const maxDate = phase === 0 ? isoOf(today) : `${k}-${pad(daysIn(view))}`;
+    const maxDate = `${k}-${pad(daysIn(view))}`;
+    const defDate = phase === 0 ? isoOf(today) : `${k}-01`;
     const fDate = $("fDate");
     fDate.min = `${k}-01`;
     fDate.max = maxDate;
-    if (!fDate.value || fDate.value < fDate.min || fDate.value > fDate.max) fDate.value = maxDate;
-    const blocked = !canWrite || full || phase > 0 || !loaded;
+    if (!fDate.value || fDate.value < fDate.min || fDate.value > fDate.max) fDate.value = defDate;
+    const blocked = !canWrite || full || !loaded;
     $("form").hidden = !canWrite;
     [...$("form").elements].forEach((el) => (el.disabled = blocked));
     const note = $("note");
     note.className = "form-note" + (full && canWrite ? " warn" : "");
     note.textContent = !canWrite ? "Tienes acceso de solo lectura a este conteo."
       : full ? `Se completaron los ${MONTHLY_TOTAL} contenidos de ${monthName.toLowerCase()}.`
-      : phase > 0 ? `Podrás registrar contenidos desde el 1 de ${monthName.toLowerCase()}.`
+      : phase > 0 ? `Mes futuro: lo que registres aquí queda como programado y cuenta para el paquete de ${monthName.toLowerCase()}.`
       : "";
 
     renderHistory();
