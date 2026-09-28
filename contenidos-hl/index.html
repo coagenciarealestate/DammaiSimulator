@@ -612,7 +612,7 @@
     m.className = "msg" + (msg.warn ? " warn" : "");
     m.textContent = msg.text || (canWrite === false && mode === "artifact" ? "Vista de solo lectura: el conteo se actualiza cuando C&O registra contenidos." : "");
     $("unlock").hidden = !(mode === "remote" && canWrite !== true);
-    $("lockOut").hidden = !(mode === "remote" && canWrite === true);
+    $("lockOut").hidden = !(mode === "remote" && canWrite === true && !!editKey);
 
     // pie
     const sync = $("sync");
@@ -802,7 +802,7 @@
           mode = "remote";
           if (Array.isArray(j.items)) items = clean(j.items);
           try { editKey = localStorage.getItem(KEY_STORE) || ""; } catch {}
-          canWrite = !!editKey;
+          canWrite = j.open === true || !!editKey;
           render();
           setInterval(refresh, 20000);
           document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });

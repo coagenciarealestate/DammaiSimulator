@@ -1,7 +1,8 @@
 // Servicio de guardado del conteo de contenidos HL (Netlify Functions + Netlify Blobs).
 // GET  /api/contenidos            -> { items }
 // POST /api/contenidos {key, action: "check" | "add" | "update" | "delete", item?, id?, ads?}
-// Para escribir se necesita la clave del equipo, definida en Netlify como variable de entorno EDIT_KEY.
+// Si en Netlify se define la variable de entorno EDIT_KEY, para escribir se pide esa clave.
+// Sin EDIT_KEY, cualquiera que abra el link puede registrar y borrar.
 import { getStore } from "@netlify/blobs";
 
 const MONTHLY_TOTAL = 18;
@@ -159,7 +160,7 @@ export default async (req) => {
 
   if (req.method === "GET") {
     const items = await store.get(BLOB_KEY, { type: "json" });
-    return json({ items: items ?? SEED });
+    return json({ items: items ?? SEED, open: !editKey() });
   }
   if (req.method !== "POST") return json({ error: "Método no permitido" }, 405);
 
@@ -167,8 +168,7 @@ export default async (req) => {
   try { body = await req.json(); } catch { return json({ error: "Solicitud inválida" }, 400); }
 
   const key = editKey();
-  if (!key) return json({ error: "Falta configurar la clave del equipo (EDIT_KEY) en Netlify." }, 500);
-  if (typeof body.key !== "string" || body.key.trim() !== key) return json({ error: "Clave incorrecta" }, 401);
+  if (key && (typeof body.key !== "string" || body.key.trim() !== key)) return json({ error: "Clave incorrecta" }, 401);
   if (body.action === "check") return json({ ok: true });
 
   // leer, modificar y guardar; si otra persona guardó al mismo tiempo, se reintenta sobre lo más reciente

@@ -1,6 +1,6 @@
 # Sitio del conteo de contenidos HL. Configurar en Netlify:
 #   Base directory: contenidos-hl
-#   Variable de entorno EDIT_KEY: la clave del equipo para registrar contenidos
+#   Opcional: variable de entorno EDIT_KEY para pedir clave al registrar (sin ella, cualquiera con el link edita)
 [build]
   publish = "."
   functions = "netlify/functions"
