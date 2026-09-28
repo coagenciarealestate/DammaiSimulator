@@ -1,6 +1,6 @@
 // Servicio de guardado del conteo de contenidos HL (Netlify Functions + Netlify Blobs).
 // GET  /api/contenidos            -> { items }
-// POST /api/contenidos {key, action: "check" | "add" | "delete", item?, id?}
+// POST /api/contenidos {key, action: "check" | "add" | "update" | "delete", item?, id?, ads?}
 // Para escribir se necesita la clave del equipo, definida en Netlify como variable de entorno EDIT_KEY.
 import { getStore } from "@netlify/blobs";
 
@@ -65,14 +65,16 @@ const SEED = [
     "title": "Reel ads arriendo",
     "type": "Reel",
     "date": "2026-09-16",
-    "createdAt": "2026-09-16T12:00:08Z"
+    "createdAt": "2026-09-16T12:00:08Z",
+    "ads": true
   },
   {
     "id": "sep26-09",
     "title": "reel ad arriendo superpoder",
     "type": "Reel",
     "date": "2026-09-17",
-    "createdAt": "2026-09-17T12:00:09Z"
+    "createdAt": "2026-09-17T12:00:09Z",
+    "ads": true
   },
   {
     "id": "sep26-10",
@@ -178,11 +180,15 @@ export default async (req) => {
     if (body.action === "add") {
       const it = body.item;
       if (!validItem(it)) return json({ error: "Revisa el nombre, el formato y la fecha del contenido." }, 400);
-      const clean = { id: it.id, title: it.title.trim(), type: it.type, date: it.date, createdAt: new Date().toISOString() };
+      const clean = { id: it.id, title: it.title.trim(), type: it.type, ads: it.ads === true, date: it.date, createdAt: new Date().toISOString() };
       if (items.some((x) => x.id === clean.id)) return json({ items });
       if (items.filter((x) => x.date.slice(0, 7) === clean.date.slice(0, 7)).length >= MONTHLY_TOTAL)
         return json({ error: `Ese mes ya tiene sus ${MONTHLY_TOTAL} contenidos completos.` }, 409);
       next = [...items, clean];
+    } else if (body.action === "update") {
+      if (typeof body.ads !== "boolean") return json({ error: "Solicitud inválida" }, 400);
+      if (!items.some((x) => x.id === body.id)) return json({ error: "Ese contenido ya no existe. Recarga la página." }, 404);
+      next = items.map((x) => (x.id === body.id ? { ...x, ads: body.ads } : x));
     } else if (body.action === "delete") {
       next = items.filter((x) => x.id !== body.id);
     } else {

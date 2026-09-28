@@ -206,7 +206,23 @@
   .note-line { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--hair); font-size: 13px; color: var(--muted); }
 
   /* ---------- registro ---------- */
-  form { display: grid; grid-template-columns: 2.2fr 1fr 1.1fr auto; gap: 14px; align-items: end; padding: clamp(20px, 3vw, 30px); }
+  form { display: grid; grid-template-columns: 2fr 1fr auto 1.1fr auto; gap: 14px; align-items: end; padding: clamp(20px, 3vw, 30px); }
+  .pill-check { position: relative; display: inline-flex; align-items: center; gap: 9px; height: 52px; padding: 0 18px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--bronze);
+    background: rgba(255,255,255,.42); box-shadow: inset 0 1px 3px rgba(104,92,75,.18), inset 0 -1px 1px rgba(255,255,255,.9); transition: background .25s, color .25s; }
+  .pill-check input { position: absolute; opacity: 0; pointer-events: none; }
+  .pill-check i { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--sanguine); transition: background .25s; }
+  .pill-check:has(input:checked) { background: var(--sanguine); color: #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,.35), 0 8px 16px -10px rgba(139,54,28,.9); }
+  .pill-check:has(input:checked) i { background: #fff; box-shadow: none; }
+  .pill-check:has(input:focus-visible) { outline: 2px solid var(--olive); outline-offset: 3px; }
+  .tags { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ad-tag { border: 1px solid rgba(139,54,28,.5); background: none; border-radius: 999px; padding: 4px 10px; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--sanguine); white-space: nowrap; }
+  .ad-tag.on { background: var(--sanguine); border-color: var(--sanguine); color: #fff; }
+  button.ad-tag { cursor: pointer; transition: background .2s, color .2s; }
+  button.ad-tag:not(.on) { border-style: dashed; opacity: .75; }
+  button.ad-tag:hover { opacity: 1; background: rgba(139,54,28,.1); }
+  button.ad-tag.on:hover { background: #a3421f; }
+  .type.ads { margin-top: 4px; padding-top: 18px; border-top: 1px solid var(--hair); }
   label { display: grid; gap: 9px; min-width: 0; }
   .field { width: 100%; min-width: 0; border: 0; border-radius: 16px; padding: 15px 18px; font-size: 16px; outline: none;
     background: rgba(255,255,255,.42); box-shadow: inset 0 1px 3px rgba(104,92,75,.18), inset 0 -1px 1px rgba(255,255,255,.9); transition: box-shadow .2s; color-scheme: light; }
@@ -225,7 +241,10 @@
   .lock-out { background: none; border: 0; padding: 0; margin: 12px 6px 0; font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
   .list { margin-top: 18px; padding: 8px clamp(14px, 2.4vw, 28px); }
-  .row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto 34px; gap: 18px; align-items: center; padding: 16px 0; }
+  .row { display: grid; grid-template-columns: 44px minmax(0, 1fr) 210px 158px 34px; gap: 18px; align-items: center; padding: 16px 0; }
+  .row .tags { justify-content: flex-start; }
+  .row .chip { min-width: 98px; }
+  .row time { text-align: right; }
   .row + .row { border-top: 1px solid var(--hair); }
   .row .n { font-family: var(--display); font-style: italic; font-size: 24px; color: var(--olive); }
   .row .t { font-family: var(--display); font-size: 21px; line-height: 1.2; overflow-wrap: anywhere; }
@@ -268,6 +287,11 @@
 
   /* ---------- responsive ---------- */
   @media (max-width: 940px) {
+    .row { grid-template-columns: 36px minmax(0, 1fr) 34px; row-gap: 6px; }
+    .row .tags, .row time { grid-column: 2; }
+    .row time { text-align: left; }
+    .row .x { grid-row: 1; grid-column: 3; }
+    .confirm { grid-column: 1 / -1; justify-content: flex-start; }
     .hero-inner, .pack { grid-template-columns: 1fr; }
     .lens { width: min(360px, 100%); }
     form { grid-template-columns: 1fr 1fr; }
@@ -286,7 +310,8 @@
     .type { grid-template-columns: 84px 1fr 22px; }
     .type span { font-size: 18px; }
     .row { grid-template-columns: 30px minmax(0, 1fr) 34px; row-gap: 6px; }
-    .row .chip, .row time { grid-column: 2; }
+    .row .tags, .row time { grid-column: 2; }
+    .row time { text-align: left; }
     .row .x { grid-row: 1; grid-column: 3; }
     .confirm { grid-column: 1 / -1; justify-content: flex-start; }
     .unlock { grid-template-columns: 1fr; }
@@ -382,6 +407,9 @@
         <label><span class="label">Formato</span>
           <select class="field" id="fType"></select>
         </label>
+        <label><span class="label">Etiqueta extra</span>
+          <span class="pill-check"><input type="checkbox" id="fAds"><i></i>Pautado</span>
+        </label>
         <label><span class="label">Fecha de publicación</span>
           <input class="field" id="fDate" type="date" required>
         </label>
@@ -411,7 +439,7 @@
   </div>
 </template>
 <div id="app"></div>
-<script type="application/json" id="data">[{"id": "sep26-01", "title": "reel penthouse bella suiza", "type": "Reel", "date": "2026-09-04", "createdAt": "2026-09-04T12:00:01Z"}, {"id": "sep26-02", "title": "reel amazonia recorrido", "type": "Reel", "date": "2026-09-09", "createdAt": "2026-09-09T12:00:02Z"}, {"id": "sep26-03", "title": "Pieza Venta Amazonia", "type": "Historia", "date": "2026-09-09", "createdAt": "2026-09-09T12:00:03Z"}, {"id": "sep26-04", "title": "reel amazonía interior vs exterior", "type": "Reel", "date": "2026-09-10", "createdAt": "2026-09-10T12:00:04Z"}, {"id": "sep26-05", "title": "reel penthouse bella suiza fachado vs interior", "type": "Reel", "date": "2026-09-11", "createdAt": "2026-09-11T12:00:05Z"}, {"id": "sep26-06", "title": "carrusel apto Amazonia", "type": "Carrusel", "date": "2026-09-12", "createdAt": "2026-09-12T12:00:06Z"}, {"id": "sep26-07", "title": "reel pov estrenas apartamento amazonia", "type": "Reel", "date": "2026-09-14", "createdAt": "2026-09-14T12:00:07Z"}, {"id": "sep26-08", "title": "Reel ads arriendo", "type": "Reel", "date": "2026-09-16", "createdAt": "2026-09-16T12:00:08Z"}, {"id": "sep26-09", "title": "reel ad arriendo superpoder", "type": "Reel", "date": "2026-09-17", "createdAt": "2026-09-17T12:00:09Z"}, {"id": "sep26-10", "title": "Video expectativa Casa Cajicá", "type": "Historia", "date": "2026-09-21", "createdAt": "2026-09-21T12:00:10Z"}, {"id": "sep26-11", "title": "Pieza Casa Cajicá", "type": "Historia", "date": "2026-09-22", "createdAt": "2026-09-22T12:00:11Z"}, {"id": "sep26-12", "title": "Carrusel apto La Carolina", "type": "Carrusel", "date": "2026-09-23", "createdAt": "2026-09-23T12:00:12Z"}, {"id": "sep26-13", "title": "Pieza Apto La Carolina", "type": "Historia", "date": "2026-09-23", "createdAt": "2026-09-23T12:00:13Z"}, {"id": "sep26-14", "title": "Pieza Captación Arriendos", "type": "Historia", "date": "2026-09-24", "createdAt": "2026-09-24T12:00:14Z"}, {"id": "sep26-15", "title": "reel casa Cajicá", "type": "Reel", "date": "2026-09-25", "createdAt": "2026-09-25T12:00:15Z"}, {"id": "sep26-16", "title": "reel casa Cajicá exterior vs interior", "type": "Reel", "date": "2026-09-28", "createdAt": "2026-09-28T12:00:16Z"}, {"id": "sep26-17", "title": "reel casa Cajicá tranquilidad", "type": "Reel", "date": "2026-09-29", "createdAt": "2026-09-29T12:00:17Z"}, {"id": "sep26-18", "title": "Carrusel Casa Cajicá", "type": "Carrusel", "date": "2026-09-30", "createdAt": "2026-09-30T12:00:18Z"}]</script>
+<script type="application/json" id="data">[{"id": "sep26-01", "title": "reel penthouse bella suiza", "type": "Reel", "date": "2026-09-04", "createdAt": "2026-09-04T12:00:01Z"}, {"id": "sep26-02", "title": "reel amazonia recorrido", "type": "Reel", "date": "2026-09-09", "createdAt": "2026-09-09T12:00:02Z"}, {"id": "sep26-03", "title": "Pieza Venta Amazonia", "type": "Historia", "date": "2026-09-09", "createdAt": "2026-09-09T12:00:03Z"}, {"id": "sep26-04", "title": "reel amazonía interior vs exterior", "type": "Reel", "date": "2026-09-10", "createdAt": "2026-09-10T12:00:04Z"}, {"id": "sep26-05", "title": "reel penthouse bella suiza fachado vs interior", "type": "Reel", "date": "2026-09-11", "createdAt": "2026-09-11T12:00:05Z"}, {"id": "sep26-06", "title": "carrusel apto Amazonia", "type": "Carrusel", "date": "2026-09-12", "createdAt": "2026-09-12T12:00:06Z"}, {"id": "sep26-07", "title": "reel pov estrenas apartamento amazonia", "type": "Reel", "date": "2026-09-14", "createdAt": "2026-09-14T12:00:07Z"}, {"id": "sep26-08", "title": "Reel ads arriendo", "type": "Reel", "date": "2026-09-16", "createdAt": "2026-09-16T12:00:08Z", "ads": true}, {"id": "sep26-09", "title": "reel ad arriendo superpoder", "type": "Reel", "date": "2026-09-17", "createdAt": "2026-09-17T12:00:09Z", "ads": true}, {"id": "sep26-10", "title": "Video expectativa Casa Cajicá", "type": "Historia", "date": "2026-09-21", "createdAt": "2026-09-21T12:00:10Z"}, {"id": "sep26-11", "title": "Pieza Casa Cajicá", "type": "Historia", "date": "2026-09-22", "createdAt": "2026-09-22T12:00:11Z"}, {"id": "sep26-12", "title": "Carrusel apto La Carolina", "type": "Carrusel", "date": "2026-09-23", "createdAt": "2026-09-23T12:00:12Z"}, {"id": "sep26-13", "title": "Pieza Apto La Carolina", "type": "Historia", "date": "2026-09-23", "createdAt": "2026-09-23T12:00:13Z"}, {"id": "sep26-14", "title": "Pieza Captación Arriendos", "type": "Historia", "date": "2026-09-24", "createdAt": "2026-09-24T12:00:14Z"}, {"id": "sep26-15", "title": "reel casa Cajicá", "type": "Reel", "date": "2026-09-25", "createdAt": "2026-09-25T12:00:15Z"}, {"id": "sep26-16", "title": "reel casa Cajicá exterior vs interior", "type": "Reel", "date": "2026-09-28", "createdAt": "2026-09-28T12:00:16Z"}, {"id": "sep26-17", "title": "reel casa Cajicá tranquilidad", "type": "Reel", "date": "2026-09-29", "createdAt": "2026-09-29T12:00:17Z"}, {"id": "sep26-18", "title": "Carrusel Casa Cajicá", "type": "Carrusel", "date": "2026-09-30", "createdAt": "2026-09-30T12:00:18Z"}]</script>
 <script id="app-js">
 (() => {
   const MONTHLY_TOTAL = 18;
@@ -553,6 +581,8 @@
       const n = list.filter((x) => x.type === t.name).length;
       return `<div class="type"><span>${t.name}</span><div class="tube"><i style="width:${(n / MONTHLY_TOTAL) * 100}%;background-color:${t.color}"></i></div><b>${n}</b></div>`;
     }).join("");
+    const adsN = list.filter((x) => x.ads).length;
+    $("types").insertAdjacentHTML("beforeend", `<div class="type ads"><span>Pautados</span><div class="tube"><i style="width:${(adsN / MONTHLY_TOTAL) * 100}%;background-color:#8b361c"></i></div><b>${adsN}</b></div>`);
     $("typesNote").textContent = `${pct}% del paquete de ${MONTHLY_TOTAL} piezas usado en ${lower} ${view.getFullYear()}.`;
 
     // lista
@@ -564,7 +594,9 @@
           <span class="t">${esc(x.title)}</span>
           ${pendingDelete === x.id
             ? `<div class="confirm"><span>¿Eliminar este contenido?</span><button class="yes" data-yes="${esc(x.id)}">Eliminar</button><button class="no" data-no>Cancelar</button></div>`
-            : `<span class="chip"><i style="background:${colorOf(x.type)}"></i>${esc(x.type)}</span>
+            : `<span class="tags"><span class="chip"><i style="background:${colorOf(x.type)}"></i>${esc(x.type)}</span>${
+                 writable ? `<button class="ad-tag${x.ads ? " on" : ""}" data-ad="${esc(x.id)}" aria-pressed="${!!x.ads}" title="${x.ads ? "Quitar pauta" : "Marcar como pautado"}">${x.ads ? "Pautado" : "+ Pauta"}</button>`
+                 : x.ads ? `<span class="ad-tag on">Pautado</span>` : ""}</span>
                <time>${isSched(x) ? '<span class="sched">Programado · </span>' : ""}${new Date(x.date + "T12:00").toLocaleDateString("es-CO", { day: "numeric", month: "short" })}</time>
                ${writable ? `<button class="x" data-id="${esc(x.id)}" aria-label="Eliminar ${esc(x.title)}">×</button>` : "<span></span>"}`}
         </div>`).join("")
@@ -686,7 +718,8 @@
     const k = date.slice(0, 7);
     if (y * 12 + m - 1 < monthIndex(CONTRACT_START)) { msg = { text: "El contrato empieza en julio 2026. Elige una fecha desde el 1 de julio.", warn: true }; render(); return; }
     if (monthItems(k).length >= MONTHLY_TOTAL) { msg = { text: `${MONTHS[m - 1]} ya tiene sus ${MONTHLY_TOTAL} contenidos completos.`, warn: true }; render(); return; }
-    const item = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), title, type: $("fType").value, date, createdAt: new Date().toISOString() };
+    const item = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), title, type: $("fType").value, ads: $("fAds").checked, date, createdAt: new Date().toISOString() };
+    $("fAds").checked = false;
     $("fTitle").value = "";
     commit({ action: "add", item }, [...items, item], k, item.id);
   });
@@ -694,6 +727,15 @@
   $("list").addEventListener("click", (e) => {
     const x = e.target.closest(".x");
     if (x) { pendingDelete = x.dataset.id; render(); return; }
+    const ad = e.target.closest("[data-ad]");
+    if (ad) {
+      if (saving) return;
+      const cur = items.find((i) => i.id === ad.dataset.ad);
+      if (!cur) return;
+      const ads = !cur.ads;
+      commit({ action: "update", id: cur.id, ads }, items.map((i) => (i.id === cur.id ? { ...i, ads } : i)));
+      return;
+    }
     if (e.target.closest("[data-no]")) { pendingDelete = null; render(); return; }
     const yes = e.target.closest("[data-yes]");
     if (yes) { pendingDelete = null; commit({ action: "delete", id: yes.dataset.yes }, items.filter((i) => i.id !== yes.dataset.yes)); }
