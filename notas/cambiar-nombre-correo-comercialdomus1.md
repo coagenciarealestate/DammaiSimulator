@@ -60,4 +60,4 @@ Las opciones A y B no sirven en este caso. Mailchimp no usa el nombre que tiene 
 
 Si además se quiere una dirección más bonita (por ejemplo `dammai@…`), el administrador la crea como alias (Opción C) y después se pone esa dirección en el campo **From email** de Mailchimp.
 
-⚠️ Para que los correos no lleguen a spam, el dominio `hoyosluque…` tiene que estar autenticado en Mailchimp (Website → **Domains** → **Authenticate**). Esto pide agregar unos registros DNS, y lo tiene que hacer quien maneje el dominio.
+⚠️ Para que los correos no lleguen a spam, el dominio `hoyosluque…` tiene que estar autenticado en Mailchimp (ícono de perfil → **Account & billing → Domains** → **Authenticate**). Esto pide agregar unos registros DNS, y lo tiene que hacer quien maneje el dominio.
