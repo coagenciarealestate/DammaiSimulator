@@ -47,3 +47,15 @@ Así el buzón recibe correos en las dos direcciones, y se puede enviar como `da
 
 - Si solo te molesta el nombre que ven los demás → **Opción A** (2 minutos, sin administrador).
 - Si quieres una dirección bonita → **Opción C** (alias), que no rompe nada de lo que ya existe.
+
+## Si los correos se envían desde Mailchimp
+
+Las opciones A y B no sirven en este caso. Mailchimp no usa el nombre que tiene la cuenta en Gmail ni en el administrador de Google Workspace. Solo usa la **dirección** (`comercialdomus1@…`), y el nombre que ven los destinatarios se configura en Mailchimp:
+
+- **Nombre por defecto de la audiencia:** Audience → **Settings → Audience name and defaults** → **Default From name** → *Dammai Lifestyle Hotel* → Save.
+- **En cada campaña:** en el editor de la campaña, sección **From** → **Edit** → **Name** → *Dammai Lifestyle Hotel*.
+- **En automatizaciones (Customer Journeys):** cada correo tiene su propio "From". Hay que cambiarlo en cada uno.
+
+Si además se quiere una dirección más bonita (por ejemplo `dammai@…`), el administrador la crea como alias (Opción C) y después se pone esa dirección en el campo **From email** de Mailchimp.
+
+⚠️ Para que los correos no lleguen a spam, el dominio `hoyosluque…` tiene que estar autenticado en Mailchimp (Website → **Domains** → **Authenticate**). Esto pide agregar unos registros DNS, y lo tiene que hacer quien maneje el dominio.
