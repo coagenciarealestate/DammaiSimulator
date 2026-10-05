@@ -39,7 +39,9 @@ Qué pasa después:
 
 Si no quieren tocar ComercialDomus1 (porque alguien más la usa o está impresa en tarjetas), el administrador puede agregarle un alias:
 
-[admin.google.com](https://admin.google.com) → **Directorio → Usuarios → ComercialDomus1 → Información del usuario → Alias de correo electrónico** → agregar `dammai` → **Guardar**.
+[admin.google.com](https://admin.google.com) → **Directorio → Usuarios → ComercialDomus1** → a la izquierda, debajo del nombre, **Agregar correos alternativos** (*Add Alternate Emails*) → **Correo alternativo** → escribir `dammai` → **Guardar**.
+
+Es gratis (hasta 30 alias por usuario) y puede tardar hasta 24 horas en funcionar, aunque normalmente es más rápido.
 
 Así el buzón recibe correos en las dos direcciones, y se puede enviar como `dammai@…` agregándola en Gmail → ⚙️ → **Cuentas → Enviar como → Añadir otra dirección**.
 
