@@ -1,5 +1,9 @@
 # Cambiar el nombre o la dirección del correo ComercialDomus1
 
+> **Resultado final:** el correo quedó como `comercial@hoyosluque.com` y el nombre como **Hotel Dammai**.
+>
+> En Mailchimp usar: **From name:** Hotel Dammai · **From email:** `comercial@hoyosluque.com`. Falta verificar y autenticar el dominio `hoyosluque.com` (ícono de perfil → **Account & billing → Domains**).
+
 Sí, se puede. Y no cuesta nada, porque se sigue usando la misma licencia.
 
 Hay dos cosas distintas que se pueden cambiar. Te explico las dos para que elijas.
