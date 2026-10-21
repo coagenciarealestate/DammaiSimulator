@@ -199,11 +199,16 @@ section.chapter { padding-block: 112px; border-top: 1px solid var(--line); }
 .videos::-webkit-scrollbar { display: none; }
 .videos > * { scroll-snap-align: start; min-width: 0; }
 .car-bar { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
-.car-nav { display: flex; align-items: center; gap: 10px; }
-.car-count { font-size: 14px; color: var(--muted); margin-right: 6px; font-variant-numeric: tabular-nums; }
-.car-btn { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 400 22px/1 var(--ui); cursor: pointer; display: grid; place-items: center; transition: border-color .2s, background .2s, opacity .2s; }
+.carousel { position: relative; }
+.car-count { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.car-btn { position: absolute; top: 50%; z-index: 2; transform: translateY(-50%); width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 400 22px/1 var(--ui); cursor: pointer; display: grid; place-items: center; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .55); transition: border-color .2s, opacity .2s; }
+.car-btn.prev { left: -28px; }
+.car-btn.next { right: -28px; }
+.carousel { --bar: 76px; }
+.carousel .car-btn { top: calc(50% - var(--bar) / 2); }
 .car-btn:hover:not(:disabled) { border-color: var(--accent); }
-.car-btn:disabled { opacity: .35; cursor: default; }
+.car-btn:disabled { opacity: 0; pointer-events: none; }
+@media (max-width: 1260px) { .car-btn.prev { left: 8px; } .car-btn.next { right: 8px; } }
 .video { aspect-ratio: 9 / 16; max-width: 100%; display: grid; place-items: center; align-content: center; gap: 14px; text-align: center; padding: 18px; }
 a.reel { position: relative; overflow: hidden; border-radius: var(--r); text-decoration: none; color: #F4E7CB; background: radial-gradient(120% 80% at 50% 0%, #565C24 0%, #2C311F 50%, #1C1714 100%); border: 1px solid rgba(205, 190, 163, .18); align-content: space-between; place-items: stretch; text-align: left; padding: 22px; transition: transform .25s, border-color .25s; }
 a.reel:hover { transform: translateY(-3px); border-color: rgba(220, 218, 158, .6); }
@@ -317,7 +322,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   footer { display: none; }
   .videos { grid-auto-flow: row; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: visible; }
   .videos a.reel { aspect-ratio: 3 / 4; }
-  .car-nav { display: none; }
+  .car-btn { display: none; }
   .promise { break-before: page; margin-top: 0; }
   #planes .wrap > .promise { margin-top: 112px; }
 }
@@ -647,6 +652,8 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
         <p>Reels y recorridos que hemos producido para nuestros clientes, con su alcance real en Instagram.</p>
       </div>
       <div class="carousel">
+        <button type="button" class="car-btn prev" id="reels-prev" aria-label="Ver reels anteriores">←</button>
+        <button type="button" class="car-btn next" id="reels-next" aria-label="Ver reels siguientes">→</button>
         <div class="videos" id="reels" tabindex="0" aria-label="Reels publicados">
           <blockquote class="instagram-media ig" data-instgrm-permalink="https://www.instagram.com/reel/DIfY80sAtIn/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14"><a class="video reel" href="https://www.instagram.com/reel/DIfY80sAtIn/" target="_blank" rel="noopener"><span class="n">01</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a></blockquote>
           <blockquote class="instagram-media ig" data-instgrm-permalink="https://www.instagram.com/reel/DJo_cQjAoOx/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14"><a class="video reel" href="https://www.instagram.com/reel/DJo_cQjAoOx/" target="_blank" rel="noopener"><span class="n">02</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a></blockquote>
@@ -658,11 +665,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
         </div>
         <div class="car-bar">
           <a class="btn ghost" href="https://www.instagram.com/lacasadelmarketingco/" target="_blank" rel="noopener">Ver más en @lacasadelmarketingco</a>
-          <div class="car-nav">
-            <span class="car-count" id="reels-count" aria-live="polite">1–3 de 7</span>
-            <button type="button" class="car-btn" id="reels-prev" aria-label="Ver reels anteriores">←</button>
-            <button type="button" class="car-btn" id="reels-next" aria-label="Ver reels siguientes">→</button>
-          </div>
+          <span class="car-count" id="reels-count" aria-live="polite">1–3 de 7</span>
         </div>
       </div>
     </div>
