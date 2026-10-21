@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tarjeta C&amp;O</title>
+<style>
+/*FUENTES*/
+
+/* Tarjeta 90 × 50 mm + 3 mm de sangrado por lado = 96 × 56 mm por cara */
+:root{
+  --carbon:#1C1714; --tinta:#121212; --pergamino:#E3DAC5; --marfil:#F4E7CB;
+  --laton:#AA8B64; --champan:#CDBEA3; --bronce:#685C4B; --oliva:#4B511E; --musgo:#2C311F;
+  --cromo:linear-gradient(118deg,#6E5636 0%,#AA8B64 22%,#F4E7CB 42%,#CDBEA3 58%,#8A6F4C 74%,#E3DAC5 92%);
+  --sangrado:3mm; --seguridad:4.5mm;
+  --fondo-pantalla:#D9D3C6;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--fondo-pantalla:#0F100D}}
+:root[data-theme="dark"]{--fondo-pantalla:#0F100D}
+
+@page{size:96mm 56mm;margin:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{background:var(--fondo-pantalla)}
+
+.cara{
+  position:relative;width:96mm;height:56mm;overflow:hidden;
+  break-after:page;page-break-after:always;
+}
+.cara:last-child{break-after:auto;page-break-after:auto}
+/* área útil: corte (3 mm) + margen de seguridad */
+.util{position:absolute;inset:calc(var(--sangrado) + var(--seguridad))}
+
+.monograma{
+  aspect-ratio:1064/568;
+  -webkit-mask:url(data:image/png;base64,__LOGO__) center/contain no-repeat;
+          mask:url(data:image/png;base64,__LOGO__) center/contain no-repeat;
+}
+
+/* ---------- FRENTE ---------- */
+.frente{
+  background:
+    radial-gradient(60% 75% at 50% 42%, rgba(75,81,30,.42) 0%, rgba(44,49,31,.18) 45%, transparent 75%),
+    radial-gradient(120% 90% at 50% 120%, rgba(170,139,100,.10), transparent 60%),
+    var(--carbon);
+}
+.frente .util{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.frente .monograma{width:38mm;background:var(--cromo)}
+.frente .filete{width:9mm;height:.25mm;margin:4.2mm 0 3mm;background:var(--cromo);opacity:.85}
+.frente .lema{
+  font:500 5.4pt/1 'Jost',sans-serif;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--champan);padding-left:.32em;
+}
+.frente .marco{
+  position:absolute;inset:calc(var(--sangrado) + 2.6mm);
+  border:.18mm solid rgba(170,139,100,.35);border-radius:.6mm;pointer-events:none;
+}
+
+/* ---------- REVERSO ---------- */
+.reverso{
+  background:
+    radial-gradient(90% 120% at 0% 0%, rgba(255,250,240,.55), transparent 55%),
+    var(--marfil);
+  color:var(--carbon);
+}
+.reverso .util{display:grid;grid-template-columns:1fr auto;column-gap:5mm;align-items:stretch}
+.reverso .datos{display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.reverso .monograma{width:13mm;background:var(--carbon)}
+.reverso h2{
+  font:300 italic 15pt/1 'Inria Serif',serif;letter-spacing:-.01em;margin-top:2.2mm;
+}
+.reverso .canal{
+  font:600 4.6pt/1 'Jost',sans-serif;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--bronce);margin-top:2.6mm;
+}
+.reverso .tel{font:500 9.4pt/1 'DM Mono',monospace;letter-spacing:.02em;margin-top:1.3mm;white-space:nowrap}
+.reverso .firma{
+  font:400 4.6pt/1.5 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--bronce);
+  border-top:.18mm solid var(--laton);padding-top:1.6mm;
+}
+.reverso .firma b{font-weight:600;color:var(--carbon)}
+.reverso .bloque-qr{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6mm}
+.reverso .ficha-qr{
+  background:#FFFFFF;border-radius:1.6mm;padding:.6mm;
+  box-shadow:0 0 0 .2mm var(--laton);
+}
+.reverso .qr{display:block;width:25mm;height:25mm}
+.reverso .escanea{
+  font:600 4.4pt/1 'Jost',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--oliva);padding-left:.28em;
+}
+.reverso .banda{position:absolute;left:0;right:0;bottom:0;height:calc(var(--sangrado) + 1.2mm);background:var(--oliva)}
+
+/* ---------- Vista en pantalla (no se imprime) ---------- */
+@media screen{
+  body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:32px 16px}
+  .mesa{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;zoom:1.9}
+  .cara{box-shadow:0 1px 2px rgba(0,0,0,.18),0 10px 28px rgba(0,0,0,.22);border-radius:1mm;
+        clip-path:inset(var(--sangrado) round .8mm)}
+  .nota{font:400 13px/1.5 'Jost',sans-serif;color:#685C4B;text-align:center;max-width:640px}
+  .nota a{color:#4B511E}
+}
+@media screen and (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nota{color:#A6A893}:root:not([data-theme="light"]) .nota a{color:#DCDA9E}}
+@media screen and (max-width:760px){.mesa{zoom:1}}
+@media screen and (max-width:420px){.mesa{zoom:.86}}
+@media print{.nota{display:none}.mesa{display:block}}
+</style>
+</head>
+<body>
+<div class="mesa">
+  <section class="cara frente" aria-label="Frente">
+    <div class="marco"></div>
+    <div class="util">
+      <div class="monograma" role="img" aria-label="C&amp;O"></div>
+      <div class="filete"></div>
+      <div class="lema">La Casa del Real Estate</div>
+    </div>
+  </section>
+
+  <section class="cara reverso" aria-label="Reverso">
+    <div class="util">
+      <div class="datos">
+        <div>
+          <div class="monograma" role="img" aria-label="C&amp;O"></div>
+          <h2>Hablemos.</h2>
+          <div class="canal">WhatsApp</div>
+          <div class="tel">__TELEFONO__</div>
+        </div>
+        <div class="firma"><b>C&amp;O</b> · La Casa del Real Estate<br>Bogotá · Colombia</div>
+      </div>
+      <div class="bloque-qr">
+        <div class="ficha-qr"><!--QR--></div>
+        <div class="escanea">Escanea</div>
+      </div>
+    </div>
+    <div class="banda"></div>
+  </section>
+</div>
+<p class="nota">Tarjeta 90 × 50 mm · archivo de impresión con 3 mm de sangrado. El QR abre <a href="__ENLACE__">__ENLACE__</a>: es estático, no depende de ningún servicio y no se vence.</p>
+</body>
+</html>
