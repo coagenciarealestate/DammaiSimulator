@@ -111,7 +111,7 @@ section.chapter { padding-block: 112px; border-top: 1px solid var(--line); }
 /* Rutas por tipo de cliente */
 .routes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .route { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 28px 24px 24px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
-.route .kind { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.route .kind { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 12px; }
 .route .kind h3 { font-size: 28px; }
 .route .tag { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); padding: 6px 8px; border-radius: 99px; white-space: nowrap; }
 .route .pitch { font-family: var(--display); font-size: 20px; line-height: 1.3; }
@@ -123,18 +123,6 @@ section.chapter { padding-block: 112px; border-top: 1px solid var(--line); }
 .route.featured { background: linear-gradient(180deg, color-mix(in srgb, var(--olive) 34%, var(--surface)), var(--surface) 70%); border-color: color-mix(in srgb, var(--olive-2) 60%, transparent); }
 
 /* Método & */
-.method { max-width: 940px; }
-.funnel { display: grid; gap: 10px; }
-.stage { display: grid; grid-template-columns: minmax(0, 44%) minmax(0, 1fr); gap: 26px; align-items: center; }
-.band { justify-self: center; height: 66px; display: grid; place-items: center; color: var(--on-olive); font-family: var(--display); font-size: 21px; clip-path: polygon(0 0, 100% 0, 93% 100%, 7% 100%); }
-.stage:nth-child(1) .band { width: 100%; background: #9F9D5F; }
-.stage:nth-child(2) .band { width: 86%; background: #858746; }
-.stage:nth-child(3) .band { width: 72%; background: #6B7230; }
-.stage:nth-child(4) .band { width: 58%; background: #565C24; }
-.stage:nth-child(5) .band { width: 44%; background: #4B511E; }
-.stage:nth-child(1) .band, .stage:nth-child(2) .band { color: #1C1714; }
-.stage .txt { display: grid; gap: 4px; font-size: 15.5px; color: var(--muted); }
-.stage .txt b { font: 500 11.5px/1.4 var(--mono); letter-spacing: .06em; color: var(--brass); text-transform: uppercase; }
 
 /* Servicios */
 .pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; background: var(--surface); }
@@ -213,14 +201,13 @@ a.reel .cap span { font-size: 15px; font-weight: 500; }
 .video .play { width: 58px; height: 58px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--brass) 70%, transparent); display: grid; place-items: center; }
 .video .play::before { content: ""; margin-left: 4px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent var(--brass); }
 .video p { font-size: 14px; color: var(--muted); }
-.results { margin-top: 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.result { padding: 26px; display: grid; gap: 10px; align-content: start; }
-.result b { font: 400 44px/1 var(--mono); color: var(--muted); opacity: .55; }
-.result p { color: var(--muted); font-size: 15px; }
-.quotes { margin-top: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.quote { margin: 0; padding: 30px; display: grid; gap: 16px; }
-.quote blockquote { margin: 0; font-family: var(--display); font-style: italic; font-size: 22px; line-height: 1.35; color: var(--muted); }
-.quote cite { font-style: normal; font-size: 14px; color: var(--muted); }
+.case { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.case-num { display: grid; place-content: center; text-align: center; padding: 48px 24px; background: radial-gradient(120% 120% at 30% 20%, #565C24 0%, #2C311F 55%, #1C1714 100%); color: #F4E7CB; }
+.case-num b { font-family: var(--display); font-weight: 300; font-size: clamp(140px, 16vw, 220px); line-height: .9; color: transparent; background: var(--chrome); -webkit-background-clip: text; background-clip: text; }
+.case-num span { font: 500 13px var(--ui); letter-spacing: .3em; text-transform: uppercase; color: #DCDA9E; }
+.case-copy { padding: 48px 44px; display: grid; gap: 18px; align-content: center; }
+.case-copy h3 { font-size: clamp(30px, 3.6vw, 46px); font-weight: 300; line-height: 1.1; }
+.case-copy p { color: var(--muted); font-size: 17px; max-width: 52ch; }
 
 /* Cierre y contacto */
 .closing { position: relative; color: var(--photo-ink); background: #121212; overflow: hidden; }
@@ -231,11 +218,11 @@ a.reel .cap span { font-size: 15px; font-weight: 500; }
 .closing h2 .mark { height: .8em; vertical-align: -.04em; margin-left: .18em; }
 .closing .lede { color: rgba(244, 231, 203, .74); }
 .contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.c-item { border: 1px solid rgba(205, 190, 163, .3); border-radius: 14px; padding: 18px; display: grid; gap: 8px; background: rgba(18, 18, 18, .4); backdrop-filter: blur(8px); min-width: 0; }
-.c-item small { font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #CDBEA3; }
-.c-item .val { font: 400 16px var(--mono); color: #F4E7CB; overflow-wrap: anywhere; user-select: all; }
-.c-item button { justify-self: start; font: 500 12.5px var(--ui); color: #F4E7CB; background: transparent; border: 1px solid rgba(244, 231, 203, .3); border-radius: 99px; padding: 5px 12px; cursor: pointer; }
-.c-item button:hover { border-color: #DCDA9E; }
+.c-item { border: 1px solid rgba(205, 190, 163, .3); border-radius: 16px; padding: 22px; display: grid; gap: 10px; align-content: start; background: rgba(18, 18, 18, .4); backdrop-filter: blur(8px); min-width: 0; }
+.c-item small { font: 500 12px var(--ui); letter-spacing: .22em; text-transform: uppercase; color: #CDBEA3; }
+.c-item .val { font: 300 clamp(18px, 1.6vw, 22px)/1.25 var(--display); color: #F4E7CB; overflow-wrap: anywhere; }
+.c-btn { justify-self: start; margin-top: 6px; display: inline-flex; padding: 10px 18px; border-radius: 999px; font: 500 14px/1 var(--ui); letter-spacing: .03em; text-decoration: none; color: #F4E7CB; border: 1px solid rgba(244, 231, 203, .35); transition: border-color .2s, background .2s; }
+.c-btn:hover { border-color: #DCDA9E; background: rgba(220, 218, 158, .08); }
 footer { border-top: 1px solid var(--line); }
 footer .wrap { padding-block: 34px; display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; font-size: 13.5px; color: var(--muted); }
 footer .mark { height: 30px; }
@@ -251,7 +238,6 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   .plans { grid-template-columns: 1fr; max-width: 640px; }
   .includes { grid-template-columns: 1fr; }
   .clients, .videos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .top nav { display: none; }
   .top .btn { margin-left: auto; }
 }
@@ -259,7 +245,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   body { font-size: 16px; }
   section.chapter { padding-block: 76px; }
   .chapter-head { grid-template-columns: 1fr; margin-bottom: 36px; }
-  .routes, .pillars, .results, .quotes, .notes, .contact { grid-template-columns: 1fr; }
+  .routes, .pillars, .notes, .contact { grid-template-columns: 1fr; }
   .pillar + .pillar { border-left: 0; border-top: 1px solid var(--line); }
   .facts .wrap { grid-template-columns: 1fr; }
   .fact + .fact { padding-left: 0; border-left: 0; border-top: 1px solid rgba(205, 190, 163, .18); }
@@ -268,8 +254,6 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   .hero .wrap { padding-block: 64px 44px; }
   .hero .mark { height: 52px; }
   .hero::after { background: linear-gradient(0deg, rgba(var(--photo-shade), 1) 10%, rgba(var(--photo-shade), .78) 55%, rgba(var(--photo-shade), .55) 100%); }
-  .stage { grid-template-columns: 1fr; gap: 8px; }
-  .band { width: 100% !important; clip-path: none; border-radius: 10px; height: 52px; }
   .prod { grid-template-columns: 1fr 1fr; }
   .shot { min-height: 180px; }
   .shot:last-child { grid-column: 1 / -1; }
@@ -277,6 +261,8 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   .promise { grid-template-columns: 1fr; padding: 30px 24px; }
   .promise img { justify-self: start; width: 150px; }
   .clients { grid-template-columns: 1fr; }
+  .case { grid-template-columns: 1fr; }
+  .case-copy { padding: 32px 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -288,8 +274,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .top { display: none; }
   section.chapter, .closing { break-before: page; }
-  .route, .plan, .pillar, .stage, .result, .quote, .promise, .includes, .prod, .video, .c-item { break-inside: avoid; }
-  .c-item button { display: none; }
+  .route, .plan, .pillar, .promise, .case, .includes, .prod, .video, .c-item { break-inside: avoid; }
   .hero, .closing { min-height: 1810px; display: flex; flex-direction: column; justify-content: space-between; }
   .hero .wrap { padding-top: 200px; width: 100%; }
   .closing .wrap { margin-top: auto; padding-bottom: 140px; width: 100%; }
@@ -304,10 +289,10 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
     <a href="#inicio" aria-label="Inicio"><span class="mark" role="img" aria-label="C&amp;O"></span></a>
     <nav aria-label="Secciones">
       <a href="#rutas">Para quién</a>
-      <a href="#metodo">Método</a>
       <a href="#servicios">Servicios</a>
       <a href="#planes">Planes</a>
       <a href="#resultados">Clientes</a>
+      <a href="#casos">Casos</a>
       <a href="#videos">Videos</a>
     </nav>
     <a class="btn primary" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Quiero%20agendar%20una%20reuni%C3%B3n%20para%20conocer%20sus%20servicios." target="_blank" rel="noopener">Agenda una reunión</a>
@@ -320,7 +305,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
       <span class="mark sheen" role="img" aria-label="C&amp;O"></span>
       <span class="eyebrow">La Casa del Marketing Inmobiliario · Portafolio de servicios</span>
       <h1>Más inventario. Más negocios. <em>En 60 días.</em></h1>
-      <p class="lede">Construimos y operamos el sistema comercial de tu negocio inmobiliario: estrategia, contenido, pauta, CRM y tablero de resultados con un solo equipo. Atraemos propietarios, arrendatarios y compradores con mensajes, formatos y canales que convierten.</p>
+      <p class="lede">Construimos y operamos el sistema comercial de tu negocio inmobiliario: estrategia, contenido, pauta y tablero de resultados con un solo equipo. Atraemos propietarios, arrendatarios y compradores con mensajes, formatos y canales que convierten.</p>
       <div class="ctas">
         <a class="btn primary" href="#planes">Ver planes</a>
       </div>
@@ -345,15 +330,15 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
       </div>
       <div class="routes">
         <article class="route">
-          <div class="kind"><h3>Constructoras</h3><span class="tag">B2B</span></div>
+          <div class="kind"><h3>Constructoras</h3><span class="tag">Planes</span></div>
           <p class="pitch">Vendemos tu proyecto en planos, en obra y en entrega.</p>
           <ul>
             <li>Estrategia de lanzamiento, precio y oferta por etapa</li>
             <li>Avatar del comprador y del inversionista</li>
             <li>Landing, pauta y WhatsApp para cada proyecto</li>
-            <li>CRM y pipeline para tu sala de ventas</li>
+            <li>Producción con dron, equipo completo e IA</li>
           </ul>
-          <a class="go" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Somos%20una%20constructora%20y%20queremos%20una%20propuesta%20para%20vender%20nuestro%20proyecto." target="_blank" rel="noopener">Pide tu propuesta <span aria-hidden="true">→</span></a>
+          <a class="go" href="#planes">Ver planes y precios <span aria-hidden="true">→</span></a>
         </article>
         <article class="route featured">
           <div class="kind"><h3>Inmobiliarias</h3><span class="tag">Planes</span></div>
@@ -361,7 +346,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
           <ul>
             <li>Captación de propietarios con contenido y pauta</li>
             <li>Atracción de arrendatarios y compradores</li>
-            <li>CRM inmobiliario, dashboard e informe mensual</li>
+            <li>Dashboard e informe mensual de resultados</li>
             <li>Capacitación de tu equipo de vendedores</li>
           </ul>
           <a class="go" href="#planes">Ver planes y precios <span aria-hidden="true">→</span></a>
@@ -388,42 +373,6 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
           </ul>
           <a class="go" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Soy%20propietario%20y%20quiero%20vender%20o%20arrendar%20mi%20inmueble.%20%C2%BFMe%20env%C3%ADan%20una%20propuesta%3F" target="_blank" rel="noopener">Pide tu propuesta <span aria-hidden="true">→</span></a>
         </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="chapter" id="metodo">
-    <div class="wrap">
-      <div class="chapter-head">
-        <div>
-          <span class="eyebrow">Nuestro sistema</span>
-          <h2>El Método <span class="amp">&amp;</span></h2>
-        </div>
-        <p>Es nuestro sistema de atracción de propietarios, arrendatarios y compradores. Cada etapa del funnel tiene su mensaje, su formato y su canal, y todo queda medido en el CRM.</p>
-      </div>
-      <div class="method">
-        <div class="funnel" role="list" aria-label="Etapas del funnel">
-          <div class="stage" role="listitem">
-            <div class="band">Atracción</div>
-            <div class="txt"><b>Paid media · Orgánico</b>Anuncios y contenido que ponen tu marca frente al avatar correcto.</div>
-          </div>
-          <div class="stage" role="listitem">
-            <div class="band">Seducción</div>
-            <div class="txt"><b>Lead magnets · Landing pages · Formularios</b>Una oferta gratuita de valor a cambio del contacto.</div>
-          </div>
-          <div class="stage" role="listitem">
-            <div class="band">Persuasión</div>
-            <div class="txt"><b>WhatsApp · Email · Copys</b>Seguimiento con piezas que responden las objeciones del avatar.</div>
-          </div>
-          <div class="stage" role="listitem">
-            <div class="band">Venta</div>
-            <div class="txt"><b>CRM · Pipeline</b>Cita, visita y cierre, con cada lead registrado y medido.</div>
-          </div>
-          <div class="stage" role="listitem">
-            <div class="band">Upsell</div>
-            <div class="txt"><b>Email · Comunidad</b>El cliente vuelve: otro inmueble, otra operación o un referido.</div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -475,7 +424,6 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
         <div class="pillar">
           <div class="head"><span class="num">FRENTE 4</span><h3>Negocio</h3><p>Los números que dicen si funciona.</p></div>
           <ul>
-            <li>CRM inmobiliario</li>
             <li>Inventario de propiedades</li>
             <li>Ingresos y gastos de operación</li>
             <li>Inversión, ROI y ROAS</li>
@@ -503,7 +451,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
     <div class="wrap">
       <div class="chapter-head">
         <div>
-          <span class="eyebrow">Planes para inmobiliarias</span>
+          <span class="eyebrow">Planes para constructoras e inmobiliarias</span>
           <h2>Tres planes. <em>Un mismo sistema.</em></h2>
         </div>
         <p>Ayudamos a gerentes de inmobiliarias a mejorar su sistema de captación y comercialización de propiedades en arriendo o venta. Eliges el plan según el negocio que quieres mover.</p>
@@ -567,15 +515,14 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
           <p>No compras piezas sueltas: cada plan arranca con estrategia y termina con un informe de resultados.</p>
         </div>
         <ul class="inc-grid">
-          <li><b>01</b><span>Funnel<small>Etapas, mensajes y canales del Método &amp;</small></span></li>
+          <li><b>01</b><span>Funnel<small>Etapas, mensajes y canales para cada avatar</small></span></li>
           <li><b>02</b><span>Avatar<small>Propietario, arrendatario y comprador ideal</small></span></li>
-          <li><b>03</b><span>CRM inmobiliario<small>Cada lead registrado hasta el cierre</small></span></li>
-          <li><b>04</b><span>Inventario de propiedades<small>Control de lo captado, publicado y cerrado</small></span></li>
-          <li><b>05</b><span>Paid media<small>Campañas de captación con lead magnet</small></span></li>
-          <li><b>06</b><span>10 piezas premium al mes<small>Anuncios en reel, carruseles e historias</small></span></li>
-          <li><b>07</b><span>Producción<small>Dron, equipo completo e IA</small></span></li>
-          <li><b>08</b><span>Dashboard e informe mensual<small>Lo que funciona y lo que vamos a escalar</small></span></li>
-          <li><b>09</b><span>Capacitación de vendedores<small>Para que tu equipo cierre lo que llega</small></span></li>
+          <li><b>03</b><span>Inventario de propiedades<small>Control de lo captado, publicado y cerrado</small></span></li>
+          <li><b>04</b><span>Paid media<small>Campañas de captación con lead magnet</small></span></li>
+          <li><b>05</b><span>10 piezas premium al mes<small>Anuncios en reel, carruseles e historias</small></span></li>
+          <li><b>06</b><span>Producción<small>Dron, equipo completo e IA</small></span></li>
+          <li><b>07</b><span>Dashboard e informe mensual<small>Lo que funciona y lo que vamos a escalar</small></span></li>
+          <li><b>08</b><span>Capacitación de vendedores<small>Para que tu equipo cierre lo que llega</small></span></li>
         </ul>
       </div>
 
@@ -594,7 +541,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
       </div>
 
       <div class="custom">
-        <p>¿Eres constructora, broker o propietario? Armamos una propuesta a la medida de tu proyecto.</p>
+        <p>¿Eres broker o propietario? Armamos una propuesta a la medida de tu inmueble.</p>
         <a class="btn ghost" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Quiero%20una%20propuesta%20a%20la%20medida%20para%20mi%20proyecto." target="_blank" rel="noopener">Pide tu propuesta</a>
       </div>
     </div>
@@ -607,7 +554,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
           <span class="eyebrow">Clientes</span>
           <h2>Clientes que han tenido <em>resultados con nosotros.</em></h2>
         </div>
-        <p>Inmobiliarias, constructoras y propietarios que ya trabajan con el Método &amp;.</p>
+        <p>Inmobiliarias, constructoras y propietarios que ya trabajan con nosotros.</p>
       </div>
       <div class="clients">
         <div class="client real">HL Inmobiliaria<small>Inmobiliaria</small></div>
@@ -615,15 +562,26 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
         <div class="client real">Dammai<small>Proyecto de Hoyos Luque</small></div>
         <div class="client owner"><div class="photo todo">Foto por completar</div><div><b>Jhon Cifuentes</b><small>Propietario</small></div></div>
       </div>
-      <div class="results">
-        <div class="result todo"><span class="todo-tag">Por completar · resultado real</span><b>00</b><p>Ej. propiedades captadas en los primeros 60 días, con nombre del cliente.</p></div>
-        <div class="result todo"><span class="todo-tag">Por completar · resultado real</span><b>$0</b><p>Ej. costo por lead o por cita conseguida con la pauta.</p></div>
-        <div class="result todo"><span class="todo-tag">Por completar · resultado real</span><b>0 días</b><p>Ej. tiempo promedio para arrendar o vender un inmueble.</p></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="casos">
+    <div class="wrap">
+      <div class="chapter-head">
+        <div>
+          <span class="eyebrow">Casos de éxito</span>
+          <h2>Resultados que <em>se cuentan en días.</em></h2>
+        </div>
       </div>
-      <div class="quotes">
-        <figure class="quote todo"><span class="todo-tag">Por completar · testimonio</span><blockquote>Frase del cliente sobre lo que cambió en su negocio.</blockquote><cite>Nombre · Cargo · Empresa</cite></figure>
-        <figure class="quote todo"><span class="todo-tag">Por completar · testimonio</span><blockquote>Frase del cliente sobre lo que cambió en su negocio.</blockquote><cite>Nombre · Cargo · Empresa</cite></figure>
-      </div>
+      <article class="case">
+        <div class="case-num"><b>6</b><span>días</span></div>
+        <div class="case-copy">
+          <span class="eyebrow">Venta · Cedro Golf</span>
+          <h3>Vendimos una casa en Cedro Golf en 6 días.</h3>
+          <p>Estrategia de precio y oferta, contenido premium del inmueble y una campaña de pauta dirigida al comprador correcto.</p>
+          <div><a class="btn primary" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Vi%20el%20caso%20de%20la%20casa%20en%20Cedro%20Golf%20y%20quiero%20vender%20mi%20inmueble." target="_blank" rel="noopener">Quiero vender así mi inmueble</a></div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -637,10 +595,10 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
         <p>Reels y recorridos que hemos producido para nuestros clientes. Toca cada uno para verlo en Instagram.</p>
       </div>
       <div class="videos">
-        <a class="video reel" href="https://www.instagram.com/reel/DcOueR8DhAi/" target="_blank" rel="noopener"><span class="n">01</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a>
-        <a class="video reel" href="https://www.instagram.com/reel/Dee6ySCkeWM/" target="_blank" rel="noopener"><span class="n">02</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a>
-        <a class="video reel" href="https://www.instagram.com/reel/Dd7QJ10CeAC/" target="_blank" rel="noopener"><span class="n">03</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a>
-        <a class="video reel" href="https://www.instagram.com/reel/DeheS8nnJZy/" target="_blank" rel="noopener"><span class="n">04</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a>
+        <a class="video reel" href="https://www.instagram.com/reel/DcOueR8DhAi/" target="_blank" rel="noopener"><span class="n">01</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
+        <a class="video reel" href="https://www.instagram.com/reel/Dee6ySCkeWM/" target="_blank" rel="noopener"><span class="n">02</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
+        <a class="video reel" href="https://www.instagram.com/reel/Dd7QJ10CeAC/" target="_blank" rel="noopener"><span class="n">03</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
+        <a class="video reel" href="https://www.instagram.com/reel/DeheS8nnJZy/" target="_blank" rel="noopener"><span class="n">04</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
       </div>
       <div class="more"><a class="btn ghost" href="https://www.instagram.com/lacasadelmarketingco/" target="_blank" rel="noopener">Ver más en @lacasadelmarketingco</a></div>
     </div>
@@ -655,9 +613,9 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
         <div><a class="btn primary" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Quiero%20agendar%20una%20reuni%C3%B3n%20para%20conocer%20sus%20servicios." target="_blank" rel="noopener">Escríbenos por WhatsApp</a></div>
       </div>
       <div class="contact">
-        <div class="c-item"><small>WhatsApp</small><span class="val" id="c-wa">+57 319 486 5610</span><button type="button" data-copy="c-wa">Copiar</button></div>
-        <div class="c-item"><small>Correo</small><span class="val" id="c-mail">coagenciarealestate@gmail.com</span><button type="button" data-copy="c-mail">Copiar</button></div>
-        <div class="c-item"><small>Instagram</small><span class="val" id="c-ig">@lacasadelmarketingco</span><button type="button" data-copy="c-ig">Copiar</button></div>
+        <div class="c-item"><small>WhatsApp</small><span class="val">+57 319 486 5610</span><a class="c-btn" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Quiero%20agendar%20una%20reuni%C3%B3n%20para%20conocer%20sus%20servicios." target="_blank" rel="noopener">Escribir por WhatsApp</a></div>
+        <div class="c-item"><small>Correo</small><span class="val">coagenciarealestate@gmail.com</span><a class="c-btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=coagenciarealestate@gmail.com&amp;su=Quiero%20conocer%20los%20servicios%20de%20C%26O" target="_blank" rel="noopener">Enviar un correo</a></div>
+        <div class="c-item"><small>Instagram</small><span class="val">@lacasadelmarketingco</span><a class="c-btn" href="https://www.instagram.com/lacasadelmarketingco/" target="_blank" rel="noopener">Ver el Instagram</a></div>
       </div>
     </div>
   </section>
@@ -670,13 +628,3 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   </div>
 </footer>
 
-<script>
-  document.querySelectorAll("[data-copy]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var el = document.getElementById(b.dataset.copy);
-      var done = function () { b.textContent = "Copiado"; setTimeout(function () { b.textContent = "Copiar"; }, 1600); };
-      var pick = function () { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Seleccionado"; };
-      try { navigator.clipboard.writeText(el.textContent.trim()).then(done, pick); } catch (e) { pick(); }
-    });
-  });
-</script>
