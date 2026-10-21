@@ -1,6 +1,6 @@
 """Genera la tarjeta de presentación de C&O (HTML imprimible con todo embebido).
 
-El QR es estático: el enlace va escrito dentro del propio código, no pasa por
+El QR es estático (abre el portafolio): el enlace va escrito dentro del propio código, no pasa por
 ningún servicio de redirección, así que no caduca nunca.
 
 Uso: python3 build.py  ->  tarjeta-cyo.html
@@ -13,8 +13,7 @@ import segno
 AQUI = pathlib.Path(__file__).parent
 ASSETS = AQUI / "assets"
 
-TELEFONO = "573194865610"            # +57 319 486 5610
-ENLACE = f"https://wa.me/{TELEFONO}"  # abre el chat de WhatsApp con ese número
+ENLACE = "https://lacasadelmarketing.netlify.app/"  # el QR abre el portafolio
 TELEFONO_VISIBLE = "319 486 5610"
 USUARIO = "@lacasadelmarketingco"
 CORREO = "coagenciarealestate@gmail.com"
@@ -113,7 +112,7 @@ def qr_svg():
                 x += 1
     return (
         f'<svg class="qr" viewBox="0 0 {n} {n}" shape-rendering="crispEdges" '
-        f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR a WhatsApp {TELEFONO_VISIBLE}">'
+        f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR al portafolio {ENLACE}">'
         f'<rect width="{n}" height="{n}" fill="#FFFFFF"/>'
         f'<path fill="#121212" d="{"".join(trazos)}"/></svg>'
     )
