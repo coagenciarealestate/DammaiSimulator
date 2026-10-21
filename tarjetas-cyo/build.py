@@ -16,7 +16,7 @@ ASSETS = AQUI / "assets"
 TELEFONO = "573194865610"            # +57 319 486 5610
 ENLACE = f"https://wa.me/{TELEFONO}"  # abre el chat de WhatsApp con ese número
 TELEFONO_VISIBLE = "319 486 5610"
-USUARIO = "@lacasadelmarketinginmobiliarioco"
+USUARIO = "@lacasadelmarketingco"
 CORREO = "coagenciarealestate@gmail.com"
 
 
