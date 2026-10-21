@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Portafolio C&amp;O</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Portafolio de servicios de C&amp;O, La Casa del Marketing Inmobiliario.">
@@ -49,6 +54,8 @@
 }
 
 * { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--fg); font-family: var(--ui); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
@@ -186,7 +193,7 @@ section.chapter { padding-block: 112px; border-top: 1px solid var(--line); }
 .client figcaption { padding: 16px 18px 18px; display: grid; gap: 4px; }
 .client figcaption b { font-family: var(--display); font-weight: 400; font-size: 21px; line-height: 1.15; }
 .client figcaption small { font: 500 11.5px var(--ui); letter-spacing: .2em; text-transform: uppercase; color: var(--brass); }
-.videos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.videos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .video { aspect-ratio: 9 / 16; max-width: 100%; display: grid; place-items: center; align-content: center; gap: 14px; text-align: center; padding: 18px; }
 a.reel { position: relative; overflow: hidden; border-radius: var(--r); text-decoration: none; color: #F4E7CB; background: radial-gradient(120% 80% at 50% 0%, #565C24 0%, #2C311F 50%, #1C1714 100%); border: 1px solid rgba(205, 190, 163, .18); align-content: space-between; place-items: stretch; text-align: left; padding: 22px; transition: transform .25s, border-color .25s; }
 a.reel:hover { transform: translateY(-3px); border-color: rgba(220, 218, 158, .6); }
@@ -200,11 +207,18 @@ a.reel .cap span { font-size: 15px; font-weight: 500; }
 .video .play { width: 58px; height: 58px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--brass) 70%, transparent); display: grid; place-items: center; }
 .video .play::before { content: ""; margin-left: 4px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent var(--brass); }
 .video p { font-size: 14px; color: var(--muted); }
-.case { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
-.case-num { display: grid; place-content: center; text-align: center; padding: 48px 24px; background: radial-gradient(120% 120% at 30% 20%, #565C24 0%, #2C311F 55%, #1C1714 100%); color: #F4E7CB; }
-.case-num b { font-family: var(--display); font-weight: 300; font-size: clamp(140px, 16vw, 220px); line-height: .9; color: transparent; background: var(--chrome); -webkit-background-clip: text; background-clip: text; }
-.case-num span { font: 500 13px var(--ui); letter-spacing: .3em; text-transform: uppercase; color: #DCDA9E; }
+.case { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.case-num { display: flex; align-items: baseline; gap: 14px; }
+.case-num b { font-family: var(--display); font-weight: 300; font-size: clamp(110px, 12vw, 170px); line-height: .85; color: transparent; background: var(--chrome); -webkit-background-clip: text; background-clip: text; }
+.case-num span { font: 500 14px var(--ui); letter-spacing: .3em; text-transform: uppercase; color: var(--brass); }
 .case-copy { padding: 48px 44px; display: grid; gap: 18px; align-content: center; }
+.case-reel { display: grid; place-items: center; padding: 36px 28px; background: radial-gradient(120% 100% at 50% 0%, #565C24 0%, #2C311F 55%, #1C1714 100%); }
+.case-reel .ig, .case-reel iframe { width: 100%; max-width: 380px !important; }
+.ig { margin: 0 !important; padding: 0 !important; border: 0 !important; background: none !important; box-shadow: none !important; min-width: 0 !important; width: 100%; }
+.ig > a.reel { width: 100%; }
+.case-reel a.reel { max-width: 340px; margin-inline: auto; }
+.case-reel a.reel .n { font-size: 30px; line-height: 1.1; }
+.videos iframe.instagram-media { margin: 0 !important; min-width: 0 !important; }
 .case-copy h3 { font-size: clamp(30px, 3.6vw, 46px); font-weight: 300; line-height: 1.1; }
 .case-copy p { color: var(--muted); font-size: 17px; max-width: 52ch; }
 
@@ -237,6 +251,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   .plans { grid-template-columns: 1fr; max-width: 640px; }
   .includes { grid-template-columns: 1fr; }
   .clients, .videos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .case { grid-template-columns: 1fr; }
   .top nav { display: none; }
   .top .btn { margin-left: auto; }
 }
@@ -244,7 +259,8 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   body { font-size: 16px; }
   section.chapter { padding-block: 76px; }
   .chapter-head { grid-template-columns: 1fr; margin-bottom: 36px; }
-  .routes, .pillars, .notes, .contact { grid-template-columns: 1fr; }
+  .routes, .pillars, .notes, .contact, .videos { grid-template-columns: 1fr; }
+  .case-reel { padding: 24px 16px; }
   .pillar + .pillar { border-left: 0; border-top: 1px solid var(--line); }
   .facts .wrap { grid-template-columns: 1fr; }
   .fact + .fact { padding-left: 0; border-left: 0; border-top: 1px solid rgba(205, 190, 163, .18); }
@@ -263,7 +279,6 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   .client figcaption { padding: 12px 14px 14px; }
   .client figcaption b { font-size: 18px; }
   .client figcaption small { font-size: 10px; letter-spacing: .14em; }
-  .case { grid-template-columns: 1fr; }
   .case-copy { padding: 32px 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -285,6 +300,9 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   #planes .wrap > .promise { margin-top: 112px; }
 }
 </style>
+</head>
+<body>
+
 
 <header class="top">
   <div class="wrap">
@@ -576,12 +594,15 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
         </div>
       </div>
       <article class="case">
-        <div class="case-num"><b>6</b><span>días</span></div>
         <div class="case-copy">
+          <div class="case-num"><b>6</b><span>días</span></div>
           <span class="eyebrow">Venta · Cedro Golf</span>
           <h3>Vendimos una casa en Cedro Golf en 6 días.</h3>
           <p>Estrategia de precio y oferta, contenido premium del inmueble y una campaña de pauta dirigida al comprador correcto.</p>
           <div><a class="btn primary" href="https://wa.me/573194865610?text=Hola%2C%20C%26O.%20Vi%20el%20caso%20de%20la%20casa%20en%20Cedro%20Golf%20y%20quiero%20vender%20mi%20inmueble." target="_blank" rel="noopener">Quiero vender así mi inmueble</a></div>
+        </div>
+        <div class="case-reel">
+          <blockquote class="instagram-media ig" data-instgrm-permalink="https://www.instagram.com/reel/DcOueR8DhAi/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14"><a class="video reel" href="https://www.instagram.com/reel/DcOueR8DhAi/" target="_blank" rel="noopener"><span class="n">Casa Cedro Golf</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a></blockquote>
         </div>
       </article>
     </div>
@@ -594,13 +615,12 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
           <span class="eyebrow">Nuestro trabajo</span>
           <h2>Videos que ya están <em>en redes.</em></h2>
         </div>
-        <p>Reels y recorridos que hemos producido para nuestros clientes. Toca cada uno para verlo en Instagram.</p>
+        <p>Reels y recorridos que hemos producido para nuestros clientes, con su alcance real en Instagram.</p>
       </div>
       <div class="videos">
-        <a class="video reel" href="https://www.instagram.com/reel/DcOueR8DhAi/" target="_blank" rel="noopener"><span class="n">01</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
-        <a class="video reel" href="https://www.instagram.com/reel/Dee6ySCkeWM/" target="_blank" rel="noopener"><span class="n">02</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
-        <a class="video reel" href="https://www.instagram.com/reel/Dd7QJ10CeAC/" target="_blank" rel="noopener"><span class="n">03</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
-        <a class="video reel" href="https://www.instagram.com/reel/DeheS8nnJZy/" target="_blank" rel="noopener"><span class="n">04</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver reel&nbsp;↗</span></span></a>
+        <blockquote class="instagram-media ig" data-instgrm-permalink="https://www.instagram.com/reel/Dee6ySCkeWM/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14"><a class="video reel" href="https://www.instagram.com/reel/Dee6ySCkeWM/" target="_blank" rel="noopener"><span class="n">01</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a></blockquote>
+        <blockquote class="instagram-media ig" data-instgrm-permalink="https://www.instagram.com/reel/Dd7QJ10CeAC/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14"><a class="video reel" href="https://www.instagram.com/reel/Dd7QJ10CeAC/" target="_blank" rel="noopener"><span class="n">02</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a></blockquote>
+        <blockquote class="instagram-media ig" data-instgrm-permalink="https://www.instagram.com/reel/DeheS8nnJZy/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14"><a class="video reel" href="https://www.instagram.com/reel/DeheS8nnJZy/" target="_blank" rel="noopener"><span class="n">03</span><span class="play" aria-hidden="true"></span><span class="cap"><small>Reel</small><span>Ver en Instagram&nbsp;↗</span></span></a></blockquote>
       </div>
       <div class="more"><a class="btn ghost" href="https://www.instagram.com/lacasadelmarketingco/" target="_blank" rel="noopener">Ver más en @lacasadelmarketingco</a></div>
     </div>
@@ -630,3 +650,7 @@ footer .brand span { font-family: var(--display); font-size: 18px; color: var(--
   </div>
 </footer>
 
+
+<script async src="https://www.instagram.com/embed.js"></script>
+</body>
+</html>

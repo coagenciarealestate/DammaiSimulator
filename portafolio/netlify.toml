@@ -1,0 +1,4 @@
+# Portafolio de servicios de C&O. Configurar en Netlify:
+#   Base directory: portafolio
+[build]
+  publish = "."
