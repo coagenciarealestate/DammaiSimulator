@@ -5,33 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Recupera dinero de tu carro híbrido o eléctrico · Valora Energy</title>
 <meta name="description" content="Si tienes un carro híbrido o eléctrico, la ley te devuelve parte de lo que pagaste. Valora Energy hace todo el trámite ante la UPME y la DIAN por ti.">
-<meta property="og:title" content="Tu carro híbrido o eléctrico te devuelve dinero">
+<meta property="og:title" content="Si tienes carro híbrido o eléctrico, tienes dinero por recibir">
 <meta property="og:description" content="Calcula gratis tu beneficio tributario en menos de 30 segundos. Nosotros hacemos todo el trámite.">
 <meta property="og:image" content="media/exhibicion.jpg">
-<meta name="theme-color" content="#0b1f24">
+<meta name="theme-color" content="#ff441f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="media/exhibicion.webp" type="image/webp">
 <style>
   /* Método 80/20: titular → héroe → un solo CTA → formulario por pasos. Todo lo demás es justificación debajo.
-     Colores de marca en :root — reemplazar por los de valoraenergy.com. */
+     Estilo visual tipo app de domicilios (naranja, tarjetas de categoría, píldora azul flotante), con marca Valora Energy. */
   :root {
-    --brand-dark: #0b1f24;
-    --brand-deep: #10343a;
-    --brand: #13a38a;
-    --accent: #c6f24e;
-    --accent-ink: #0b1f24;
-    --ink: #10201f;
-    --muted: #5a6b69;
-    --line: #dfe7e5;
+    --orange: #ff441f;
+    --orange-soft: #ffe9e9;
+    --green: #29d884;
+    --green-soft: #e9fcf2;
+    --blue: #007aff;
+    --blue-soft: #e8f2ff;
+    --yellow: #ffc700;
+    --yellow-soft: #fff7d9;
+    --ink: #2e2c36;
+    --muted: #6a696e;
+    --line: #e7e8ec;
     --bg: #ffffff;
-    --bg-soft: #f3f7f6;
-    --danger: #c2412d;
-    --ok: #0f8a5f;
-    --radius: 16px;
-    --display: "Sora", "Helvetica Neue", Arial, sans-serif;
-    --ui: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --bg-soft: #f7f8f9;
+    --danger: #e0301e;
+    --radius: 24px;
+    --font: "Outfit", "Helvetica Neue", Arial, sans-serif;
     color-scheme: light;
   }
   * { box-sizing: border-box; }
@@ -41,185 +42,228 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: var(--ui);
-    font-size: 16px;
-    line-height: 1.55;
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
   img, video { max-width: 100%; display: block; }
   a { color: inherit; }
-  h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0; letter-spacing: -.01em; }
-  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
-  .narrow { max-width: 720px; }
+  h1, h2, h3 { line-height: 1.12; margin: 0; letter-spacing: -.01em; }
+  .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  .narrow { max-width: 760px; }
+  .center { text-align: center; }
 
-  /* ---------- Barra superior ---------- */
-  .top { background: var(--brand-dark); color: #fff; }
-  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 56px; }
-  .logo { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 700; font-size: 18px; text-decoration: none; white-space: nowrap; }
-  .logo-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
-  .logo-mark svg { width: 16px; height: 16px; }
-  .chip { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); white-space: nowrap; }
+  /* ---------- Encabezado blanco ---------- */
+  .top { position: sticky; top: 0; z-index: 30; background: #fff; border-bottom: 1px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; gap: 14px; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 19px; text-decoration: none; white-space: nowrap; color: var(--ink); }
+  .logo-mark { width: 30px; height: 30px; border-radius: 9px; background: var(--orange); display: grid; place-items: center; }
+  .logo-mark svg { width: 17px; height: 17px; }
+  .logo b { color: var(--orange); font-weight: 800; }
+  .city { display: none; align-items: center; gap: 6px; padding-left: 14px; border-left: 1px solid var(--line); color: var(--orange); font-weight: 600; font-size: 16px; white-space: nowrap; }
+  .city svg { width: 20px; height: 20px; }
+  .search { flex: 1; display: none; align-items: center; gap: 12px; height: 52px; padding: 0 18px; border-radius: 12px; background: var(--bg-soft); color: var(--muted); font: inherit; font-size: 16px; text-decoration: none; }
+  .search svg { width: 22px; height: 22px; flex: none; }
+  .search span { flex: 1; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .top-cta { margin-left: auto; display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 999px; background: var(--orange); color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; white-space: nowrap; }
 
-  /* ---------- Héroe ---------- */
-  .hero { background: radial-gradient(120% 80% at 80% 0%, var(--brand-deep), var(--brand-dark) 60%); color: #fff; padding: 24px 0 36px; }
-  .hero-grid { display: grid; gap: 20px; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
-  .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(198,242,78,.2); }
-  .hero h1 { font-size: clamp(28px, 7.6vw, 52px); font-weight: 800; margin-top: 10px; }
-  .hero h1 mark { background: none; color: var(--accent); }
-  .hero .sub { font-size: clamp(16px, 4.2vw, 19px); color: rgba(255,255,255,.82); margin: 12px 0 0; max-width: 34em; }
-  .media { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 10; background: #0003; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  /* ---------- Héroe naranja ---------- */
+  .hero { background: var(--orange); color: #fff; padding: 40px 0 120px; text-align: center; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,.16); font-size: 14px; font-weight: 500; }
+  .hero h1 { font-weight: 300; font-size: clamp(34px, 9vw, 76px); letter-spacing: -.02em; margin: 18px auto 0; max-width: 15em; }
+  .hero h1 strong { font-weight: 700; }
+  .hero .sub { font-size: clamp(17px, 4.4vw, 21px); margin: 16px auto 0; max-width: 34em; opacity: .95; }
+  .hero-box { display: flex; align-items: center; gap: 14px; width: 100%; max-width: 840px; margin: 28px auto 0; min-height: 72px; padding: 14px 18px 14px 22px; background: #fff; color: var(--ink); border: 0; border-radius: 4px; box-shadow: 0 10px 30px rgba(120,20,0,.25); font: inherit; font-size: clamp(16px, 4.4vw, 21px); text-align: left; text-decoration: none; cursor: pointer; transition: transform .15s; }
+  .hero-box:hover { transform: translateY(-1px); }
+  .hero-box .ico { width: 26px; height: 26px; color: var(--ink); flex: none; }
+  .hero-box span { flex: 1; color: var(--muted); }
+  .hero-box .go { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 18px; border-radius: 999px; background: var(--orange); color: #fff; font-weight: 600; font-size: 16px; }
+  .hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px; margin-top: 22px; font-size: 16px; }
+  .hero-links a, .hero-links button { display: inline-flex; align-items: center; gap: 8px; color: #fff; font: inherit; font-weight: 600; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: none; }
+  .hero-links svg { width: 20px; height: 20px; }
+  .hero-links .soft { font-weight: 400; }
+  .hero-links .soft u { font-weight: 700; }
+
+  /* Video del abogado montado sobre el borde del héroe */
+  .media-wrap { margin-top: -90px; }
+  .media { position: relative; max-width: 840px; margin: 0 auto; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 9; background: #ddd; box-shadow: 0 18px 40px rgba(46,44,54,.18); }
   .media img, .media video { width: 100%; height: 100%; object-fit: cover; }
-  .play { position: absolute; inset: 0; display: grid; place-items: center; border: 0; background: linear-gradient(to top, rgba(11,31,36,.75), rgba(11,31,36,.05) 55%); color: #fff; cursor: pointer; font: inherit; }
-  .play-btn { width: 68px; height: 68px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; box-shadow: 0 0 0 10px rgba(198,242,78,.25); transition: transform .2s; }
+  .play { position: absolute; inset: 0; display: grid; place-items: center; border: 0; background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,0) 55%); color: #fff; cursor: pointer; font: inherit; }
+  .play-btn { width: 72px; height: 72px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 0 0 10px rgba(255,255,255,.3); transition: transform .2s; }
   .play:hover .play-btn { transform: scale(1.06); }
-  .play-btn svg { width: 26px; height: 26px; margin-left: 4px; }
-  .play-label { position: absolute; left: 14px; bottom: 12px; right: 14px; text-align: left; font-size: 14px; font-weight: 600; }
-  .play-label small { display: block; font-weight: 400; opacity: .8; }
-  .proof { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 14px; color: rgba(255,255,255,.85); }
-  .proof li { display: flex; align-items: center; gap: 6px; }
-  .proof svg { width: 16px; height: 16px; color: var(--accent); flex: none; }
+  .play-btn svg { width: 28px; height: 28px; margin-left: 4px; }
+  .play-label { position: absolute; left: 18px; bottom: 14px; right: 18px; text-align: left; font-size: 18px; font-weight: 700; }
+  .play-label small { display: block; font-weight: 400; font-size: 15px; opacity: .9; }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 14px 24px; border: 0; border-radius: 14px; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 700; font-size: 17px; text-decoration: none; cursor: pointer; transition: transform .15s, box-shadow .15s; box-shadow: 0 8px 24px rgba(198,242,78,.28); width: 100%; }
-  .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(198,242,78,.38); }
-  .btn:active { transform: translateY(0); }
+  /* ---------- Botones ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 14px 26px; border: 0; border-radius: 999px; background: var(--orange); color: #fff; font: inherit; font-weight: 700; font-size: 18px; text-decoration: none; cursor: pointer; width: 100%; transition: transform .15s, filter .15s; }
+  .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
   .btn svg { width: 20px; height: 20px; }
-  .btn.dark { background: var(--brand-dark); color: #fff; box-shadow: none; }
-  .btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); box-shadow: none; }
-  .btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
-  .cta-note { font-size: 13px; color: rgba(255,255,255,.7); text-align: center; margin: 10px 0 0; }
+  .btn.green { background: var(--green); color: #0f3a24; }
+  .btn.ghost { background: #fff; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn[disabled] { opacity: .5; cursor: not-allowed; transform: none; }
 
   /* ---------- Formulario por pasos ---------- */
-  .form-section { background: var(--bg-soft); padding: 0 0 48px; }
-  .card { background: #fff; border-radius: 20px; box-shadow: 0 12px 40px rgba(16,32,31,.12); padding: 22px 18px 24px; position: relative; margin-top: -18px; border: 1px solid var(--line); scroll-margin-top: 12px; }
-  .progress { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; }
-  .progress span { display: block; height: 100%; width: 25%; background: var(--brand); border-radius: inherit; transition: width .35s ease; }
-  .step-meta { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 14px; font-size: 13px; color: var(--muted); }
-  .back { background: none; border: 0; padding: 6px 0; color: var(--muted); font: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; }
-  .step h2 { font-size: clamp(21px, 5.4vw, 26px); }
-  .step .hint { color: var(--muted); margin: 6px 0 16px; font-size: 15px; }
-  .options { display: grid; gap: 10px; }
-  .opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 14px 16px; min-height: 60px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; font: inherit; color: var(--ink); cursor: pointer; transition: border-color .15s, background .15s; }
-  .opt:hover { border-color: var(--brand); }
-  .opt[aria-pressed="true"] { border-color: var(--brand); background: #e9f7f3; }
-  .opt .ico { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-soft); display: grid; place-items: center; flex: none; font-size: 18px; }
-  .opt b { display: block; font-weight: 600; }
-  .opt small { color: var(--muted); font-size: 13px; }
-  .field { display: grid; gap: 6px; margin-bottom: 14px; }
-  .field label { font-weight: 600; font-size: 14px; }
-  .input { width: 100%; min-height: 54px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 12px; font: inherit; font-size: 17px; color: var(--ink); background: #fff; }
-  .input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px rgba(19,163,138,.15); }
-  .money { position: relative; }
-  .money span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 600; }
-  .money .input { padding-left: 30px; font-family: var(--display); font-weight: 700; }
-  .quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 16px; }
-  .quick button { border: 1.5px solid var(--line); background: #fff; border-radius: 99px; padding: 8px 12px; font: inherit; font-size: 14px; cursor: pointer; }
-  .quick button:hover { border-color: var(--brand); }
-  .err { color: var(--danger); font-size: 13px; min-height: 1em; margin: -6px 0 10px; }
-  .phone { display: flex; gap: 8px; }
-  .phone .cc { flex: 0 0 76px; text-align: center; color: var(--muted); }
-  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); margin: 4px 0 16px; }
-  .check input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--brand); flex: none; }
+  .form-section { padding: 44px 0 56px; }
+  .flow { max-width: 980px; margin: 0 auto; scroll-margin-top: 80px; }
+  .progress { height: 6px; border-radius: 99px; background: var(--bg-soft); overflow: hidden; max-width: 420px; }
+  .progress span { display: block; height: 100%; width: 25%; background: var(--orange); border-radius: inherit; transition: width .35s ease; }
+  .step-meta { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 18px; font-size: 14px; color: var(--muted); max-width: 420px; }
+  .back { background: none; border: 0; padding: 6px 0; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; text-decoration: underline; }
+  .step h2 { font-size: clamp(24px, 6vw, 30px); font-weight: 700; }
+  .step .hint { color: var(--muted); margin: 6px 0 22px; }
 
-  .result { border-radius: 16px; background: var(--brand-dark); color: #fff; padding: 18px; margin-bottom: 18px; }
-  .result .label { font-size: 13px; color: rgba(255,255,255,.75); }
-  .result .big { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 9vw, 44px); color: var(--accent); line-height: 1.1; margin: 4px 0 10px; }
-  .result dl { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin: 0; font-size: 14px; border-top: 1px solid rgba(255,255,255,.15); padding-top: 10px; }
-  .result dt { color: rgba(255,255,255,.75); }
-  .result dd { margin: 0; font-weight: 600; text-align: right; }
-  .result .fine { font-size: 12px; color: rgba(255,255,255,.6); margin: 10px 0 0; }
-  .notice { border-radius: 14px; padding: 16px; background: #fff4f0; border: 1px solid #f3c9bd; margin-bottom: 16px; }
-  .notice h3 { font-size: 18px; margin-bottom: 6px; }
-  .notice p { margin: 0; font-size: 15px; }
-  .done { text-align: center; padding: 8px 0; }
-  .done .tick { width: 64px; height: 64px; border-radius: 50%; background: #e3f6ee; color: var(--ok); display: grid; place-items: center; margin: 0 auto 14px; }
-  .done .tick svg { width: 32px; height: 32px; }
+  /* Tarjetas de categoría: cabecera de color + ícono en círculo + franja pastel con el nombre */
+  .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .cat { display: flex; flex-direction: column; padding: 0; border: 0; border-radius: var(--radius); overflow: hidden; cursor: pointer; font: inherit; color: var(--ink); text-align: center; transition: transform .15s, box-shadow .15s; box-shadow: 0 0 0 0 transparent; }
+  .cat:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(46,44,54,.12); }
+  .cat[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--ink); }
+  .cat .top-c { display: grid; place-items: center; height: 132px; background: var(--c); }
+  .cat .circle { width: 92px; height: 92px; border-radius: 50%; background: rgba(255,255,255,.88); display: grid; place-items: center; font-size: 46px; line-height: 1; }
+  .cat .name { background: var(--s); padding: 12px 10px 4px; font-size: 18px; font-weight: 500; }
+  .cat small { background: var(--s); padding: 0 10px 12px; color: var(--muted); font-size: 13px; }
+  .cat.red { --c: var(--orange); --s: var(--orange-soft); }
+  .cat.green { --c: var(--green); --s: var(--green-soft); }
+  .cat.blue { --c: var(--blue); --s: var(--blue-soft); }
+  .cat.yellow { --c: var(--yellow); --s: var(--yellow-soft); }
+  /* Íconos pequeños sin tarjeta (fila inferior) */
+  .minis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
+  .mini { display: grid; justify-items: center; gap: 6px; padding: 12px 4px; border: 0; border-radius: 18px; background: none; font: inherit; color: var(--ink); cursor: pointer; transition: background .15s; }
+  .mini:hover { background: var(--bg-soft); }
+  .mini[aria-pressed="true"] { background: var(--orange-soft); }
+  .mini .emo { font-size: 50px; line-height: 1.1; filter: drop-shadow(0 6px 6px rgba(0,0,0,.12)); }
+  .mini .name { font-size: 17px; font-weight: 500; line-height: 1.2; }
+  .mini small { color: var(--muted); font-size: 13px; line-height: 1.2; }
+
+  .field { display: grid; gap: 6px; margin-bottom: 14px; }
+  .field label { font-weight: 600; font-size: 15px; }
+  .input { width: 100%; min-height: 60px; padding: 12px 16px; border: 1.5px solid var(--line); border-radius: 6px; font: inherit; font-size: 18px; color: var(--ink); background: #fff; }
+  .input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 4px rgba(255,68,31,.14); }
+  .money { position: relative; max-width: 560px; }
+  .money span { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 600; font-size: 20px; }
+  .money .input { padding-left: 36px; font-weight: 700; font-size: 22px; box-shadow: 0 8px 22px rgba(46,44,54,.08); }
+  .quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 18px; }
+  .quick button { border: 1.5px solid var(--line); background: #fff; border-radius: 99px; padding: 9px 16px; font: inherit; font-size: 15px; cursor: pointer; }
+  .quick button:hover { border-color: var(--orange); color: var(--orange); }
+  .err { color: var(--danger); font-size: 14px; min-height: 1em; margin: -6px 0 10px; }
+  .phone { display: flex; gap: 8px; }
+  .phone .cc { flex: 0 0 78px; text-align: center; color: var(--muted); }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--muted); margin: 4px 0 18px; }
+  .check input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--orange); flex: none; }
+  .two { display: grid; gap: 22px; }
+  .step-col { max-width: 560px; }
+
+  .result { border-radius: var(--radius); background: var(--orange); color: #fff; padding: 22px; }
+  .result .label { font-size: 15px; opacity: .9; }
+  .result .big { font-weight: 800; font-size: clamp(38px, 10vw, 52px); line-height: 1.05; margin: 4px 0 14px; }
+  .result dl { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; margin: 0; font-size: 16px; border-top: 1px solid rgba(255,255,255,.3); padding-top: 12px; }
+  .result dd { margin: 0; font-weight: 700; text-align: right; }
+  .result .fine { font-size: 13px; opacity: .85; margin: 12px 0 0; }
+  .notice { border-radius: var(--radius); padding: 20px; background: var(--orange-soft); margin-bottom: 18px; }
+  .notice h3 { font-size: 20px; margin-bottom: 6px; }
+  .notice p { margin: 0; }
+  .done { text-align: center; padding: 8px 0; max-width: 520px; margin: 0 auto; }
+  .done .tick { width: 84px; height: 84px; border-radius: 50%; background: var(--green-soft); display: grid; place-items: center; margin: 0 auto 16px; font-size: 42px; }
   .done p { color: var(--muted); }
-  .stack { display: grid; gap: 10px; }
-  .safe { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 12px 0 0; font-size: 12px; color: var(--muted); }
+  .stack { display: grid; gap: 10px; max-width: 520px; }
+  .safe { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 12px 0 0; font-size: 13px; color: var(--muted); }
   .safe svg { width: 14px; height: 14px; }
 
-  /* ---------- Justificación (debajo del pliegue) ---------- */
-  section.block { padding: 56px 0; }
+  /* ---------- Justificación ---------- */
+  section.block { padding: 64px 0; }
   section.block.soft { background: var(--bg-soft); }
-  .kicker { font-size: 13px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
-  .block h2 { font-size: clamp(25px, 6vw, 36px); }
-  .lead { font-size: 17px; color: var(--muted); margin: 12px 0 0; }
-  .steps { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px; counter-reset: s; }
-  .steps li { counter-increment: s; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 18px 64px; position: relative; }
-  .steps li::before { content: counter(s); position: absolute; left: 16px; top: 16px; width: 34px; height: 34px; border-radius: 10px; background: var(--brand-dark); color: var(--accent); font-family: var(--display); font-weight: 800; display: grid; place-items: center; }
-  .steps h3 { font-size: 18px; }
-  .steps p { margin: 4px 0 0; color: var(--muted); }
-  .benefits { display: grid; gap: 14px; margin-top: 28px; }
-  .benefit { border-radius: var(--radius); padding: 20px; border: 1px solid var(--line); background: #fff; }
-  .benefit.hl { background: var(--brand-dark); color: #fff; border-color: transparent; }
-  .benefit .pct { font-family: var(--display); font-weight: 800; font-size: 34px; color: var(--brand); }
-  .benefit.hl .pct { color: var(--accent); }
-  .benefit h3 { font-size: 18px; margin: 2px 0 6px; }
-  .benefit p { margin: 0; color: var(--muted); font-size: 15px; }
-  .benefit.hl p { color: rgba(255,255,255,.78); }
-  .example { margin-top: 18px; border-radius: var(--radius); border: 1px dashed var(--brand); padding: 18px; background: #f2fbf8; }
-  .example table { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 8px; }
-  .example td { padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .big-title { font-weight: 300; font-size: clamp(36px, 9vw, 72px); letter-spacing: -.02em; text-align: center; }
+  .big-title strong { font-weight: 700; color: var(--orange); }
+  .sec-title { font-size: clamp(26px, 6vw, 36px); font-weight: 700; }
+  .lead { font-size: 18px; color: var(--muted); margin: 12px 0 0; }
+  .center .lead { margin-left: auto; margin-right: auto; }
+  .cards3 { display: grid; gap: 18px; margin-top: 36px; }
+  .card3 { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; text-align: center; }
+  .card3 .pic { height: 170px; display: grid; place-items: center; background: var(--c); font-size: 72px; }
+  .card3 .pic span { width: 116px; height: 116px; border-radius: 50%; background: rgba(255,255,255,.85); display: grid; place-items: center; }
+  .card3 h3 { font-size: 23px; font-weight: 700; margin: 22px 18px 0; }
+  .card3 p { color: var(--muted); margin: 12px 22px 26px; }
+  .card3.red { --c: var(--orange); }
+  .card3.green { --c: var(--green); }
+  .card3.blue { --c: var(--blue); }
+  .benefits { display: grid; gap: 16px; margin-top: 32px; }
+  .benefit { border-radius: var(--radius); overflow: hidden; background: var(--s); }
+  .benefit .head { background: var(--c); color: #fff; padding: 18px 22px; font-size: 44px; font-weight: 800; line-height: 1; }
+  .benefit .body { padding: 16px 22px 22px; }
+  .benefit h3 { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
+  .benefit p { margin: 0; color: var(--muted); font-size: 16px; }
+  .benefit.red { --c: var(--orange); --s: var(--orange-soft); }
+  .benefit.green { --c: var(--green); --s: var(--green-soft); }
+  .benefit.blue { --c: var(--blue); --s: var(--blue-soft); }
+  .example { margin-top: 18px; border-radius: var(--radius); padding: 20px 22px; background: #fff; border: 1px solid var(--line); }
+  .example table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: 8px; }
+  .example td { padding: 8px 0; border-bottom: 1px solid var(--line); }
   .example td:last-child { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .example tr:last-child td { border-bottom: 0; font-weight: 700; font-size: 17px; color: var(--brand-dark); }
-  .myth { display: grid; gap: 16px; margin-top: 24px; }
-  .myth-card { border-radius: var(--radius); padding: 20px; }
-  .myth-card.bad { background: #fff4f0; border: 1px solid #f3c9bd; }
-  .myth-card.good { background: #eaf8f2; border: 1px solid #bfe7d6; }
-  .myth-card .tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .example tr:last-child td { border-bottom: 0; font-weight: 800; font-size: 19px; color: var(--orange); }
+  .myth { display: grid; gap: 16px; margin-top: 28px; }
+  .myth-card { border-radius: var(--radius); padding: 22px; }
+  .myth-card.bad { background: var(--orange-soft); }
+  .myth-card.good { background: var(--green-soft); }
+  .myth-card .tag { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
   .myth-card.bad .tag { color: var(--danger); }
-  .myth-card.good .tag { color: var(--ok); }
+  .myth-card.good .tag { color: #13995a; }
   .myth-card p { margin: 6px 0 0; }
-  .applies { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 24px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-size: 15px; }
-  .applies th, .applies td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+  .applies { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 24px; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 16px; }
+  .applies th, .applies td { padding: 15px 18px; text-align: left; border-bottom: 1px solid var(--line); }
   .applies tr:last-child td { border-bottom: 0; }
-  .applies th { background: var(--bg-soft); font-size: 13px; color: var(--muted); font-weight: 600; }
-  .applies small { display: block; color: var(--muted); font-size: 13px; }
+  .applies th { background: var(--bg-soft); font-size: 14px; color: var(--muted); font-weight: 600; }
+  .applies small { display: block; color: var(--muted); font-size: 14px; }
   .yes, .no { font-weight: 700; white-space: nowrap; }
-  .yes { color: var(--ok); }
+  .yes { color: #13995a; }
   .no { color: var(--danger); }
   .split { display: grid; gap: 24px; align-items: center; }
-  .quote { font-family: var(--display); font-size: clamp(20px, 5vw, 26px); font-weight: 600; line-height: 1.35; margin: 0; }
-  .quote-by { color: var(--muted); margin-top: 10px; font-size: 14px; }
-  .faq { margin-top: 24px; display: grid; gap: 10px; }
-  .faq details { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 0 18px; }
-  .faq summary { cursor: pointer; list-style: none; padding: 18px 28px 18px 0; font-weight: 600; position: relative; }
+  .quote { font-size: clamp(22px, 5.4vw, 28px); font-weight: 500; line-height: 1.35; margin: 0; padding: 24px; border-radius: var(--radius); background: #fff; border-left: 6px solid var(--orange); }
+  .quote-by { color: var(--muted); margin-top: 10px; font-size: 15px; }
+  .faq { margin-top: 26px; display: grid; gap: 10px; }
+  .faq details { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 0 20px; }
+  .faq summary { cursor: pointer; list-style: none; padding: 18px 30px 18px 0; font-weight: 600; position: relative; }
   .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--brand); }
+  .faq summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 26px; color: var(--orange); }
   .faq details[open] summary::after { content: "–"; }
   .faq details p { margin: 0 0 18px; color: var(--muted); }
-  .final { background: radial-gradient(120% 90% at 20% 0%, var(--brand-deep), var(--brand-dark) 65%); color: #fff; text-align: center; padding: 56px 0 64px; }
-  .final h2 { font-size: clamp(26px, 6.5vw, 40px); }
-  .final p { color: rgba(255,255,255,.8); margin: 12px auto 24px; max-width: 32em; }
-  .final .btn { max-width: 420px; }
+  .final { background: var(--orange); color: #fff; text-align: center; padding: 64px 0 72px; }
+  .final h2 { font-weight: 300; font-size: clamp(32px, 8vw, 60px); letter-spacing: -.02em; }
+  .final h2 strong { font-weight: 700; }
+  .final p { opacity: .95; margin: 14px auto 26px; max-width: 32em; }
+  .final .btn { max-width: 440px; background: #fff; color: var(--orange); }
 
-  footer { background: #071417; color: rgba(255,255,255,.6); font-size: 12.5px; padding: 32px 0 110px; }
+  footer { background: var(--ink); color: rgba(255,255,255,.65); font-size: 13.5px; padding: 36px 0 120px; }
   footer p { margin: 0 0 10px; }
-  footer a { color: rgba(255,255,255,.85); }
-  footer .row { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 14px; }
+  footer a { color: #fff; }
+  footer .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-bottom: 16px; }
+  footer .logo { color: #fff; }
 
-  /* CTA fijo en móvil, se oculta cuando el formulario está a la vista */
-  .sticky { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .25s ease; z-index: 20; }
-  .sticky.show { transform: none; }
-  .sticky .btn { min-height: 52px; }
+  /* Píldora azul flotante: visible solo cuando el formulario no está en pantalla */
+  .float { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); transform: translate(-50%, 160%); width: calc(100% - 32px); max-width: 520px; z-index: 40; display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 64px; padding: 12px 22px; border-radius: 999px; background: var(--blue); color: #fff; text-decoration: none; text-align: center; font-size: 17px; line-height: 1.3; box-shadow: 0 12px 30px rgba(0,90,200,.35); transition: transform .3s ease; }
+  .float.show { transform: translate(-50%, 0); }
+  .float svg { width: 28px; height: 28px; flex: none; }
 
-  @media (max-width: 380px) { .chip .wide { display: none; } }
-  @media (min-width: 900px) {
-    .hero { padding: 48px 0 72px; }
-    .hero-grid { grid-template-columns: 1.05fr .95fr; align-items: center; gap: 44px; }
-    .hero .btn { width: auto; min-width: 320px; }
-    .cta-note { text-align: left; }
-    .form-section .wrap { max-width: 640px; }
-    .card { padding: 30px 32px 32px; margin-top: -40px; }
-    .options { grid-template-columns: 1fr 1fr; }
+  @media (min-width: 720px) {
+    .city, .search { display: flex; }
+    .cats { grid-template-columns: repeat(4, 1fr); }
+    .minis { grid-template-columns: repeat(6, 1fr); justify-items: start; }
+    .cards3 { grid-template-columns: repeat(3, 1fr); }
     .benefits { grid-template-columns: repeat(3, 1fr); }
     .myth { grid-template-columns: 1fr 1fr; }
     .split { grid-template-columns: 1fr 1fr; }
-    .steps { grid-template-columns: repeat(3, 1fr); }
-    .sticky { display: none; }
-    footer { padding-bottom: 40px; }
+    .two { grid-template-columns: 1fr 1fr; align-items: start; }
+    .hero { padding: 72px 0 150px; }
+    .media-wrap { margin-top: -110px; }
+    .cat .top-c { height: 200px; }
+    .cat .circle { width: 128px; height: 128px; font-size: 64px; }
+    .btn.fit { width: auto; min-width: 340px; }
+    footer { padding-bottom: 110px; }
+  }
+  @media (max-width: 380px) {
+    .top-cta { padding: 0 12px; font-size: 14px; }
+    .logo { font-size: 17px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -233,50 +277,54 @@
   <div class="wrap">
     <a class="logo" href="#" aria-label="Valora Energy">
       <!-- Reemplazar por el logo oficial de Valora Energy (SVG) -->
-      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#0b1f24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
-      Valora Energy
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+      Valora<b>Energy</b>
     </a>
-    <span class="chip"><span class="wide">Beneficio para </span>usuarios Rappi</span>
+    <span class="city"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>Colombia</span>
+    <a class="search" href="#calcula" data-cta>
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.4" stroke-linecap="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+      <span>¿Cuánto te devuelven por tu carro híbrido o eléctrico?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </a>
+    <a class="top-cta" href="#calcula" data-cta>Calcular gratis</a>
   </div>
 </header>
 
 <main>
-  <!-- 1. TITULAR + HÉROE + UN SOLO CTA -->
+  <!-- 1. TITULAR + UN SOLO CTA -->
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow">Ley de transición energética</span>
-        <h1>Tu carro híbrido o eléctrico te devuelve <mark>cerca del 19%*</mark> de lo que pagaste</h1>
-        <p class="sub">Nosotros hacemos todo el trámite ante la UPME y la DIAN. Tú solo recibes el dinero.</p>
-        <ul class="proof">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>Cálculo gratis en 30 segundos</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>Cientos de clientes certificados</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>Sin trámites para ti ni tu contador</li>
-        </ul>
-      </div>
-      <div>
-        <div class="media" id="video">
-          <!-- Video del abogado: exportar a 1080p o menos y comprimido para que cargue rápido en móvil -->
-          <img src="media/exhibicion.webp" alt="Exhibición de carros híbridos y eléctricos Toyota, Tesla, BYD, Volvo y Mercedes-Benz" width="1200" height="670" fetchpriority="high">
-          <button class="play" type="button" id="playBtn" aria-label="Ver video: lo que debes saber de tu carro">
-            <span class="play-btn"><svg viewBox="0 0 24 24" fill="#0b1f24"><path d="M7 4v16l13-8z"/></svg></span>
-            <span class="play-label">Lo que nadie te ha contado de tu carro<small>Nuestro abogado lo explica en 2 minutos</small></span>
-          </button>
-        </div>
-        <div style="margin-top:18px">
-          <a class="btn" href="#calcula" data-cta>Calcular mi devolución gratis
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
-          </a>
-          <p class="cta-note">Sin costo · Sin compromiso · Toma 30 segundos</p>
-        </div>
+    <div class="wrap">
+      <span class="pill">⚡ Beneficio para usuarios Rappi</span>
+      <h1>Si tienes carro <strong>híbrido o eléctrico</strong>, tienes <strong>dinero por recibir.</strong></h1>
+      <p class="sub">Recupera cerca del 19%* de lo que pagaste. Nosotros hacemos todo el trámite ante la UPME y la DIAN.</p>
+      <a class="hero-box" href="#calcula" data-cta>
+        <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1h-1a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H4a1 1 0 0 1-1-1v-4a2 2 0 0 1 2-2zm2.1 0h9.8l-1.1-3.4a.8.8 0 0 0-.8-.6H9a.8.8 0 0 0-.8.6zM7 15.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+        <span>¿Cuánto te devuelven por tu carro?</span>
+        <b class="go">Calcular</b>
+      </a>
+      <div class="hero-links">
+        <button type="button" data-play><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z" fill="currentColor"/></svg>Ver video del abogado</button>
+        <span class="soft"><u>Gratis</u> y sin compromiso · toma 30 segundos</span>
       </div>
     </div>
   </section>
 
-  <!-- 2. FORMULARIO POR PASOS: lo mínimo para un lead calificado -->
+  <!-- 2. HÉROE VISUAL: video del abogado -->
+  <div class="wrap media-wrap">
+    <div class="media" id="video">
+      <!-- Video del abogado: exportar a 1080p o menos y comprimido para que cargue rápido en móvil -->
+      <img src="media/exhibicion.webp" alt="Exhibición de carros híbridos y eléctricos Toyota, Tesla, BYD, Volvo y Mercedes-Benz" width="1200" height="670" fetchpriority="high">
+      <button class="play" type="button" data-play aria-label="Ver video: lo que debes saber de tu carro">
+        <span class="play-btn"><svg viewBox="0 0 24 24" fill="#ff441f"><path d="M7 4v16l13-8z"/></svg></span>
+        <span class="play-label">Lo que nadie te ha contado de tu carro<small>Nuestro abogado lo explica en 2 minutos</small></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 3. FORMULARIO POR PASOS: lo mínimo para un lead calificado -->
   <section class="form-section">
     <div class="wrap">
-      <div class="card" id="calcula" aria-live="polite">
+      <div class="flow" id="calcula" aria-live="polite">
         <div class="progress" aria-hidden="true"><span id="bar"></span></div>
         <div class="step-meta"><span id="stepLabel">Paso 1 de 4</span><button class="back" id="backBtn" type="button" hidden>← Atrás</button></div>
 
@@ -294,34 +342,41 @@
             <h2>¿Qué tipo de carro tienes?</h2>
             <p class="hint">Si no estás seguro, elige “No sé”: lo verificamos por ti.</p>
             <div class="options" data-field="tipo_vehiculo">
-              <button type="button" class="opt" data-value="Eléctrico"><span class="ico">⚡</span><span><b>100% eléctrico</b><small>Tesla, BYD, Renault, Kia EV…</small></span></button>
-              <button type="button" class="opt" data-value="Híbrido enchufable"><span class="ico">🔌</span><span><b>Híbrido enchufable</b><small>Se carga en la toma (PHEV)</small></span></button>
-              <button type="button" class="opt" data-value="Híbrido completo"><span class="ico">🔋</span><span><b>Híbrido completo</b><small>Full hybrid (HEV)</small></span></button>
-              <button type="button" class="opt" data-value="Híbrido ligero"><span class="ico">〰️</span><span><b>Híbrido ligero</b><small>Mild hybrid (MHEV)</small></span></button>
-              <button type="button" class="opt" data-value="No sé"><span class="ico">❓</span><span><b>No sé</b><small>Lo revisamos gratis</small></span></button>
+              <div class="cats">
+                <button type="button" class="opt cat red" data-value="Eléctrico"><span class="top-c"><span class="circle">⚡</span></span><span class="name">100% eléctrico</span><small>Tesla, BYD, Renault…</small></button>
+                <button type="button" class="opt cat green" data-value="Híbrido enchufable"><span class="top-c"><span class="circle">🔌</span></span><span class="name">Híbrido enchufable</span><small>Se carga en la toma</small></button>
+                <button type="button" class="opt cat blue" data-value="Híbrido completo"><span class="top-c"><span class="circle">🔋</span></span><span class="name">Híbrido completo</span><small>Full hybrid (HEV)</small></button>
+                <button type="button" class="opt cat yellow" data-value="No sé"><span class="top-c"><span class="circle">🤔</span></span><span class="name">No sé</span><small>Lo revisamos gratis</small></button>
+              </div>
+              <div class="minis">
+                <button type="button" class="opt mini" data-value="Híbrido ligero"><span class="emo">🚗</span><span class="name">Híbrido ligero</span><small>Mild hybrid</small></button>
+                <button type="button" class="opt mini" data-value="Varios vehículos"><span class="emo">🚙</span><span class="name">Tengo varios</span><small>Casa o empresa</small></button>
+              </div>
             </div>
           </div>
 
           <!-- Paso 1b: no aplica -->
           <div class="step" data-step="mild" hidden>
-            <div class="notice">
+            <div class="notice step-col">
               <h3>Los híbridos ligeros no aplican</h3>
               <p>Su motor eléctrico no mueve el carro por sí solo, así que la ley no les da el beneficio. Desconfía de quien te diga lo contrario.</p>
             </div>
             <p class="hint">¿Tienes otro carro eléctrico, enchufable o híbrido completo en casa o en tu empresa? Ese sí puede aplicar.</p>
             <div class="stack">
-              <button type="button" class="btn dark" data-goto="1">Sí, calcular con otro carro</button>
+              <button type="button" class="btn" data-goto="1">Sí, calcular con otro carro</button>
               <button type="button" class="btn ghost" data-mild-continue>No estoy seguro de que sea ligero</button>
             </div>
           </div>
 
           <!-- Paso 2 -->
           <div class="step" data-step="2" hidden>
-            <h2>¿A nombre de quién está el carro?</h2>
+            <h2>¿A nombre de quién está?</h2>
             <p class="hint">El beneficio cambia según quién lo compró.</p>
             <div class="options" data-field="tipo_persona">
-              <button type="button" class="opt" data-value="natural"><span class="ico">👤</span><span><b>Persona natural</b><small>A mi nombre</small></span></button>
-              <button type="button" class="opt" data-value="empresa"><span class="ico">🏢</span><span><b>Empresa</b><small>A nombre de una sociedad</small></span></button>
+              <div class="cats">
+                <button type="button" class="opt cat red" data-value="natural"><span class="top-c"><span class="circle">🙋</span></span><span class="name">Persona natural</span><small>A mi nombre</small></button>
+                <button type="button" class="opt cat green" data-value="empresa"><span class="top-c"><span class="circle">🏢</span></span><span class="name">Empresa</span><small>A nombre de una sociedad</small></button>
+              </div>
             </div>
           </div>
 
@@ -329,83 +384,87 @@
           <div class="step" data-step="3" hidden>
             <h2>¿Cuánto pagaste por él?</h2>
             <p class="hint">Un valor aproximado está bien.</p>
-            <div class="field">
-              <label for="valor">Valor del carro (con IVA)</label>
-              <div class="money"><span>$</span><input class="input" id="valor" inputmode="numeric" autocomplete="off" placeholder="150.000.000"></div>
+            <div class="step-col">
+              <div class="field">
+                <label for="valor">Valor del vehículo (con IVA)</label>
+                <div class="money"><span>$</span><input class="input" id="valor" inputmode="numeric" autocomplete="off" placeholder="150.000.000"></div>
+              </div>
+              <div class="quick" aria-label="Valores rápidos">
+                <button type="button" data-amount="120000000">$120 M</button>
+                <button type="button" data-amount="180000000">$180 M</button>
+                <button type="button" data-amount="250000000">$250 M</button>
+                <button type="button" data-amount="350000000">$350 M</button>
+              </div>
+              <p class="err" id="valorErr"></p>
+              <button type="button" class="btn" id="calcBtn">Ver mi beneficio estimado</button>
             </div>
-            <div class="quick" aria-label="Valores rápidos">
-              <button type="button" data-amount="120000000">$120 M</button>
-              <button type="button" data-amount="180000000">$180 M</button>
-              <button type="button" data-amount="250000000">$250 M</button>
-              <button type="button" data-amount="350000000">$350 M</button>
-            </div>
-            <p class="err" id="valorErr"></p>
-            <button type="button" class="btn" id="calcBtn">Ver mi beneficio estimado</button>
           </div>
 
           <!-- Paso 4 -->
           <div class="step" data-step="4" hidden>
-            <div class="result">
-              <div class="label">Tu beneficio estimado</div>
-              <div class="big" id="total">$0</div>
-              <dl>
-                <dt>Ahorro real en renta</dt><dd id="renta">$0</dd>
-                <dt>Devolución de IVA (DIAN)</dt><dd id="iva">$0</dd>
-              </dl>
-              <p class="fine">Estimado aproximado. El valor exacto depende de tu declaración de renta; te lo confirmamos sin costo.</p>
+            <div class="two">
+              <div class="result">
+                <div class="label">Tu beneficio estimado</div>
+                <div class="big" id="total">$0</div>
+                <dl>
+                  <dt>Ahorro real en renta</dt><dd id="renta">$0</dd>
+                  <dt>Devolución de IVA (DIAN)</dt><dd id="iva">$0</dd>
+                </dl>
+                <p class="fine">Estimado aproximado. El valor exacto depende de tu declaración de renta; te lo confirmamos sin costo.</p>
+              </div>
+              <div>
+                <h2 style="font-size:24px">¿A dónde te enviamos tu estudio gratis?</h2>
+                <p class="hint" style="margin-bottom:16px">Un asesor te escribe por WhatsApp para confirmar si tu carro aplica.</p>
+                <div class="field">
+                  <label for="nombre">Nombre</label>
+                  <input class="input" id="nombre" name="nombre" autocomplete="given-name" placeholder="Tu nombre">
+                </div>
+                <div class="field">
+                  <label for="whatsapp">WhatsApp</label>
+                  <div class="phone"><input class="input cc" value="+57" readonly tabindex="-1" aria-hidden="true"><input class="input" id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="300 123 4567"></div>
+                </div>
+                <label class="check"><input type="checkbox" id="acepto" name="acepto_datos" value="si"><span>Autorizo a Valora Energy a tratar mis datos para contactarme, según su <a href="#politica">política de tratamiento de datos</a> (Ley 1581 de 2012).</span></label>
+                <p class="err" id="leadErr"></p>
+                <button type="submit" class="btn" id="sendBtn">Quiero recibir mi devolución</button>
+                <p class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>No compartimos tus datos con nadie.</p>
+              </div>
             </div>
-            <h2 style="font-size:20px">¿A dónde te enviamos tu estudio gratis?</h2>
-            <p class="hint">Un asesor te escribe por WhatsApp para confirmar si tu carro aplica.</p>
-            <div class="field">
-              <label for="nombre">Nombre</label>
-              <input class="input" id="nombre" name="nombre" autocomplete="given-name" placeholder="Tu nombre">
-            </div>
-            <div class="field">
-              <label for="whatsapp">WhatsApp</label>
-              <div class="phone"><input class="input cc" value="+57" readonly tabindex="-1" aria-hidden="true"><input class="input" id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="300 123 4567"></div>
-            </div>
-            <label class="check"><input type="checkbox" id="acepto" name="acepto_datos" value="si"><span>Autorizo a Valora Energy a tratar mis datos para contactarme, según su <a href="#politica">política de tratamiento de datos</a> (Ley 1581 de 2012).</span></label>
-            <p class="err" id="leadErr"></p>
-            <button type="submit" class="btn" id="sendBtn">Quiero recibir mi devolución</button>
-            <p class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>No compartimos tus datos con nadie.</p>
           </div>
         </form>
 
         <!-- Gracias -->
         <div class="step done" data-step="done" hidden>
-          <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></div>
+          <div class="tick">✅</div>
           <h2 id="doneTitle">¡Listo!</h2>
           <p>Un asesor de Valora Energy te escribirá por WhatsApp para revisar tu caso. Si quieres adelantar, escríbenos ya.</p>
-          <a class="btn" id="waBtn" href="#" target="_blank" rel="noopener">Escribir por WhatsApp ahora</a>
+          <a class="btn green" id="waBtn" href="#" target="_blank" rel="noopener">Escribir por WhatsApp ahora</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. JUSTIFICACIÓN: para quien necesita más información antes de decidir -->
+  <!-- 4. JUSTIFICACIÓN: para quien necesita más información antes de decidir -->
   <section class="block">
-    <div class="wrap">
-      <div class="kicker">Así funciona</div>
-      <h2>Tú no haces trámites. Nosotros hacemos todo.</h2>
+    <div class="wrap center">
+      <h2 class="big-title">Tú tranquilo, <strong>nosotros</strong> hacemos todo</h2>
       <p class="lead narrow">Muchos dueños de carros híbridos y eléctricos no saben que tienen este beneficio, y otros lo dejan pasar porque el trámite ante la DIAN es engorroso. Para eso estamos.</p>
-      <ol class="steps">
-        <li><h3>Verificamos tu carro</h3><p>Confirmamos el tipo de hibridación y calculamos el beneficio exacto al que tienes derecho.</p></li>
-        <li><h3>Tramitamos tu certificado</h3><p>Gestionamos la certificación de tu inversión ante la UPME, que es la llave para acceder a los beneficios.</p></li>
-        <li><h3>Gestionamos tu devolución</h3><p>Hacemos la solicitud de devolución del IVA ante la DIAN y le entregamos a tu contador el paso a paso para el beneficio en renta.</p></li>
-      </ol>
-      <div style="margin-top:28px; max-width:420px"><a class="btn" href="#calcula" data-cta>Calcular mi devolución gratis</a></div>
+      <div class="cards3">
+        <article class="card3 red"><div class="pic"><span>🔍</span></div><h3>1. Verificamos tu carro</h3><p>Confirmamos el tipo de hibridación y calculamos el beneficio exacto al que tienes derecho.</p></article>
+        <article class="card3 green"><div class="pic"><span>📄</span></div><h3>2. Tramitamos tu certificado</h3><p>Gestionamos la certificación de tu inversión ante la UPME, que es la llave para acceder a los beneficios.</p></article>
+        <article class="card3 blue"><div class="pic"><span>💰</span></div><h3>3. Gestionamos tu devolución</h3><p>Hacemos la solicitud de devolución del IVA ante la DIAN y le entregamos a tu contador el paso a paso para el beneficio en renta.</p></article>
+      </div>
+      <div style="margin-top:32px"><a class="btn fit" href="#calcula" data-cta>Calcular mi devolución gratis</a></div>
     </div>
   </section>
 
   <section class="block soft">
     <div class="wrap">
-      <div class="kicker">Los beneficios, sin enredos</div>
-      <h2>Lo que de verdad llega a tu bolsillo</h2>
+      <h2 class="sec-title">Lo que de verdad llega a tu bolsillo</h2>
       <p class="lead narrow">La ley contempla cuatro beneficios: exclusión de IVA, arancel, depreciación acelerada y deducción en renta. Si compraste tu carro como persona natural, los que te sirven son dos:</p>
       <div class="benefits">
-        <div class="benefit"><div class="pct">~14%</div><h3>Ahorro en renta</h3><p>Descuentas el 50% del valor del carro en tu declaración. Ese descuento se traduce en un ahorro real cercano al 14% (17,5% para empresas).</p></div>
-        <div class="benefit"><div class="pct">~5%</div><h3>Devolución del IVA</h3><p>La DIAN te devuelve el IVA que pagaste al comprar tu carro. Nosotros hacemos la solicitud por ti.</p></div>
-        <div class="benefit hl"><div class="pct">~19%</div><h3>Beneficio real total</h3><p>Aproximadamente lo que recuperas como persona natural sobre el valor de tu carro.</p></div>
+        <div class="benefit red"><div class="head">~14%</div><div class="body"><h3>Ahorro en renta</h3><p>Descuentas el 50% del valor del carro en tu declaración. Eso se traduce en un ahorro real cercano al 14% (17,5% para empresas).</p></div></div>
+        <div class="benefit green"><div class="head">~5%</div><div class="body"><h3>Devolución del IVA</h3><p>La DIAN te devuelve el IVA que pagaste al comprar tu carro. Nosotros hacemos la solicitud por ti.</p></div></div>
+        <div class="benefit blue"><div class="head">~19%</div><div class="body"><h3>Beneficio real total</h3><p>Aproximadamente lo que recuperas como persona natural sobre el valor de tu carro.</p></div></div>
       </div>
       <div class="example">
         <strong>Ejemplo: carro de $150 millones, persona natural</strong>
@@ -420,14 +479,13 @@
 
   <section class="block">
     <div class="wrap">
-      <div class="kicker">Cuidado</div>
-      <h2>“Te devolvemos el 50%”: así no funciona</h2>
+      <h2 class="sec-title">“Te devolvemos el 50%”: así no funciona</h2>
       <div class="myth">
         <div class="myth-card bad"><div class="tag">Lo que te ofrecen</div><p>Algunos prometen que el Estado te regresa la mitad de lo que pagaste. Si tu carro costó $100 millones, te dicen que recibes $50 millones.</p></div>
         <div class="myth-card good"><div class="tag">Lo que dice la norma</div><p>El 50% es un descuento contable en tu declaración de renta: sobre ese valor no pagas impuesto. La ganancia real depende de tu tarifa de renta, y por eso hablamos de cerca del 19%, no del 50%.</p></div>
       </div>
       <table class="applies" aria-label="Qué carros aplican">
-        <thead><tr><th>Tipo de carro</th><th>¿Aplica?</th></tr></thead>
+        <thead><tr><th>Tipo de vehículo</th><th>¿Aplica?</th></tr></thead>
         <tbody>
           <tr><td>100% eléctrico</td><td class="yes">Sí</td></tr>
           <tr><td>Híbrido enchufable (PHEV)</td><td class="yes">Sí</td></tr>
@@ -441,8 +499,7 @@
   <section class="block soft">
     <div class="wrap split">
       <div>
-        <div class="kicker">¿Y tu contador?</div>
-        <h2>Somos los aliados favoritos de los contadores</h2>
+        <h2 class="sec-title">Somos los aliados favoritos de los <span style="color:var(--orange)">contadores</span></h2>
         <p class="lead">Hablamos directamente con tu equipo contable, resolvemos sus dudas y le entregamos en detalle cómo aplicar los beneficios. Ellos se libran del trámite ante la DIAN y tú no pierdes tiempo.</p>
       </div>
       <figure style="margin:0">
@@ -455,29 +512,27 @@
   <!-- Testimonios: activar (quitar hidden) cuando haya testimonios reales con autorización del cliente -->
   <section class="block" id="testimonios" hidden>
     <div class="wrap">
-      <div class="kicker">Clientes</div>
-      <h2>Ellos ya recibieron su devolución</h2>
+      <h2 class="sec-title">Ellos ya recibieron su devolución</h2>
     </div>
   </section>
 
   <section class="block">
     <div class="wrap narrow">
-      <div class="kicker">Preguntas frecuentes</div>
-      <h2>Lo que nos preguntan antes de empezar</h2>
+      <h2 class="sec-title">Preguntas frecuentes</h2>
       <div class="faq">
         <details><summary>¿Cómo sé qué tipo de híbrido es mi carro?</summary><p>Déjanos la referencia en el formulario y lo verificamos por ti. Si es híbrido ligero (mild hybrid) te lo decimos de una vez, sin cobrarte nada.</p></details>
         <details><summary>¿Por qué no me devuelven el 50% como me dijeron?</summary><p>Porque el 50% es una deducción contable en tu declaración de renta, no dinero que te regresan. El ahorro real depende de tu tarifa de renta: cerca del 14% para personas naturales y 17,5% para empresas, más la devolución del IVA.</p></details>
         <details><summary>¿Aplica si el carro está a nombre de mi empresa?</summary><p>Sí. Para empresas el ahorro en renta suele ser mayor. En el formulario elige “Empresa” y te damos el estimado.</p></details>
         <details><summary>¿Tengo que hacer algo ante la DIAN o la UPME?</summary><p>No. Nos encargamos de la certificación ante la UPME y de la solicitud de devolución del IVA ante la DIAN. Solo te pedimos los documentos del carro.</p></details>
         <details><summary>¿Pueden hablar con mi contador?</summary><p>Claro. Le explicamos el proceso y le entregamos el paso a paso para aplicar el beneficio en tu declaración de renta.</p></details>
-        <details><summary>¿Tengo dos carros, puedo certificar ambos?</summary><p>Sí, siempre que ambos apliquen. Cada carro se certifica por separado.</p></details>
+        <details><summary>¿Tengo dos carros, puedo certificar ambos?</summary><p>Sí, siempre que ambos apliquen. Cada vehículo se certifica por separado.</p></details>
       </div>
     </div>
   </section>
 
   <section class="final">
     <div class="wrap">
-      <h2>Calcula cuánto te devuelven en 30 segundos</h2>
+      <h2>Calcula cuánto te devuelven en <strong>30 segundos</strong></h2>
       <p>Es gratis y sin compromiso. Si tu carro no aplica, te lo decimos de una vez.</p>
       <a class="btn" href="#calcula" data-cta>Calcular mi devolución gratis</a>
     </div>
@@ -488,18 +543,21 @@
 <footer>
   <div class="wrap">
     <div class="row">
-      <strong style="color:#fff">Valora Energy</strong>
+      <span class="logo"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>Valora Energy</span>
       <a href="mailto:info@valoraenergy.com">info@valoraenergy.com</a>
       <a href="https://valoraenergy.com" target="_blank" rel="noopener">valoraenergy.com</a>
     </div>
     <p>* Porcentaje aproximado para personas naturales: ahorro estimado en impuesto de renta (cerca del 14%) más devolución del IVA (cerca del 5%) sobre el valor del vehículo. Para empresas el ahorro en renta es cercano al 17,5%. Los valores son estimados, no constituyen una oferta ni asesoría tributaria personalizada y dependen de la situación fiscal de cada contribuyente, de la obtención del certificado ante la UPME y de la aprobación de la DIAN, según la Ley 1715 de 2014, la Ley 2099 de 2021 y sus reglamentaciones.</p>
-    <p>Los vehículos híbridos ligeros (mild hybrid) no aplican a estos beneficios. Las marcas de vehículos que aparecen en las imágenes pertenecen a sus respectivos dueños.</p>
+    <p>Los vehículos híbridos ligeros (mild hybrid) no aplican a estos beneficios. Esta página es de Valora Energy; las marcas de terceros que se mencionan o aparecen en las imágenes pertenecen a sus respectivos dueños.</p>
     <p id="politica">Tratamiento de datos: tus datos se usan únicamente para contactarte sobre este servicio, conforme a la Ley 1581 de 2012. Puedes solicitar su actualización o eliminación en info@valoraenergy.com.</p>
     <p>© <span id="year">2026</span> Valora Energy. Todos los derechos reservados.</p>
   </div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn" href="#calcula" data-cta>Calcular mi devolución gratis</a></div>
+<a class="float" id="float" href="#calcula" data-cta>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.5l2.2 1.6 2.7-.2.9 2.6 2.2 1.6-.8 2.6.8 2.6-2.2 1.6-.9 2.6-2.7-.2L12 21.5l-2.2-1.6-2.7.2-.9-2.6L4 15.9l.8-2.6L4 10.7l2.2-1.6.9-2.6 2.7.2z"/><path d="M9 15l6-6" stroke-linecap="round"/><circle cx="9.5" cy="9.5" r="1" fill="currentColor"/><circle cx="14.5" cy="14.5" r="1" fill="currentColor"/></svg>
+  <span>Calcula tu <b>DEVOLUCIÓN</b> gratis aquí</span>
+</a>
 
 <script>
 (() => {
@@ -516,29 +574,29 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const form = $("#lead");
-  const card = $("#calcula");
+  const flow = $("#calcula");
   const cop = n => "$" + Math.round(n).toLocaleString("es-CO");
   const ORDER = ["1", "2", "3", "4"];
   let history = [];
 
   $("#year").textContent = new Date().getFullYear();
 
-  // Origen del lead (UTM / referer) para saber qué campaña convierte
+  // Origen del lead (UTM) para saber qué campaña convierte
   const params = new URLSearchParams(location.search);
   form.origen.value = ["utm_source", "utm_medium", "utm_campaign"].map(k => params.get(k)).filter(Boolean).join(" / ") || "rappi";
 
   function show(step, push = true) {
-    const current = $$(".step", card).find(s => !s.hidden);
+    const current = $$(".step", flow).find(s => !s.hidden);
     if (push && current) history.push(current.dataset.step);
-    $$(".step", card).forEach(s => s.hidden = s.dataset.step !== step);
+    $$(".step", flow).forEach(s => s.hidden = s.dataset.step !== step);
     const idx = ORDER.indexOf(step);
     const n = idx >= 0 ? idx + 1 : step === "done" ? 4 : 1;
     $("#bar").style.width = (step === "done" ? 100 : n * 25) + "%";
     $("#stepLabel").textContent = step === "done" ? "Completado" : `Paso ${n} de 4`;
     $("#backBtn").hidden = !history.length || step === "done";
-    const h = $(`[data-step="${step}"] h2, [data-step="${step}"] h3`, card);
+    const h = $(`[data-step="${step}"] h2, [data-step="${step}"] h3`, flow);
     if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
-    if (card.getBoundingClientRect().top < 0) card.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (flow.getBoundingClientRect().top < 64) flow.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   $("#backBtn").addEventListener("click", () => { if (history.length) show(history.pop(), false); });
@@ -554,12 +612,12 @@
       setTimeout(() => {
         if (group.dataset.field === "tipo_vehiculo") show(opt.dataset.value === "Híbrido ligero" ? "mild" : "2");
         else show("3");
-      }, 160);
+      }, 180);
     });
   });
   $("[data-mild-continue]").addEventListener("click", () => { form.tipo_vehiculo.value = "Posible híbrido ligero"; show("2"); });
 
-  // Valor del carro con separador de miles
+  // Valor del vehículo con separador de miles
   const valor = $("#valor");
   const parse = s => Number(String(s).replace(/\D/g, "")) || 0;
   valor.addEventListener("input", () => {
@@ -574,7 +632,7 @@
 
   $("#calcBtn").addEventListener("click", () => {
     const n = parse(valor.value);
-    if (n < 20000000) { $("#valorErr").textContent = "Escribe el valor completo, por ejemplo 150.000.000"; valor.focus(); return; }
+    if (n < 5000000) { $("#valorErr").textContent = "Escribe el valor completo, por ejemplo 150.000.000"; valor.focus(); return; }
     const t = CONFIG.tasas[form.tipo_persona.value] || CONFIG.tasas.natural;
     const renta = n * t.renta, iva = n * t.iva;
     $("#renta").textContent = cop(renta);
@@ -604,7 +662,7 @@
         body: new URLSearchParams(new FormData(form)).toString(),
       });
     } catch (_) { /* si falla el envío, el botón de WhatsApp sigue llevando el lead */ }
-    const msg = `Hola, soy ${nombre}. Calculé mi beneficio en la página: carro ${form.tipo_vehiculo.value.toLowerCase()}, ${form.tipo_persona.value === "empresa" ? "a nombre de empresa" : "persona natural"}, valor ${cop(form.valor_vehiculo.value)}. Estimado: ${cop(form.beneficio_estimado.value)}. Quiero iniciar el trámite.`;
+    const msg = `Hola, soy ${nombre}. Calculé mi beneficio en la página. Vehículo: ${form.tipo_vehiculo.value.toLowerCase()}, ${form.tipo_persona.value === "empresa" ? "a nombre de empresa" : "persona natural"}, valor ${cop(form.valor_vehiculo.value)}. Estimado: ${cop(form.beneficio_estimado.value)}. Quiero iniciar el trámite.`;
     $("#waBtn").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
     $("#doneTitle").textContent = `¡Listo, ${nombre.split(" ")[0]}!`;
     history = [];
@@ -612,21 +670,22 @@
   });
 
   // Video del abogado (solo se descarga al tocar play)
-  $("#playBtn").addEventListener("click", () => {
-    if (!CONFIG.videoSrc) { card.scrollIntoView({ behavior: "smooth" }); return; }
+  $$("[data-play]").forEach(b => b.addEventListener("click", () => {
+    const media = $("#video");
+    if (!CONFIG.videoSrc) { media.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
     const v = document.createElement("video");
     v.src = CONFIG.videoSrc; v.controls = true; v.playsInline = true; v.autoplay = true;
     v.poster = "media/exhibicion.webp";
-    $("#video").replaceChildren(v);
-  });
+    media.replaceChildren(v);
+    media.scrollIntoView({ behavior: "smooth", block: "center" });
+  }));
 
-  // CTA fijo: visible solo cuando el formulario no está en pantalla
-  const sticky = $("#sticky");
-  const hero = $(".hero");
-  let heroOut = false, cardIn = true;
-  const sync = () => sticky.classList.toggle("show", heroOut && !cardIn);
-  new IntersectionObserver(([e]) => { heroOut = !e.isIntersecting; sync(); }).observe(hero);
-  new IntersectionObserver(([e]) => { cardIn = e.isIntersecting; sync(); }).observe(card);
+  // Píldora flotante: visible solo cuando ni el héroe ni el formulario están en pantalla
+  const float = $("#float");
+  let heroOut = false, flowIn = true;
+  const sync = () => float.classList.toggle("show", heroOut && !flowIn);
+  new IntersectionObserver(([e]) => { heroOut = !e.isIntersecting; sync(); }).observe($(".hero"));
+  new IntersectionObserver(([e]) => { flowIn = e.isIntersecting; sync(); }).observe(flow);
 })();
 </script>
 </body>
