@@ -117,7 +117,6 @@
   footer a { color: #fff; }
   footer .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 16px; color: #fff; }
   footer .logo { color: #fff; }
-  footer .ph { background: rgba(255,243,176,.15); color: #ffe78a; border-color: rgba(224,180,0,.7); }
 
   /* Botón fijo abajo en móvil */
   .sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.95); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .25s ease; }
@@ -240,13 +239,11 @@
   </section>
 </main>
 
-<!-- 07 PIE LEGAL (logo, razón social, NIT y términos pendientes de aprobación de Rappi) -->
+<!-- 07 PIE LEGAL (logo y términos pendientes de aprobación de Rappi) -->
 <footer>
   <div class="wrap">
     <div class="row">
       <span class="logo"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>Valora Energy</span>
-      <span>· <span class="ph" data-ph="razonSocial">Razón social</span></span>
-      <span>· NIT <span class="ph" data-ph="nit">número</span></span>
     </div>
     <p>El valor del beneficio depende de cada vehículo y de la situación tributaria de cada persona. Sujeto a validación.</p>
     <p><a href="#" id="terminos">Términos y condiciones</a> · <a href="#" id="politica">Política de tratamiento de datos</a></p>
@@ -260,8 +257,6 @@
   // ---- Datos pendientes: al llenarlos desaparece el resaltado amarillo ----
   const CONFIG = {
     whatsapp: "573153800282",  // provisional hasta que definan el número de WhatsApp
-    razonSocial: "",           // pendiente de aprobación de Rappi
-    nit: "",                   // pendiente de aprobación de Rappi
     terminosUrl: "",           // enlace a términos y condiciones
     politicaUrl: "",           // enlace a la política de tratamiento de datos
     videoSrc: "",              // archivo del video, p. ej. "video-valora-1080p.mp4"
