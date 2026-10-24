@@ -377,14 +377,17 @@
     $("#video").replaceChildren(v);
   });
 
-  // Botón fijo en móvil: visible cuando ninguno de los dos botones principales está en pantalla
+  // Botón fijo en móvil: solo aparece cuando ningún otro botón de WhatsApp está en pantalla
   const sticky = $("#sticky");
-  const seen = new Map();
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => seen.set(e.target, e.isIntersecting));
-    sticky.classList.toggle("show", ![...seen.values()].some(Boolean) && scrollY > 200);
-  });
-  [$("#cta1"), $("#cta2")].forEach(el => io.observe(el));
+  const ctas = $$("[data-wa]").filter(a => !sticky.contains(a) && !a.closest("header"));
+  const sync = () => {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const visible = ctas.some(a => { const r = a.getBoundingClientRect(); return r.bottom > 0 && r.top < vh; });
+    sticky.classList.toggle("show", !visible);
+  };
+  addEventListener("scroll", sync, { passive: true, capture: true });
+  addEventListener("resize", sync);
+  sync();
 })();
 </script>
 </body>
