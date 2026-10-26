@@ -112,7 +112,8 @@
   .input.other { margin-top: 8px; }
   .money { position: relative; }
   .money span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 600; }
-  .money .input { padding-left: 30px; font-family: var(--display); font-weight: 700; }
+  .money .input { padding-left: 30px; padding-right: 156px; font-family: var(--display); font-weight: 700; font-size: 20px; }
+  .money .suffix { left: auto; right: 14px; font-family: var(--ui); font-weight: 600; font-size: 15px; pointer-events: none; }
   .estimate { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; line-height: 1.3; margin: 2px 0 14px; padding: 14px 16px; border-radius: 14px; background: var(--brand-dark); color: rgba(255,255,255,.8); font-size: 14px; }
   .estimate b { font-family: var(--display); font-size: 24px; color: var(--accent); }
   .estimate small { flex-basis: 100%; font-size: 12px; color: rgba(255,255,255,.55); }
@@ -241,7 +242,7 @@
           <p>Déjanos tres datos y te confirmamos por WhatsApp si tu vehículo tiene derecho al beneficio.</p>
           <ul class="calc-steps">
             <li><b>1</b>Elige la marca y la referencia</li>
-            <li><b>2</b>Pon el precio de compra</li>
+            <li><b>2</b>Pon el precio de compra en millones</li>
             <li><b>3</b>Te respondemos por WhatsApp</li>
           </ul>
         </div>
@@ -258,7 +259,7 @@
           </div>
           <div class="field">
             <label for="precio">Precio de compra</label>
-            <div class="money"><span>$</span><input class="input" id="precio" inputmode="numeric" autocomplete="off" placeholder="150.000.000"></div>
+            <div class="money"><span>$</span><input class="input" id="precio" inputmode="decimal" autocomplete="off" maxlength="7" placeholder="150" aria-describedby="precioUnidad"><span class="suffix" id="precioUnidad">millones de pesos</span></div>
           </div>
           <div class="estimate" id="estimate" hidden>Tu reintegro podría ser de hasta <b id="estVal">$0</b><small>El valor dependerá del tipo de contribuyente.</small></div>
           <p class="err" id="calcErr" role="alert"></p>
@@ -377,11 +378,15 @@
     if (ref.value === OTRO) refOtra.focus();
   });
 
-  const parse = v => Number(String(v).replace(/\D/g, "")) || 0;
+  // El precio se escribe en millones (100 = $100.000.000). Si alguien escribe el valor completo, también se entiende.
+  const parse = v => {
+    const m = parseFloat(String(v).replace(",", ".")) || 0;
+    return m >= 100000 ? m : Math.round(m * 1e6);
+  };
   const cop = n => "$" + Math.round(n).toLocaleString("es-CO");
   precio.addEventListener("input", () => {
+    precio.value = precio.value.replace(/\./g, ",").replace(/[^\d,]/g, "").replace(/,(?=.*,)/g, "");
     const n = parse(precio.value);
-    precio.value = n ? n.toLocaleString("es-CO") : "";
     $("#estimate").hidden = n < 10000000;
     $("#estVal").textContent = cop(n * 0.29);
   });
@@ -396,7 +401,7 @@
     checks.forEach(([el, bad]) => bad ? el.setAttribute("aria-invalid", "true") : el.removeAttribute("aria-invalid"));
     const first = checks.find(([, bad]) => bad);
     if (first) {
-      err.textContent = n && n < 10000000 ? "Escribe el precio completo, por ejemplo 150.000.000." : "Completa la marca, la referencia y el precio de compra.";
+      err.textContent = n && n < 10000000 ? "Escribe el precio en millones, por ejemplo 150." : "Completa la marca, la referencia y el precio de compra.";
       first[0].focus();
       return;
     }
