@@ -87,6 +87,12 @@
   .badge { position: absolute; top: 12px; left: 12px; padding: 6px 12px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 800; font-size: 14px; }
   .play-label { position: absolute; left: 14px; bottom: 12px; right: 14px; text-align: left; font-size: 15px; font-weight: 600; }
   .play-label small { display: block; font-weight: 400; opacity: .8; }
+  /* Video real: arranca solo y sin sonido (los navegadores solo permiten eso); un botón activa el sonido */
+  .media.has-video { background: #000; max-height: 82vh; }
+  .media.has-video video { object-fit: contain; }
+  .sound { position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: inherit; font-family: var(--display); font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,.35); animation: nudge 1.8s ease-in-out infinite; white-space: nowrap; }
+  .sound svg { width: 20px; height: 20px; }
+  @keyframes nudge { 0%, 100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.06); } }
 
   /* ---------- 03 / 06 Botón a WhatsApp ---------- */
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; padding: 14px 24px; border: 0; border-radius: 14px; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 700; font-size: 18px; text-decoration: none; cursor: pointer; box-shadow: 0 8px 24px rgba(198,242,78,.28); transition: transform .15s, box-shadow .15s; }
@@ -386,7 +392,7 @@
     whatsapp: "573153800282",  // provisional hasta que definan el número de WhatsApp
     terminosUrl: "",           // enlace a términos y condiciones
     politicaUrl: "",           // enlace a la política de tratamiento de datos
-    videoSrc: "",              // archivo del video, p. ej. "video-valora-1080p.mp4"
+    videoSrc: "",              // archivo del video en esta carpeta, p. ej. "video-valora.mp4"
   };
   const MENSAJE = "Hola, vengo de Rappi y quiero saber si mi carro aplica al beneficio.";
 
@@ -465,13 +471,27 @@
     if (d.open) faqs.forEach(o => { if (o !== d) o.open = false; });
   }));
 
-  // El video solo se descarga al tocar play
-  $("#playBtn").addEventListener("click", () => {
-    if (!CONFIG.videoSrc) return;
+  // Video principal: se reproduce solo al entrar, sin sonido (es lo único que permiten los navegadores),
+  // con controles para pausar y un botón para activar el sonido desde el inicio.
+  if (CONFIG.videoSrc) {
+    const media = $("#video");
     const v = document.createElement("video");
-    v.src = CONFIG.videoSrc; v.controls = true; v.playsInline = true; v.autoplay = true;
-    $("#video").replaceChildren(v);
-  });
+    v.src = CONFIG.videoSrc;
+    v.poster = media.querySelector("img").src;
+    v.muted = true; v.playsInline = true; v.controls = true; v.preload = "auto";
+    v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    v.autoplay = !reduce;
+    const sound = document.createElement("button");
+    sound.type = "button"; sound.className = "sound";
+    sound.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Toca para escuchar';
+    sound.addEventListener("click", () => { v.muted = false; v.currentTime = 0; v.play(); });
+    v.addEventListener("volumechange", () => { sound.hidden = !v.muted; });
+    v.addEventListener("loadedmetadata", () => { if (v.videoWidth) media.style.aspectRatio = v.videoWidth + " / " + v.videoHeight; });
+    media.classList.add("has-video");
+    media.replaceChildren(v, sound);
+    if (!reduce) v.play().catch(() => {});
+  }
 
   // Botón fijo en móvil: solo aparece cuando ningún otro botón de WhatsApp está en pantalla
   const sticky = $("#sticky");
