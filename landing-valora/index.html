@@ -99,6 +99,8 @@
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; padding: 14px 24px; border: 0; border-radius: 14px; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 700; font-size: 18px; text-decoration: none; cursor: pointer; box-shadow: 0 8px 24px rgba(198,242,78,.28); transition: transform .15s, box-shadow .15s; }
   .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(198,242,78,.38); }
   .btn svg { width: 22px; height: 22px; flex: none; }
+  .btn .lbl { min-width: 0; text-align: center; text-wrap: balance; }
+  @media (max-width: 420px) { .btn { font-size: clamp(15px, 4.5vw, 18px); padding: 14px 16px; gap: 8px; } .btn svg { width: 20px; height: 20px; } }
   .cta-note { font-size: 13.5px; color: rgba(255,255,255,.7); text-align: center; margin: 10px 0 0; }
 
   /* ---------- Calculadora ---------- */
@@ -184,7 +186,7 @@
   /* Botón fijo abajo en móvil */
   .sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .25s ease; }
   .sticky.show { transform: none; }
-  .sticky .btn { min-height: 52px; font-size: 17px; box-shadow: none; }
+  .sticky .btn { min-height: 52px; font-size: clamp(15px, 4.5vw, 17px); box-shadow: none; }
 
   @media (min-width: 900px) {
     .hero { padding: 52px 0 64px; }
@@ -253,7 +255,7 @@
         <li><svg><use href="#check"/></svg><span>Gestionamos el retorno de tu <span class="accent">IVA</span> sin costo adicional</span></li>
       </ul>
       <div id="cta1" style="margin-top:22px">
-        <a class="btn" href="#" data-wa><svg><use href="#wa"/></svg>Descubre si tu carro aplica →</a>
+        <a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Descubre si tu carro aplica&nbsp;→</span></a>
         <p class="cta-note">Respuesta por WhatsApp inmediata</p>
       </div>
     </div>
@@ -290,7 +292,7 @@
           </div>
           <div class="estimate" id="estimate" hidden>Tu reintegro podría ser de hasta <b id="estVal">$0</b><small>El valor dependerá del tipo de contribuyente.</small></div>
           <p class="err" id="calcErr" role="alert"></p>
-          <button type="submit" class="btn" data-cta><svg><use href="#wa"/></svg>Ver si aplica →</button>
+          <button type="submit" class="btn" data-cta><svg><use href="#wa"/></svg><span class="lbl">Quiero mi beneficio&nbsp;→</span></button>
           <p class="calc-note">Respuesta por WhatsApp inmediata</p>
         </form>
       </div>
@@ -318,7 +320,7 @@
           <p>La ley tributaria es cambiante y podrías perder tu reintegro.</p>
         </article>
       </div>
-      <div class="reasons-cta"><a class="btn" href="#" data-wa><svg><use href="#wa"/></svg>Hazlo ya</a></div>
+      <div class="reasons-cta"><a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Hazlo ya</span></a></div>
     </div>
   </section>
 
@@ -340,7 +342,7 @@
   <section class="final" id="cta2">
     <div class="wrap">
       <h2>Toma <span class="accent">2 minutos</span> saber si tu carro aplica.</h2>
-      <a class="btn" href="#" data-wa><svg><use href="#wa"/></svg>Quiero mi beneficio →</a>
+      <a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Quiero mi beneficio&nbsp;→</span></a>
     </div>
   </section>
 
@@ -402,7 +404,7 @@
   </div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn" href="#" data-wa><svg><use href="#wa"/></svg>Descubre si tu carro aplica →</a></div>
+<div class="sticky" id="sticky"><a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Descubre si tu carro aplica&nbsp;→</span></a></div>
 
 <script>
 (() => {
