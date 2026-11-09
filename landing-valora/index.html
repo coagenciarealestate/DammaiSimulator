@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="medicion.js"></script>
 <style>
   /* Estructura: 1 Título → 2 Video → 3 Botón → 4 Por qué ahora → 5 Prueba → 6 Botón → 7 Pie legal.
      Diseño de la primera versión: héroe oscuro con acento verde lima, secciones claras con verde azulado. */
@@ -228,13 +229,13 @@
   <div class="promo" role="note">Beneficio por tiempo <span class="limit">limitado</span></div>
   <div class="wrap">
     <a class="logo-badge" href="#" aria-label="Valora Energy"><img src="logo-260.webp" srcset="logo-160.webp 160w, logo-260.webp 260w, logo-400.webp 400w" sizes="(min-width: 900px) 124px, 75px" alt="Valora Energy" width="400" height="181"></a>
-    <a class="contact" href="#" data-wa><svg><use href="#wa"/></svg>Contáctanos<span class="wide">por WhatsApp</span></a>
+    <a class="contact" href="#" data-wa data-loc="header_contactanos"><svg><use href="#wa"/></svg>Contáctanos<span class="wide">por WhatsApp</span></a>
   </div>
 </header>
 
 <main>
   <!-- 01 TÍTULO → 02 VIDEO → BULLETS → 03 BOTÓN -->
-  <section class="hero">
+  <section class="hero" data-section="hero">
     <div class="wrap">
       <span class="eyebrow">Exclusivo para usuarios de Rappi</span>
       <h1>Por tener un carro eléctrico/híbrido puedes recibir un reintegro real <span class="accent">de hasta 28%</span></h1>
@@ -255,14 +256,14 @@
         <li><svg><use href="#check"/></svg><span>Gestionamos el retorno de tu <span class="accent">IVA</span> sin costo adicional</span></li>
       </ul>
       <div id="cta1" style="margin-top:22px">
-        <a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Descubre si tu carro aplica&nbsp;→</span></a>
+        <a class="btn" href="#" data-wa data-loc="hero_descubre"><svg><use href="#wa"/></svg><span class="lbl">Descubre si tu carro aplica&nbsp;→</span></a>
         <p class="cta-note">Respuesta por WhatsApp inmediata</p>
       </div>
     </div>
   </section>
 
   <!-- CALCULADORA: datos del carro → WhatsApp con el mensaje armado -->
-  <section class="calc-sec">
+  <section class="calc-sec" data-section="calculadora">
     <div class="wrap">
       <div class="calc" id="calculadora">
         <div class="calc-head">
@@ -300,7 +301,7 @@
   </section>
 
   <!-- 04 POR QUÉ HACERLO AHORA -->
-  <section class="block soft">
+  <section class="block soft" data-section="razones">
     <div class="wrap">
       <h2>Tres razones para hacerlo ahora</h2>
       <div class="reasons">
@@ -320,12 +321,12 @@
           <p>La ley tributaria es cambiante y podrías perder tu reintegro.</p>
         </article>
       </div>
-      <div class="reasons-cta"><a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Hazlo ya</span></a></div>
+      <div class="reasons-cta"><a class="btn" href="#" data-wa data-loc="razones_hazlo_ya"><svg><use href="#wa"/></svg><span class="lbl">Hazlo ya</span></a></div>
     </div>
   </section>
 
   <!-- 05 PRUEBA -->
-  <section class="block">
+  <section class="block" data-section="resultados">
     <div class="wrap">
       <div class="kicker">Resultados</div>
       <h2>Cifras que nos respaldan</h2>
@@ -339,15 +340,15 @@
   </section>
 
   <!-- 06 BOTÓN REPETIDO -->
-  <section class="final" id="cta2">
+  <section class="final" id="cta2" data-section="cierre">
     <div class="wrap">
       <h2>Toma <span class="accent">2 minutos</span> saber si tu carro aplica.</h2>
-      <a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Quiero mi beneficio&nbsp;→</span></a>
+      <a class="btn" href="#" data-wa data-loc="cierre_quiero_beneficio"><svg><use href="#wa"/></svg><span class="lbl">Quiero mi beneficio&nbsp;→</span></a>
     </div>
   </section>
 
   <!-- PREGUNTAS FRECUENTES -->
-  <section class="block soft">
+  <section class="block soft" data-section="faq">
     <div class="wrap faq">
       <div class="kicker">Preguntas frecuentes</div>
       <h2>Resolvemos tus dudas</h2>
@@ -386,7 +387,7 @@
         </details>
         <details>
           <summary>¿Cómo puedo saber si mi vehículo específico aplica para estos beneficios?</summary>
-          <div class="answer"><p>Haz clic en <a href="#" data-wa>“Descubre si tu carro aplica”</a> y en pocos segundos te lo diremos.</p></div>
+          <div class="answer"><p>Haz clic en <a href="#" data-wa data-loc="faq_respuesta">“Descubre si tu carro aplica”</a> y en pocos segundos te lo diremos.</p></div>
         </details>
       </div>
     </div>
@@ -404,7 +405,7 @@
   </div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn" href="#" data-wa><svg><use href="#wa"/></svg><span class="lbl">Descubre si tu carro aplica&nbsp;→</span></a></div>
+<div class="sticky" id="sticky"><a class="btn" href="#" data-wa data-loc="boton_fijo_movil"><svg><use href="#wa"/></svg><span class="lbl">Descubre si tu carro aplica&nbsp;→</span></a></div>
 
 <script>
 (() => {
@@ -414,7 +415,9 @@
     politicaUrl: "politica-de-datos.html", // política de tratamiento de datos (página aparte)
     videoSrc: "video-valora-v2.mp4", // video principal (en esta misma carpeta)
   };
-  const MENSAJE = "Hola, vengo de Rappi y quiero saber si mi carro aplica al beneficio.";
+  const REF = window.VALORA_REF ? ` (código ${window.VALORA_REF})` : "";
+  const MENSAJE = "Hola, vengo de Rappi y quiero saber si mi carro aplica al beneficio." + REF;
+  const track = window.vtrack || (() => {});
 
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -475,11 +478,14 @@
     const first = checks.find(([, bad]) => bad);
     if (first) {
       err.textContent = n && n < 10000000 ? "Escribe el precio en millones, por ejemplo 150." : "Completa la marca, la referencia y el precio de compra.";
+      track("calc_error", { field: first[0].id });
       first[0].focus();
       return;
     }
     const msg = `${MENSAJE}\n\n• Marca: ${vMarca}\n• Referencia: ${vRef}\n• Precio de compra: ${cop(n)}`;
     const url = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+    track("calc_submit", { brand: vMarca, model: vRef, price_millones: n / 1e6, estimate_cop: Math.round(n * 0.28) });
+    track("whatsapp_click", { cta_location: "calculadora", cta_text: "Quiero mi beneficio" });
     const w = window.open(url, "_blank");
     if (w) w.opener = null; else location.href = url;
   });
