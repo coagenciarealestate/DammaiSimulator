@@ -4,7 +4,7 @@
    a Microsoft Clarity y, los de contacto, al píxel de Meta. Con ?debug=1 en la URL se ven en la consola. */
 (() => {
   const ANALYTICS = {
-    ga4: "",          // Google Analytics 4, p. ej. "G-XXXXXXXXXX"
+    ga4: "G-6YST406QZW", // Google Analytics 4 de la landing Valora × Rappi
     gtm: "",          // Google Tag Manager, p. ej. "GTM-XXXXXXX" (usar GA4 directo o desde GTM, no ambos)
     clarity: "",      // Microsoft Clarity: mapas de calor y grabaciones de sesión, p. ej. "abcd1234ef"
     metaPixel: "",    // Píxel de Meta, p. ej. "123456789012345"
