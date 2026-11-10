@@ -5,7 +5,7 @@
 (() => {
   const ANALYTICS = {
     ga4: "G-6YST406QZW", // Google Analytics 4 de la landing Valora × Rappi
-    gtm: "",          // Google Tag Manager, p. ej. "GTM-XXXXXXX" (usar GA4 directo o desde GTM, no ambos)
+    gtm: "GTM-WM5CQFB7", // Google Tag Manager. GA4 ya se carga arriba: en GTM no crear otra etiqueta de GA4 con G-6YST406QZW (duplicaría las visitas)
     clarity: "",      // Microsoft Clarity: mapas de calor y grabaciones de sesión, p. ej. "abcd1234ef"
     metaPixel: "",    // Píxel de Meta, p. ej. "123456789012345"
     variante: "rappi_v1",   // versión de la landing, para comparar cambios en el tiempo
