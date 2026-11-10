@@ -87,6 +87,8 @@
   {
     // Clics a WhatsApp con su ubicación en la página
     document.addEventListener("click", e => {
+      const c = e.target.closest("[data-calc]");
+      if (c) track("cta_click", { cta_location: c.dataset.loc || "otro", cta_text: c.textContent.replace(/\s+/g, " ").trim(), destination: "calculadora" });
       const a = e.target.closest("[data-wa]");
       if (a) track("whatsapp_click", { cta_location: a.dataset.loc || "otro", cta_text: a.textContent.replace(/\s+/g, " ").trim() });
       if (e.target.closest(".sound")) track("video_unmute", { video_seconds: Math.round(document.querySelector("#video video")?.currentTime || 0) });
