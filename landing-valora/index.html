@@ -62,9 +62,6 @@
   .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
   .logo-badge { display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 10px; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
   .logo-badge img { height: 34px; width: auto; display: block; }
-  .contact { display: inline-flex; align-items: center; gap: 7px; height: 38px; padding: 0 14px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; box-shadow: 0 0 0 4px rgba(198,242,78,.15); transition: transform .15s; }
-  .contact:hover { transform: translateY(-1px); }
-  .contact svg { width: 18px; height: 18px; flex: none; }
 
   /* ---------- 01 Título (héroe oscuro) ---------- */
   .hero { background: radial-gradient(120% 80% at 80% 0%, var(--brand-deep), var(--brand-dark) 60%); color: #fff; padding: 26px 0 40px; }
@@ -203,9 +200,8 @@
     .sticky { display: none; }
     footer { padding-bottom: 40px; }
   }
-  @media (max-width: 440px) { .contact .wide { display: none; } .promo { font-size: 10.5px; letter-spacing: .08em; } }
+  @media (max-width: 440px) { .promo { font-size: 10.5px; letter-spacing: .08em; } }
   @media (max-width: 380px) {
-    .contact { padding: 0 11px; font-size: 13px; }
     .logo-badge img { height: 30px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -230,7 +226,6 @@
   <div class="promo" role="note">Beneficio por tiempo <span class="limit">limitado</span></div>
   <div class="wrap">
     <a class="logo-badge" href="#" aria-label="Valora Energy"><img src="logo-260.webp" srcset="logo-160.webp 160w, logo-260.webp 260w, logo-400.webp 400w" sizes="(min-width: 900px) 124px, 75px" alt="Valora Energy" width="400" height="181"></a>
-    <a class="contact" href="#calculadora" data-calc data-loc="header_contactanos"><svg><use href="#calc"/></svg>Contáctanos</a>
   </div>
 </header>
 
