@@ -484,10 +484,15 @@
     }
     const msg = `${MENSAJE}\n\n• Marca: ${vMarca}\n• Referencia: ${vRef}\n• Precio de compra: ${cop(n)}`;
     const url = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
-    track("calc_submit", { brand: vMarca, model: vRef, price_millones: n / 1e6, estimate_cop: Math.round(n * 0.28) });
-    track("whatsapp_click", { cta_location: "calculadora", cta_text: "Quiero mi beneficio" });
-    const w = window.open(url, "_blank");
-    if (w) w.opener = null; else location.href = url;
+    // La pestaña se abre ya (dentro del clic, para que el navegador no la bloquee) y recibe WhatsApp cuando los eventos salieron
+    const w = window.open("", "_blank");
+    if (w) w.opener = null;
+    const abrir = () => { if (w && !w.closed) w.location.href = url; else location.href = url; };
+    const enviar = window.vsend || ((evs, next) => { evs.forEach(([nm, pr]) => track(nm, pr)); next(); });
+    enviar([
+      ["calc_submit", { brand: vMarca, model: vRef, price_millones: n / 1e6, estimate_cop: Math.round(n * 0.28) }],
+      ["whatsapp_click", { cta_location: "calculadora", cta_text: "Quiero mi beneficio" }],
+    ], abrir);
   });
 
   // Preguntas frecuentes: al abrir una se cierran las demás

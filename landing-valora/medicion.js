@@ -47,7 +47,7 @@
     window.gtag = function () { window.dataLayer.push(arguments); };
     gtag("js", new Date());
     gtag("set", "user_properties", { ref_code: ref });
-    gtag("config", ANALYTICS.ga4, { page_variant: ANALYTICS.variante, debug_mode: debug || undefined });
+    gtag("config", ANALYTICS.ga4, debug ? { page_variant: ANALYTICS.variante, debug_mode: true } : { page_variant: ANALYTICS.variante });
     load("https://www.googletagmanager.com/gtag/js?id=" + ANALYTICS.ga4);
   }
   if (ANALYTICS.gtm) {
@@ -72,15 +72,24 @@
 
   // ---- Envío de eventos ----
   const META = { whatsapp_click: "Contact", calc_submit: "Lead" };
-  function track(name, params = {}) {
+  function track(name, params = {}, onSent) {
     const data = { ...common, ...params };
     if (ANALYTICS.gtm) window.dataLayer.push({ event: name, ...data });
-    if (ANALYTICS.ga4) gtag("event", name, data);
+    if (ANALYTICS.ga4) gtag("event", name, onSent ? { ...data, event_callback: onSent, event_timeout: 800 } : data);
     if (ANALYTICS.clarity) window.clarity("event", name);
     if (ANALYTICS.metaPixel && META[name]) fbq("track", META[name], params);
     if (debug) console.log("[medición]", name, data);
   }
   window.vtrack = track;
+
+  // Envía los eventos y solo entonces sigue (p. ej. abrir WhatsApp). En celular, al cambiar de app la página se congela
+  // y los eventos que no alcanzaron a salir se pierden; se espera la confirmación de GA4, como máximo 900 ms.
+  window.vsend = (events, next) => {
+    let done = false;
+    const go = () => { if (!done) { done = true; next(); } };
+    events.forEach(([name, params], i) => track(name, params, ANALYTICS.ga4 && i === events.length - 1 ? go : undefined));
+    if (!ANALYTICS.ga4) go(); else setTimeout(go, 900);
+  };
   window.VALORA_REF = ANALYTICS.refEnMensaje ? ref : "";
 
   // ---- Comportamiento en la página (delegado en document: escucha desde el inicio, incluso el arranque automático del video) ----
