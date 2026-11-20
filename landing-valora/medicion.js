@@ -1,7 +1,9 @@
 /* Medición de la landing Valora Energy × Rappi.
    Pegar aquí los IDs de las herramientas. Con todos vacíos la página funciona igual, pero no envía datos a ninguna parte.
-   Cada evento se envía a Google Analytics 4 (gtag), a la capa de datos de Google Tag Manager (dataLayer),
-   a Microsoft Clarity y, los de contacto, al píxel de Meta. Con ?debug=1 en la URL se ven en la consola. */
+   Cada evento se envía al contador propio en cPanel (registro.php, el conteo exacto), a Google Analytics 4 (gtag),
+   a la capa de datos de Google Tag Manager (dataLayer), a Microsoft Clarity y, los de contacto, al píxel de Meta.
+   Con ?debug=1 en la URL se ven en la consola. Con ?interno=1 el navegador queda marcado como interno (agencia, Valora)
+   y sus visitas no cuentan en el panel ni en GA4; ?externo=1 lo desmarca. */
 (() => {
   const ANALYTICS = {
     ga4: "G-6YST406QZW", // Google Analytics 4 de la landing Valora × Rappi
@@ -10,6 +12,7 @@
     metaPixel: "",    // Píxel de Meta, p. ej. "123456789012345"
     variante: "rappi_v1",   // versión de la landing, para comparar cambios en el tiempo
     refEnMensaje: true,     // agrega el código de referencia al mensaje de WhatsApp para cruzar leads con la analítica
+    registro: "https://valoraenergy.com/rappi/registro.php", // contador propio en cPanel (no lo bloquean los bloqueadores de anuncios)
   };
 
   const qs = new URLSearchParams(location.search);
@@ -18,10 +21,15 @@
     try {
       const s = kind === "local" ? localStorage : sessionStorage;
       if (value === undefined) return s.getItem(key);
-      s.setItem(key, value);
+      if (value === null) s.removeItem(key); else s.setItem(key, value);
     } catch (_) { /* almacenamiento bloqueado: se sigue sin persistir */ }
     return value === undefined ? null : value;
   };
+
+  // Navegadores del equipo (agencia, Valora): se excluyen de los conteos
+  if (qs.has("interno")) store("local", "valora_interno", "1");
+  if (qs.has("externo")) store("local", "valora_interno", null);
+  const interno = debug || store("local", "valora_interno") === "1";
 
   // UTM de la visita: se guardan en la sesión para no perderlas al pasar por la política de datos
   const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
@@ -47,7 +55,10 @@
     window.gtag = function () { window.dataLayer.push(arguments); };
     gtag("js", new Date());
     gtag("set", "user_properties", { ref_code: ref });
-    gtag("config", ANALYTICS.ga4, debug ? { page_variant: ANALYTICS.variante, debug_mode: true } : { page_variant: ANALYTICS.variante });
+    const cfg = { page_variant: ANALYTICS.variante };
+    if (debug) cfg.debug_mode = true;
+    if (interno) cfg.traffic_type = "internal"; // lo excluye el filtro "Internal Traffic" de GA4
+    gtag("config", ANALYTICS.ga4, cfg);
     load("https://www.googletagmanager.com/gtag/js?id=" + ANALYTICS.ga4);
   }
   if (ANALYTICS.gtm) {
@@ -70,10 +81,22 @@
     fbq("track", "PageView");
   }
 
+  // ---- Contador propio: cada evento va al servidor de Valora con sendBeacon, que se entrega aunque la persona cambie de app ----
+  function registrar(name, data) {
+    if (!ANALYTICS.registro) return;
+    const body = JSON.stringify({ e: name, d: data, p: location.pathname, h: location.hostname, i: interno ? 1 : 0 });
+    try {
+      const ok = navigator.sendBeacon && navigator.sendBeacon(ANALYTICS.registro, new Blob([body], { type: "text/plain" }));
+      if (!ok) fetch(ANALYTICS.registro, { method: "POST", body, keepalive: true, mode: "no-cors", headers: { "Content-Type": "text/plain" } });
+    } catch (_) { /* sin red: se pierde solo este evento */ }
+  }
+  registrar("page_view", common); // GA4 cuenta su page_view solo; al contador se le envía aquí
+
   // ---- Envío de eventos ----
   const META = { whatsapp_click: "Contact", calc_submit: "Lead" };
   function track(name, params = {}, onSent) {
     const data = { ...common, ...params };
+    registrar(name, data);
     if (ANALYTICS.gtm) window.dataLayer.push({ event: name, ...data });
     if (ANALYTICS.ga4) gtag("event", name, onSent ? { ...data, event_callback: onSent, event_timeout: 800 } : data);
     if (ANALYTICS.clarity) window.clarity("event", name);
@@ -119,15 +142,20 @@
       if (d.matches && d.matches(".faq details") && d.open) track("faq_open", { question: d.querySelector("summary").textContent.trim() });
     }, true);
 
-    // Video: inicio, pausa, reanudación, avance y final
-    const vid = { started: false, quartiles: new Set() };
+    // Video: inicio, pausa, reanudación, avance y final.
+    // El navegador pausa solo el video sin sonido cuando sale de la pantalla o se cambia de pestaña; esas pausas
+    // (y la reanudación que les sigue) no las hizo la persona y no se cuentan.
+    const vid = { started: false, quartiles: new Set(), autoPausa: false };
+    const enPantalla = v => { const r = v.getBoundingClientRect(); return document.visibilityState === "visible" && r.bottom > 0 && r.top < innerHeight; };
     document.addEventListener("play", e => {
       const v = e.target; if (!v.closest || !v.closest("#video")) return;
       if (!vid.started) { vid.started = true; track("video_start", { muted: v.muted, autoplay: v.currentTime < 1 }); }
+      else if (vid.autoPausa) vid.autoPausa = false;
       else if (v.currentTime > 0.5) track("video_resume", { video_seconds: Math.round(v.currentTime), muted: v.muted });
     }, true);
     document.addEventListener("pause", e => {
       const v = e.target; if (!v.closest || !v.closest("#video") || v.ended) return;
+      if (!enPantalla(v)) { vid.autoPausa = true; return; }
       track("video_pause", { video_seconds: Math.round(v.currentTime), muted: v.muted });
     }, true);
     document.addEventListener("timeupdate", e => {
