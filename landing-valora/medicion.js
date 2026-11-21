@@ -1,7 +1,8 @@
 /* Medición de la landing Valora Energy × Rappi.
    Pegar aquí los IDs de las herramientas. Con todos vacíos la página funciona igual, pero no envía datos a ninguna parte.
    Cada evento se envía al contador propio en cPanel (registro.php, el conteo exacto), a Google Analytics 4 (gtag),
-   a la capa de datos de Google Tag Manager (dataLayer), a PostHog, a Microsoft Clarity y, los de contacto, al píxel de Meta.
+   a la capa de datos de Google Tag Manager (dataLayer), a Microsoft Clarity y, los de contacto, al píxel de Meta.
+   A PostHog los reenvía el servidor (registro.php); en el navegador PostHog solo graba sesiones y mapas de calor.
    Con ?debug=1 en la URL se ven en la consola. Con ?interno=1 el navegador queda marcado como interno (agencia, Valora)
    y sus visitas no cuentan en el panel ni en GA4; ?externo=1 lo desmarca. */
 (() => {
@@ -10,7 +11,7 @@
     gtm: "GTM-WM5CQFB7", // Google Tag Manager. GA4 ya se carga arriba: en GTM no crear otra etiqueta de GA4 con G-6YST406QZW (duplicaría las visitas)
     clarity: "",      // Microsoft Clarity: mapas de calor y grabaciones de sesión, p. ej. "abcd1234ef"
     metaPixel: "",    // Píxel de Meta, p. ej. "123456789012345"
-    posthog: "",      // PostHog: Project API key, p. ej. "phc_XXXXXXXXXXXXXXXXXXXXXXXX"
+    posthog: "",      // PostHog (solo grabaciones y mapas de calor; los eventos los envía registro.php): Project API key "phc_…"
     posthogHost: "https://us.i.posthog.com", // región de la cuenta de PostHog: EE. UU. "https://us.i.posthog.com" o Europa "https://eu.i.posthog.com"
     variante: "rappi_v1",   // versión de la landing, para comparar cambios en el tiempo
     refEnMensaje: true,     // agrega el código de referencia al mensaje de WhatsApp para cruzar leads con la analítica
@@ -46,6 +47,15 @@
     const abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     ref = "R-" + Array.from({ length: 5 }, () => abc[Math.floor(Math.random() * abc.length)]).join("");
     store("local", "valora_ref", ref);
+  }
+
+  // Sesión de la pestaña (UUID v7, el formato de PostHog): une los eventos del servidor con la grabación de esa visita
+  let sid = store("session", "valora_sid");
+  if (!sid) {
+    const h = Date.now().toString(16).padStart(12, "0");
+    const r = Array.from(crypto.getRandomValues(new Uint8Array(10)), b => b.toString(16).padStart(2, "0")).join("");
+    sid = `${h.slice(0, 8)}-${h.slice(8)}-7${r.slice(0, 3)}-${((parseInt(r.slice(3, 4), 16) & 3) | 8).toString(16)}${r.slice(4, 7)}-${r.slice(7, 19)}`;
+    store("session", "valora_sid", sid);
   }
 
   const common = { page_variant: ANALYTICS.variante, ref_code: ref, ...utm };
@@ -86,15 +96,20 @@
   if (ANALYTICS.posthog) {
     // Fragmento oficial de PostHog: deja una cola mientras carga la librería
     !function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags on onFeatureFlags onSessionId identify setPersonProperties group resetGroups reset get_distinct_id get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording captureException get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing debug".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
-    posthog.init(ANALYTICS.posthog, { api_host: ANALYTICS.posthogHost, person_profiles: "identified_only", capture_pageview: true, capture_pageleave: true });
-    // Propiedades en todos los eventos de PostHog: código, versión, UTM y si es del equipo (para el filtro de usuarios internos)
+    // En el navegador PostHog solo graba sesiones y mapas de calor. Los eventos (visitas, botones, calculadora, WhatsApp)
+    // los envía el servidor desde registro.php, con la misma persona (código) y la misma sesión: así no se duplican.
+    posthog.init(ANALYTICS.posthog, {
+      api_host: ANALYTICS.posthogHost, person_profiles: "identified_only",
+      autocapture: false, capture_pageview: false, capture_pageleave: false, enable_heatmaps: true,
+      bootstrap: { distinctID: ref, sessionID: sid },
+    });
     posthog.register({ ...common, is_internal: interno });
   }
 
   // ---- Contador propio: cada evento va al servidor de Valora con sendBeacon, que se entrega aunque la persona cambie de app ----
   function registrar(name, data) {
     if (!ANALYTICS.registro) return;
-    const body = JSON.stringify({ e: name, d: data, p: location.pathname, h: location.hostname, i: interno ? 1 : 0 });
+    const body = JSON.stringify({ e: name, d: data, p: location.pathname, h: location.hostname, u: location.href, r: document.referrer, s: sid, i: interno ? 1 : 0 });
     try {
       const ok = navigator.sendBeacon && navigator.sendBeacon(ANALYTICS.registro, new Blob([body], { type: "text/plain" }));
       if (!ok) fetch(ANALYTICS.registro, { method: "POST", body, keepalive: true, mode: "no-cors", headers: { "Content-Type": "text/plain" } });
@@ -109,8 +124,6 @@
     registrar(name, data);
     if (ANALYTICS.gtm) window.dataLayer.push({ event: name, ...data });
     if (ANALYTICS.ga4) gtag("event", name, onSent ? { ...data, event_callback: onSent, event_timeout: 800 } : data);
-    // Los de contacto salen de inmediato en PostHog (sin esperar el lote), porque después se abre WhatsApp
-    if (ANALYTICS.posthog) posthog.capture(name, params, META[name] ? { send_instantly: true } : undefined);
     if (ANALYTICS.clarity) window.clarity("event", name);
     if (ANALYTICS.metaPixel && META[name]) fbq("track", META[name], params);
     if (debug) console.log("[medición]", name, data);
