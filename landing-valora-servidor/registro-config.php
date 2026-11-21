@@ -7,7 +7,7 @@ const PANEL_CLAVE = 'CAMBIAR-ESTA-CLAVE';
 
 // PostHog: el servidor reenvía cada evento a PostHog. Como sale del servidor de Valora y no del navegador,
 // los bloqueadores de anuncios no lo afectan y PostHog recibe todos los eventos.
-const POSTHOG_KEY = '';                            // Project API key del proyecto en PostHog (empieza por phc_)
+const POSTHOG_KEY = 'phc_wRpkBKZNiDWAyocy7aTgZcXanofVPfHTqE2T7K3Key8V';                          // Project API key del proyecto en PostHog (empieza por phc_)
 const POSTHOG_HOST = 'https://us.i.posthog.com';   // región: EE. UU. https://us.i.posthog.com · Europa https://eu.i.posthog.com
 
 // Únicos eventos que se guardan; cualquier otro nombre se descarta.

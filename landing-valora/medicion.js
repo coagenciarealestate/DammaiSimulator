@@ -11,7 +11,7 @@
     gtm: "GTM-WM5CQFB7", // Google Tag Manager. GA4 ya se carga arriba: en GTM no crear otra etiqueta de GA4 con G-6YST406QZW (duplicaría las visitas)
     clarity: "",      // Microsoft Clarity: mapas de calor y grabaciones de sesión, p. ej. "abcd1234ef"
     metaPixel: "",    // Píxel de Meta, p. ej. "123456789012345"
-    posthog: "",      // PostHog (solo grabaciones y mapas de calor; los eventos los envía registro.php): Project API key "phc_…"
+    posthog: "phc_wRpkBKZNiDWAyocy7aTgZcXanofVPfHTqE2T7K3Key8V", // PostHog (solo grabaciones y mapas de calor; los eventos los envía registro.php): Project API key "phc_…"
     posthogHost: "https://us.i.posthog.com", // región de la cuenta de PostHog: EE. UU. "https://us.i.posthog.com" o Europa "https://eu.i.posthog.com"
     variante: "rappi_v1",   // versión de la landing, para comparar cambios en el tiempo
     refEnMensaje: true,     // agrega el código de referencia al mensaje de WhatsApp para cruzar leads con la analítica
