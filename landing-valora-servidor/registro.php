@@ -46,7 +46,7 @@ $fila = [
     $campo('estimate_cop'),
     $campo('percent'),
     $campo('question'),
-    $campo('field') !== '' ? $campo('field') : ($campo('concept') !== '' ? $campo('concept') : $campo('payment_status')),
+    $campo('field') !== '' ? $campo('field') : ($campo('payment_status') !== '' ? $campo('payment_status') : $campo('concept')),
     $limpio($datos['p'] ?? ''),
     $limpio($datos['h'] ?? ''),
     $dispositivo,

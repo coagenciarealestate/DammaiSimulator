@@ -96,8 +96,8 @@ if (isset($_GET['descargar'])) {
     exit;
 }
 
-// La página de pagos (pagar.html) va en su propia sección: no suma a las visitas ni a la conversión de la landing
-$es_pago = fn($r) => substr($r['pagina'], -10) === 'pagar.html' || strpos($r['evento'], 'payment_') === 0;
+// Las páginas de pagos (pagar.html y gracias.html) van en su propia sección: no suman a las visitas ni a la conversión de la landing
+$es_pago = fn($r) => preg_match('~/(pagar|gracias)\.html$~', $r['pagina']) || strpos($r['evento'], 'payment_') === 0;
 $filas_pago = array_values(array_filter($filas, $es_pago));
 $filas = array_values(array_filter($filas, fn($r) => !$es_pago($r)));
 
@@ -223,15 +223,20 @@ echo '</table>';
 echo '<h2>Pagos con Bold (pagar.html)</h2><p class="nota">Aquí se ve quién fue a pagar y qué concepto eligió. El pago real (valor y aprobación) se confirma en el panel de Bold.</p>';
 $pv = []; $pc = []; $por_concepto = [];
 foreach ($filas_pago as $r) {
-    if ($r['evento'] === 'page_view' && $r['codigo'] !== '') $pv[$r['codigo']] = true;
+    if ($r['evento'] === 'page_view' && $r['codigo'] !== '' && substr($r['pagina'], -10) === 'pagar.html') $pv[$r['codigo']] = true;
     if ($r['evento'] === 'payment_click') {
         $pc[] = $r;
         $por_concepto[$r['campo']] = ($por_concepto[$r['campo']] ?? 0) + 1;
     }
 }
-$aprobados = count(array_filter($filas_pago, fn($r) => $r['evento'] === 'payment_result' && $r['campo'] === 'approved'));
+$resultados = [];
+foreach ($filas_pago as $r) {
+    if ($r['evento'] === 'payment_result') $resultados[$r['campo']] = ($resultados[$r['campo']] ?? 0) + 1;
+}
+$aprobados = $resultados['approved'] ?? 0;
+$no_completados = ($resultados['rejected'] ?? 0) + ($resultados['failed'] ?? 0);
 echo '<div class="kpis">';
-foreach ([['Personas en la página de pagos', count($pv)], ['Clics en "Ir a pagar con Bold"', count($pc)], ['Pagos aprobados que volvieron de Bold', $aprobados]] as [$tt, $n]) {
+foreach ([['Personas en la página de pagos', count($pv)], ['Clics en "Ir a pagar con Bold"', count($pc)], ['Volvieron de Bold con pago aprobado', $aprobados], ['Volvieron de Bold en proceso', $resultados['pending'] ?? 0], ['Volvieron de Bold sin completar el pago', $no_completados]] as [$tt, $n]) {
     echo '<div class="kpi"><b>' . $e($n) . '</b><span>' . $e($tt) . '</span></div>';
 }
 echo '</div>';

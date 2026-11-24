@@ -95,16 +95,6 @@
 
   .paso2 p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }
 
-  .estado { display: none; border-radius: 14px; padding: 16px; margin: 0 0 18px; font-size: 15px; }
-  .estado.show { display: block; }
-  .estado h2 { font-size: 19px; margin-bottom: 4px; }
-  .estado p { margin: 0; }
-  .estado.ok { background: #e8f7f2; border: 1px solid #b6e6d8; }
-  .estado.ok h2 { color: var(--ok); }
-  .estado.pend { background: #fdf6e7; border: 1px solid #f2dfb3; }
-  .estado.pend h2 { color: var(--warn); }
-  .estado.bad { background: #fdecea; border: 1px solid #f5c6c0; }
-  .estado.bad h2 { color: var(--bad); }
 
   .nota { text-align: center; color: var(--muted); font-size: 13px; margin: 0 auto 40px; }
 
@@ -145,8 +135,6 @@
 
 <main class="wrap">
   <div class="card">
-    <div class="estado" id="estado" role="status" aria-live="polite"></div>
-
     <form id="pago" novalidate>
       <h2 class="step"><b>1</b>¿Qué vas a pagar?</h2>
       <fieldset class="conceptos">
@@ -201,7 +189,7 @@
     // Link de pago de Valora en Bold (monto abierto: el cliente escribe el valor). Se usa mientras no haya llave de identidad.
     link: "https://checkout.bold.co/payment/LNK_NNAZVX62BF",
     // Llave de identidad del Botón de pagos (Bold → Integraciones → Llaves de integración → Botón de pagos → Producción).
-    // Es pública. Con ella el concepto elegido viaja a Bold como descripción del pago y Bold devuelve al cliente a esta página.
+    // Es pública. Con ella el concepto elegido viaja a Bold como descripción del pago y, al terminar, Bold lleva al cliente a gracias.html.
     apiKey: "",
   };
   const WHATSAPP = "573161133010";
@@ -260,6 +248,8 @@
     }
     const concepto = textoConcepto();
     actualizarWhatsApp();
+    // gracias.html muestra el concepto y arma el mensaje del comprobante
+    try { localStorage.setItem("valora_pago", JSON.stringify({ concepto, t: Date.now() })); } catch (_) {}
 
     if (!BOLD.apiKey) {
       track("payment_click", { concept: concepto, pay_mode: "link" });
@@ -272,14 +262,15 @@
       await cargarBold();
       const ref = (window.VALORA_REF || "WEB").replace(/[^A-Za-z0-9_-]/g, "");
       const orderId = `VAL-${ref}-${Date.now()}`;
-      const vuelta = `${location.origin}${location.pathname}`;
+      const aqui = `${location.origin}${location.pathname}`;
+      const gracias = new URL("gracias.html", location.href).href;
       track("payment_click", { concept: concepto, pay_mode: "boton", order_id: orderId });
       new window.BoldCheckout({
         apiKey: BOLD.apiKey,
         orderId,
         description: concepto.slice(0, 100),
-        redirectionUrl: vuelta,
-        originUrl: vuelta,
+        redirectionUrl: gracias,
+        originUrl: aqui,
         extraData1: ref.slice(0, 60),
       }).open();
     } catch (_) {
@@ -291,23 +282,8 @@
     }
   });
 
-  // ---- Regreso desde Bold: ?bold-order-id=…&bold-tx-status=approved|pending|rejected|failed ----
-  const qs = new URLSearchParams(location.search);
-  const status = qs.get("bold-tx-status");
-  if (status) {
-    const box = $("#estado");
-    const msj = {
-      approved: ["ok", "¡Pago recibido!", "Gracias. Envíanos el comprobante por WhatsApp para continuar tu proceso."],
-      pending: ["pend", "Tu pago está en proceso", "Bold lo está confirmando. Te llegará la respuesta al correo; si se aprueba, envíanos el comprobante."],
-      rejected: ["bad", "El pago no se completó", "No se realizó ningún cobro. Puedes intentarlo de nuevo con otro medio de pago."],
-      failed: ["bad", "El pago no se completó", "No se realizó ningún cobro. Puedes intentarlo de nuevo con otro medio de pago."],
-    }[status] || ["pend", "Revisa tu pago", "Si Bold te envió el comprobante, compártelo con nosotros por WhatsApp."];
-    box.className = `estado show ${msj[0]}`;
-    box.innerHTML = `<h2></h2><p></p>`;
-    box.querySelector("h2").textContent = msj[1];
-    box.querySelector("p").textContent = msj[2];
-    track("payment_result", { payment_status: status, order_id: (qs.get("bold-order-id") || "").slice(0, 60) });
-  }
+  // ---- Regreso desde Bold a esta página (versiones anteriores): se pasa a gracias.html con el mismo estado ----
+  if (new URLSearchParams(location.search).has("bold-tx-status")) location.replace("gracias.html" + location.search);
 
   actualizarWhatsApp();
 })();
