@@ -46,7 +46,7 @@ $fila = [
     $campo('estimate_cop'),
     $campo('percent'),
     $campo('question'),
-    $campo('field'),
+    $campo('field') !== '' ? $campo('field') : ($campo('concept') !== '' ? $campo('concept') : $campo('payment_status')),
     $limpio($datos['p'] ?? ''),
     $limpio($datos['h'] ?? ''),
     $dispositivo,
@@ -83,7 +83,8 @@ if (POSTHOG_KEY !== '') {
 function enviar_a_posthog(array $datos, array $p, string $dispositivo, callable $limpio): void
 {
     $texto = ['page_variant', 'ref_code', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
-        'cta_location', 'cta_text', 'destination', 'section', 'brand', 'model', 'price_bucket', 'field', 'question'];
+        'cta_location', 'cta_text', 'destination', 'section', 'brand', 'model', 'price_bucket', 'field', 'question',
+        'concept', 'pay_mode', 'order_id', 'payment_status'];
     $numero = ['percent', 'price_millones', 'estimate_cop', 'video_seconds'];
     $logico = ['muted', 'autoplay'];
     $props = [];

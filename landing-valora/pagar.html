@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pagos · Valora Energy</title>
+<meta name="description" content="Paga de forma segura con Bold los derechos de estudio, la consultoría u otros conceptos que te confirmó Valora Energy.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b1f24">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="medicion.js"></script>
+<style>
+  /* Misma identidad de la landing: encabezado oscuro, tarjeta blanca y botón lima. */
+  :root {
+    --brand-dark: #0b1f24;
+    --brand-deep: #10343a;
+    --brand: #13a38a;
+    --accent: #c6f24e;
+    --accent-ink: #0b1f24;
+    --ink: #10201f;
+    --muted: #5a6b69;
+    --line: #dfe7e5;
+    --bg: #ffffff;
+    --bg-soft: #f3f7f6;
+    --ok: #13a38a;
+    --warn: #b7791f;
+    --bad: #c0392b;
+    --display: "Sora", "Helvetica Neue", Arial, sans-serif;
+    --ui: "Inter", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg-soft); color: var(--ink); font-family: var(--ui); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: var(--brand); }
+  h1, h2 { font-family: var(--display); line-height: 1.2; margin: 0; letter-spacing: -.01em; }
+  .wrap { width: 100%; max-width: 560px; margin: 0 auto; padding: 0 16px; }
+
+  .top { background: var(--brand-dark); }
+  .top .wrap { max-width: 1080px; display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 64px; }
+  .logo-badge { display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 10px; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+  .logo-badge img { height: 34px; width: auto; }
+  .secure { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.8); font-size: 13px; font-weight: 600; }
+  .secure svg { width: 16px; height: 16px; color: var(--accent); }
+
+  .intro { background: radial-gradient(120% 80% at 80% 0%, var(--brand-deep), var(--brand-dark) 60%); color: #fff; padding: 30px 0 54px; }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(198,242,78,.2); }
+  .intro h1 { font-size: clamp(27px, 7vw, 38px); margin-top: 10px; }
+  .intro p { color: rgba(255,255,255,.82); margin: 12px 0 0; }
+
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 22px 18px; margin: -34px auto 18px; box-shadow: 0 18px 44px -28px rgba(11,31,36,.45); }
+  .step { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 17px; margin: 0 0 12px; }
+  .step b { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--brand-dark); color: var(--accent); font-size: 14px; flex: none; }
+  .step + .hint { margin: -6px 0 12px; color: var(--muted); font-size: 14.5px; }
+
+  .conceptos { display: grid; gap: 10px; margin: 0 0 8px; padding: 0; border: 0; }
+  .conceptos legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .op { position: relative; display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 12px 14px; border: 2px solid var(--line); border-radius: 14px; background: #fff; cursor: pointer; transition: border-color .15s, background .15s; }
+  .op input { position: absolute; opacity: 0; pointer-events: none; }
+  .op .dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #b8c6c3; flex: none; display: grid; place-items: center; transition: border-color .15s; }
+  .op .dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--brand-dark); transform: scale(0); transition: transform .15s; }
+  .op strong { display: block; font-family: var(--display); font-size: 16px; }
+  .op span.sub { display: block; color: var(--muted); font-size: 13.5px; }
+  .op:has(input:checked) { border-color: var(--brand-dark); background: #f6fbe6; }
+  .op:has(input:checked) .dot { border-color: var(--brand-dark); }
+  .op:has(input:checked) .dot::after { transform: scale(1); }
+  .op:has(input:focus-visible) { outline: 3px solid var(--brand); outline-offset: 2px; }
+
+  .otro { display: none; margin: 4px 0 8px; }
+  .otro.show { display: block; }
+  .otro label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .otro input { width: 100%; min-height: 50px; padding: 12px 14px; border: 2px solid var(--line); border-radius: 12px; font: inherit; color: var(--ink); background: #fff; }
+  .otro input:focus { outline: none; border-color: var(--brand); }
+  .otro small { display: block; color: var(--bad); font-size: 13px; margin-top: 6px; min-height: 1em; }
+
+  hr { border: 0; border-top: 1px solid var(--line); margin: 20px 0; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; padding: 14px 24px; border: 0; border-radius: 14px; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 700; font-size: 18px; text-decoration: none; cursor: pointer; box-shadow: 0 8px 24px rgba(198,242,78,.35); transition: transform .15s, box-shadow .15s; }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(198,242,78,.45); }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .btn[disabled] { opacity: .6; cursor: progress; }
+  .btn-wa { background: #fff; color: var(--brand-dark); border: 2px solid var(--brand-dark); box-shadow: none; font-size: 16px; min-height: 52px; }
+  .btn-wa:hover { box-shadow: none; background: var(--bg-soft); }
+
+  .como { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; color: var(--muted); font-size: 14.5px; }
+  .como li { display: flex; gap: 8px; }
+  .como li::before { content: "✓"; color: var(--brand); font-weight: 700; }
+
+  .medios { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .medios span { font-size: 12.5px; font-weight: 600; color: var(--brand-dark); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; }
+
+  .paso2 p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }
+
+  .estado { display: none; border-radius: 14px; padding: 16px; margin: 0 0 18px; font-size: 15px; }
+  .estado.show { display: block; }
+  .estado h2 { font-size: 19px; margin-bottom: 4px; }
+  .estado p { margin: 0; }
+  .estado.ok { background: #e8f7f2; border: 1px solid #b6e6d8; }
+  .estado.ok h2 { color: var(--ok); }
+  .estado.pend { background: #fdf6e7; border: 1px solid #f2dfb3; }
+  .estado.pend h2 { color: var(--warn); }
+  .estado.bad { background: #fdecea; border: 1px solid #f5c6c0; }
+  .estado.bad h2 { color: var(--bad); }
+
+  .nota { text-align: center; color: var(--muted); font-size: 13px; margin: 0 auto 40px; }
+
+  footer { background: #071417; color: rgba(255,255,255,.6); font-size: 13.5px; padding: 26px 0 34px; }
+  footer p { margin: 0 0 8px; }
+  footer a { color: rgba(255,255,255,.85); }
+
+  @media (min-width: 900px) {
+    .top .wrap { height: 80px; }
+    .top .logo-badge { padding: 6px 12px; border-radius: 12px; }
+    .top .logo-badge img { height: 56px; }
+    .intro { padding: 44px 0 64px; }
+    .card { padding: 30px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="ico-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo-badge" href="index.html" aria-label="Valora Energy, ir al inicio"><img src="logo-260.webp" srcset="logo-160.webp 160w, logo-260.webp 260w, logo-400.webp 400w" sizes="(min-width: 900px) 124px, 75px" alt="Valora Energy" width="400" height="181"></a>
+    <span class="secure"><svg><use href="#lock"/></svg>Pago seguro con Bold</span>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <div class="kicker">Pagos Valora Energy</div>
+    <h1>Realiza tu pago aquí</h1>
+    <p>Elige el concepto y paga el valor que te confirmó tu asesor. El pago se procesa en la pasarela segura de Bold.</p>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="card">
+    <div class="estado" id="estado" role="status" aria-live="polite"></div>
+
+    <form id="pago" novalidate>
+      <h2 class="step"><b>1</b>¿Qué vas a pagar?</h2>
+      <fieldset class="conceptos">
+        <legend>Concepto de pago</legend>
+        <label class="op"><input type="radio" name="concepto" value="Derechos de estudio" checked><span class="dot"></span><span><strong>Derechos de estudio</strong><span class="sub">Inicio del proceso de devolución</span></span></label>
+        <label class="op"><input type="radio" name="concepto" value="Consultoría"><span class="dot"></span><span><strong>Consultoría</strong><span class="sub">Servicio de consultoría acordado</span></span></label>
+        <label class="op"><input type="radio" name="concepto" value="Otros"><span class="dot"></span><span><strong>Otros</strong><span class="sub">Otro concepto acordado con tu asesor</span></span></label>
+      </fieldset>
+      <div class="otro" id="otroBox">
+        <label for="otro">¿Cuál concepto?</label>
+        <input id="otro" name="otro" type="text" maxlength="60" autocomplete="off" placeholder="Ej.: Saldo del proceso">
+        <small id="otroErr"></small>
+      </div>
+
+      <hr>
+
+      <h2 class="step"><b>2</b>Paga con Bold</h2>
+      <p class="hint">Al tocar el botón se abre Bold. Allí escribes el valor que te confirmamos y eliges cómo pagar.</p>
+      <button class="btn" type="submit" id="pagar"><svg><use href="#lock"/></svg><span>Ir a pagar con Bold&nbsp;→</span></button>
+      <div class="medios" aria-label="Medios de pago">
+        <span>Tarjeta de crédito</span><span>PSE</span><span>Botón Bancolombia</span><span>Nequi</span><span>QR Bold</span>
+      </div>
+      <ul class="como">
+        <li>El comercio que verás en Bold es VALORA ENERGY SAS.</li>
+        <li>Al terminar, Bold te muestra el comprobante del pago.</li>
+      </ul>
+    </form>
+
+    <hr>
+
+    <div class="paso2">
+      <h2 class="step"><b>3</b>Envíanos tu comprobante</h2>
+      <p>Cuando termines, mándanos el comprobante por WhatsApp para continuar tu proceso.</p>
+      <a class="btn btn-wa" id="wa" href="#" target="_blank" rel="noopener" data-wa data-loc="pago_comprobante"><svg><use href="#ico-wa"/></svg><span>Enviar comprobante</span></a>
+    </div>
+  </div>
+
+  <p class="nota">¿Tienes dudas sobre el valor? Escríbele a tu asesor antes de pagar.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>VALORA ENERGY S.A.S. · Pagos procesados por Bold.co</p>
+    <p><a href="politica-de-datos.html" id="politica">Política de tratamiento de datos</a></p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // ---- Configuración de pagos ----
+  const BOLD = {
+    // Link de pago de Valora en Bold (monto abierto: el cliente escribe el valor). Se usa mientras no haya llave de identidad.
+    link: "https://checkout.bold.co/payment/LNK_NNAZVX62BF",
+    // Llave de identidad del Botón de pagos (Bold → Integraciones → Llaves de integración → Botón de pagos → Producción).
+    // Es pública. Con ella el concepto elegido viaja a Bold como descripción del pago y Bold devuelve al cliente a esta página.
+    apiKey: "",
+  };
+  const WHATSAPP = "573161133010";
+
+  const $ = s => document.querySelector(s);
+  const track = window.vtrack || (() => {});
+  const form = $("#pago"), otroBox = $("#otroBox"), otro = $("#otro"), otroErr = $("#otroErr"), btn = $("#pagar");
+
+  const conceptoElegido = () => form.concepto.value;
+  const textoConcepto = () => {
+    const c = conceptoElegido();
+    if (c !== "Otros") return c;
+    // Bold no acepta URLs en la descripción
+    const t = otro.value.replace(/https?:\/\/\S*|www\.\S*|\S+\.(com|co|net|org)\S*/gi, "").replace(/\s+/g, " ").trim();
+    return t ? `Otros: ${t}` : "Otros";
+  };
+
+  const actualizarWhatsApp = () => {
+    const ref = window.VALORA_REF ? ` (código ${window.VALORA_REF})` : "";
+    const msg = `Hola, acabo de pagar en Bold el concepto "${textoConcepto()}". Les envío el comprobante.${ref}`;
+    $("#wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  };
+
+  form.addEventListener("change", e => {
+    if (e.target.name !== "concepto") return;
+    const esOtro = conceptoElegido() === "Otros";
+    otroBox.classList.toggle("show", esOtro);
+    if (esOtro) otro.focus();
+    otroErr.textContent = "";
+    track("payment_concept", { concept: conceptoElegido() });
+    actualizarWhatsApp();
+  });
+  otro.addEventListener("input", () => { otroErr.textContent = ""; actualizarWhatsApp(); });
+
+  // Bold carga su script solo cuando hay llave de identidad
+  const cargarBold = () => new Promise((ok, mal) => {
+    if (window.BoldCheckout) return ok();
+    const s = document.createElement("script");
+    s.src = "https://checkout.bold.co/library/boldPaymentButton.js";
+    s.onload = () => window.BoldCheckout ? ok() : mal();
+    s.onerror = mal;
+    document.head.appendChild(s);
+  });
+
+  const abrirLink = () => {
+    const w = window.open(BOLD.link, "_blank");
+    if (w) w.opener = null; else location.href = BOLD.link;
+  };
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    if (conceptoElegido() === "Otros" && otro.value.trim().length < 2) {
+      otroErr.textContent = "Escribe el concepto que vas a pagar.";
+      otro.focus();
+      return;
+    }
+    const concepto = textoConcepto();
+    actualizarWhatsApp();
+
+    if (!BOLD.apiKey) {
+      track("payment_click", { concept: concepto, pay_mode: "link" });
+      abrirLink();
+      return;
+    }
+
+    btn.disabled = true;
+    try {
+      await cargarBold();
+      const ref = (window.VALORA_REF || "WEB").replace(/[^A-Za-z0-9_-]/g, "");
+      const orderId = `VAL-${ref}-${Date.now()}`;
+      const vuelta = `${location.origin}${location.pathname}`;
+      track("payment_click", { concept: concepto, pay_mode: "boton", order_id: orderId });
+      new window.BoldCheckout({
+        apiKey: BOLD.apiKey,
+        orderId,
+        description: concepto.slice(0, 100),
+        redirectionUrl: vuelta,
+        originUrl: vuelta,
+        extraData1: ref.slice(0, 60),
+      }).open();
+    } catch (_) {
+      // Si el script de Bold no carga, se abre el link de pago para no perder el pago
+      track("payment_click", { concept: concepto, pay_mode: "link" });
+      abrirLink();
+    } finally {
+      setTimeout(() => { btn.disabled = false; }, 1500);
+    }
+  });
+
+  // ---- Regreso desde Bold: ?bold-order-id=…&bold-tx-status=approved|pending|rejected|failed ----
+  const qs = new URLSearchParams(location.search);
+  const status = qs.get("bold-tx-status");
+  if (status) {
+    const box = $("#estado");
+    const msj = {
+      approved: ["ok", "¡Pago recibido!", "Gracias. Envíanos el comprobante por WhatsApp para continuar tu proceso."],
+      pending: ["pend", "Tu pago está en proceso", "Bold lo está confirmando. Te llegará la respuesta al correo; si se aprueba, envíanos el comprobante."],
+      rejected: ["bad", "El pago no se completó", "No se realizó ningún cobro. Puedes intentarlo de nuevo con otro medio de pago."],
+      failed: ["bad", "El pago no se completó", "No se realizó ningún cobro. Puedes intentarlo de nuevo con otro medio de pago."],
+    }[status] || ["pend", "Revisa tu pago", "Si Bold te envió el comprobante, compártelo con nosotros por WhatsApp."];
+    box.className = `estado show ${msj[0]}`;
+    box.innerHTML = `<h2></h2><p></p>`;
+    box.querySelector("h2").textContent = msj[1];
+    box.querySelector("p").textContent = msj[2];
+    track("payment_result", { payment_status: status, order_id: (qs.get("bold-order-id") || "").slice(0, 60) });
+  }
+
+  actualizarWhatsApp();
+})();
+</script>
+</body>
+</html>

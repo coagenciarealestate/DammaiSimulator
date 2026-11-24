@@ -16,6 +16,7 @@ const EVENTOS = [
     'calc_start', 'calc_brand', 'calc_model', 'calc_price', 'calc_error', 'calc_submit', 'whatsapp_click',
     'video_start', 'video_unmute', 'video_pause', 'video_resume', 'video_progress', 'video_complete',
     'faq_open', 'policy_click',
+    'payment_concept', 'payment_click', 'payment_result',
 ];
 
 // Columnas del archivo de registro, en orden.

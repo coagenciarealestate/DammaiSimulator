@@ -96,6 +96,11 @@ if (isset($_GET['descargar'])) {
     exit;
 }
 
+// La página de pagos (pagar.html) va en su propia sección: no suma a las visitas ni a la conversión de la landing
+$es_pago = fn($r) => substr($r['pagina'], -10) === 'pagar.html' || strpos($r['evento'], 'payment_') === 0;
+$filas_pago = array_values(array_filter($filas, $es_pago));
+$filas = array_values(array_filter($filas, fn($r) => !$es_pago($r)));
+
 // ---- Cálculos ----
 $total = [];      // evento => cantidad
 $personas = [];   // evento => [codigo => true]
@@ -214,6 +219,34 @@ foreach ($leads as $r) {
     echo '<tr><td>' . $e($r['fecha']) . '</td><td>' . $e($r['codigo']) . '</td><td>' . $e($r['marca']) . '</td><td>' . $e($r['referencia']) . '</td><td class="n">' . $e($r['precio_millones']) . '</td><td>' . $e($r['utm_source'] ?: '(sin UTM)') . '</td><td>' . $e($r['utm_content'] ?: '—') . '</td><td>' . $e($r['dispositivo']) . '</td></tr>';
 }
 echo '</table>';
+
+echo '<h2>Pagos con Bold (pagar.html)</h2><p class="nota">Aquí se ve quién fue a pagar y qué concepto eligió. El pago real (valor y aprobación) se confirma en el panel de Bold.</p>';
+$pv = []; $pc = []; $por_concepto = [];
+foreach ($filas_pago as $r) {
+    if ($r['evento'] === 'page_view' && $r['codigo'] !== '') $pv[$r['codigo']] = true;
+    if ($r['evento'] === 'payment_click') {
+        $pc[] = $r;
+        $por_concepto[$r['campo']] = ($por_concepto[$r['campo']] ?? 0) + 1;
+    }
+}
+$aprobados = count(array_filter($filas_pago, fn($r) => $r['evento'] === 'payment_result' && $r['campo'] === 'approved'));
+echo '<div class="kpis">';
+foreach ([['Personas en la página de pagos', count($pv)], ['Clics en "Ir a pagar con Bold"', count($pc)], ['Pagos aprobados que volvieron de Bold', $aprobados]] as [$tt, $n]) {
+    echo '<div class="kpi"><b>' . $e($n) . '</b><span>' . $e($tt) . '</span></div>';
+}
+echo '</div>';
+if ($pc) {
+    arsort($por_concepto);
+    echo '<div class="grid2"><div><table><tr><th>Concepto</th><th class="n">Clics para pagar</th></tr>';
+    foreach ($por_concepto as $c => $n) {
+        echo '<tr><td>' . $e($c) . '</td><td class="n">' . $n . '</td></tr>';
+    }
+    echo '</table></div><div><table><tr><th>Fecha</th><th>Código</th><th>Concepto</th><th>Dispositivo</th></tr>';
+    foreach (array_reverse($pc) as $r) {
+        echo '<tr><td>' . $e($r['fecha']) . '</td><td>' . $e($r['codigo']) . '</td><td>' . $e($r['campo']) . '</td><td>' . $e($r['dispositivo']) . '</td></tr>';
+    }
+    echo '</table></div></div>';
+}
 
 if ($preguntas) {
     echo '<h2>Preguntas frecuentes abiertas</h2><table><tr><th>Pregunta</th><th class="n">Veces</th></tr>';
