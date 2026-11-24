@@ -268,7 +268,8 @@
       new window.BoldCheckout({
         apiKey: BOLD.apiKey,
         orderId,
-        description: concepto.slice(0, 100),
+        // Bold daña las tildes de la descripción (í → Ã­): se envía sin tildes
+        description: concepto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\x20-\x7E]/g, "").slice(0, 100),
         redirectionUrl: gracias,
         originUrl: aqui,
         extraData1: ref.slice(0, 60),
