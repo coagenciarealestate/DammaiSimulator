@@ -3,484 +3,365 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Diagnóstico de Ocupación · Sarasti</title>
-<meta name="description" content="Recibe gratis el diagnóstico de ocupación de tu hotel y el plan para llevarlo al 61%. Sarasti Hospitality Group, operadora hotelera en Bogotá.">
+<title>Tarifa exclusiva · Sarasti Hotels Bogotá</title>
+<meta name="description" content="Hospédate en Bogotá con una tarifa exclusiva de reserva directa. Consulta disponibilidad por WhatsApp en 30 segundos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1920&q=70&auto=format&fit=crop">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Pinyon+Script&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#17286E; --ink:#0A1030; --ink-2:#0F1840; --ivory:#F5F0E7; --sand:#EAE2D3; --line:#D9CFBD;
-  --gold:#C3A46E; --gold-d:#A3854F; --text:#1C2333; --muted:#6B6862;
-  --glass:rgba(10,16,48,.42); --wline:rgba(255,255,255,.22);
-  --serif:"Cormorant Garamond","Times New Roman",serif;
-  --sans:"Jost","Helvetica Neue",Arial,sans-serif;
-  --ease:cubic-bezier(.2,.7,.1,1);
-  --g:clamp(18px,5vw,80px);
+  --night:#0A1130; --night-2:#111C4A; --navy:#17286E; --mist:#B9C6EA; --mist-2:#DCE3F5;
+  --ivory:#F3EFE6; --paper:#FAF8F3; --line:#E3DED2; --text:#141A33; --muted:#5F6274;
+  --wa:#25D366;
+  --display:"Italiana","Didot","Bodoni 72",serif;
+  --script:"Pinyon Script",cursive;
+  --sans:"Manrope","Helvetica Neue",Arial,sans-serif;
+  --r:22px; --ease:cubic-bezier(.2,.7,.1,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--ivory);color:var(--text);font:300 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--paper);color:var(--text);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
-.wrap{max-width:1360px;margin:0 auto;padding:0 var(--g)}
-.eyebrow{display:inline-flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:400;color:var(--gold-d)}
-.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.8}
-.center .eyebrow::after{content:"";width:34px;height:1px;background:currentColor;opacity:.8}
-h1,h2,h3{font-family:var(--serif);font-weight:300;line-height:1.02;letter-spacing:-.012em;color:var(--navy)}
-h1 em,h2 em{font-style:italic;color:var(--gold)}
-.ph{background:var(--ink-2) var(--img) center/cover no-repeat}
-.grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.narrow{max-width:860px}
+.kicker{font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--navy)}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing:.005em}
+.sc{font-family:var(--script);font-weight:400;letter-spacing:0;line-height:.9}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 
 /* botones */
-.cta{display:inline-flex;justify-content:center;align-items:center;gap:14px;background:var(--gold);color:#0A1030;padding:19px 30px;font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:background .4s,color .4s;position:relative;overflow:hidden}
-.cta:hover{background:#d8bc86}
-.ar{width:24px;height:1px;background:currentColor;position:relative;transition:width .35s var(--ease);flex:none}
-.ar::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid currentColor;border-right:1px solid currentColor;transform:rotate(45deg)}
-.cta:hover .ar{width:36px}
+.btn{display:flex;justify-content:center;align-items:center;gap:12px;width:100%;padding:19px 26px;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:.02em;text-decoration:none;transition:transform .3s var(--ease),box-shadow .3s,background .3s}
+.btn:hover{transform:translateY(-2px)}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-light{background:var(--ivory);color:var(--night);box-shadow:0 18px 40px -16px rgba(185,198,234,.55)}
+.btn-light:hover{background:#fff}
+.btn-dark{background:var(--navy);color:#fff;box-shadow:0 18px 40px -18px rgba(23,40,110,.7)}
+.btn-dark:hover{background:var(--night-2)}
+.btn-wa svg{color:var(--wa)}
+.note{text-align:center;font-size:12.5px;margin-top:12px;color:var(--muted)}
+.note i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--wa);margin-right:7px;vertical-align:1px;box-shadow:0 0 0 0 rgba(37,211,102,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
 
-/* ---------- HEADER (solo logo, sin menú) ---------- */
-.top{position:absolute;top:0;left:0;right:0;z-index:30;padding:30px 0}
-.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;max-width:none}
-.top img{height:50px;width:auto;display:block;filter:brightness(0) invert(1)}
-.top span{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+/* ---------- barra superior + header ---------- */
+.bar{background:#060B22;color:rgba(255,255,255,.75);text-align:center;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;padding:11px 12px;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.bar b{color:var(--mist);border:1px solid rgba(185,198,234,.35);border-radius:6px;padding:3px 9px;font-weight:600}
+.head{background:var(--night)}
+.head .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:22px;padding-bottom:22px}
+.head img{height:46px;width:auto;filter:brightness(0) invert(1);display:block}
+.head a{font-size:12.5px;font-weight:600;color:var(--mist);text-decoration:none;display:flex;align-items:center;gap:8px}
+.head a svg{width:16px;height:16px;color:var(--wa)}
 
 /* ---------- HERO ---------- */
-.hero{position:relative;min-height:100vh;min-height:100svh;color:#fff;overflow:hidden;display:flex;align-items:center;padding:130px 0 60px}
-.hero .bg{position:absolute;inset:-2%;transform:scale(1.08);animation:zoom 14s var(--ease) forwards}
-@keyframes zoom{to{transform:scale(1)}}
-.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(8,12,36,.92) 0%,rgba(8,12,36,.72) 42%,rgba(8,12,36,.35) 75%,rgba(8,12,36,.55) 100%),linear-gradient(0deg,rgba(8,12,36,.7) 0%,transparent 40%)}
-.hero .wrap{position:relative;z-index:3;width:100%;display:grid;grid-template-columns:1.15fr minmax(360px,.85fr);grid-template-areas:"copy form" "report form";column-gap:clamp(40px,6vw,110px);align-items:center}
-.copy{grid-area:copy;align-self:end}
-.hero .eyebrow{color:var(--gold)}
-.hero h1{color:#fff;font-size:clamp(44px,5.6vw,84px);margin:22px 0 22px}
-.hero h1 em{color:var(--gold)}
-.sub{font-size:clamp(16px,1.35vw,19px);color:rgba(255,255,255,.8);max-width:540px}
-.sub b{font-weight:400;color:#fff}
+.hero{background:radial-gradient(120% 70% at 85% 0%,#1A2A6A 0%,transparent 60%),linear-gradient(180deg,var(--night) 0%,#0C1538 100%);color:#fff;padding:34px 0 70px;position:relative;overflow:hidden}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--mist);box-shadow:0 0 0 4px rgba(185,198,234,.18)}
+.hero h1{font-size:clamp(38px,5.2vw,64px);margin:18px 0 30px;max-width:880px}
+.hero h1 .sc{font-size:1.32em;color:var(--mist);display:inline-block;transform:translateY(.06em);padding:0 .04em}
 
-/* vista previa del entregable (imagen hero) */
-.report{grid-area:report;align-self:start;margin-top:32px;display:flex;align-items:center;gap:26px;max-width:540px;padding:22px 26px;background:rgba(255,255,255,.07);border:1px solid var(--wline);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);position:relative}
-.report svg{width:120px;flex:none}
-.report small{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
-.report b.nm{display:block;font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.15;margin:4px 0 8px;word-break:break-word}
-.report .nums{font-family:var(--serif);font-size:34px;line-height:1}
-.report .nums em{color:var(--gold);font-style:italic}
-.report .cap{font-size:12px;color:rgba(255,255,255,.62);margin-top:6px}
-.report .tag{position:absolute;right:-1px;top:-1px;background:var(--gold);color:var(--ink);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;padding:6px 10px}
+.media{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:16/9;background:#0F1A45 center/cover;box-shadow:0 50px 90px -40px rgba(0,0,0,.8)}
+.media .img{position:absolute;inset:0;background:var(--img) center/cover;transform:scale(1.06);animation:z 12s var(--ease) forwards}
+@keyframes z{to{transform:scale(1)}}
+.media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,12,36,.15) 0%,rgba(8,12,36,.05) 40%,rgba(8,12,36,.7) 100%)}
+.media .welcome{position:absolute;z-index:2;left:0;right:0;top:15%;text-align:center;font-family:var(--script);font-size:clamp(40px,6vw,74px);color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.45)}
+.pill{position:absolute;z-index:3;left:4%;right:4%;bottom:6%;display:grid;grid-template-columns:1fr 1fr 1fr auto;align-items:center;background:rgba(18,26,66,.38);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%);border-radius:999px;padding:8px 8px 8px 12px}
+.pill .f{display:flex;align-items:center;gap:12px;padding:6px 18px;min-width:0}
+.pill .f+.f{border-left:1px solid rgba(255,255,255,.2)}
+.pill svg{width:18px;height:18px;flex:none;color:var(--mist)}
+.pill label{display:block;font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.pill input,.pill select{background:transparent;border:0;outline:none;color:rgba(255,255,255,.75);font-size:12px;width:100%;padding:0;appearance:none;-webkit-appearance:none;color-scheme:dark;cursor:pointer}
+.pill select option{color:#111}
+.pill button{background:var(--ivory);color:var(--night);font-weight:600;font-size:14px;padding:15px 26px;border-radius:999px;white-space:nowrap;transition:background .3s}
+.pill button:hover{background:#fff}
 
-/* formulario estilo widget de reservas */
-.form{grid-area:form;background:var(--glass);border:1px solid var(--wline);backdrop-filter:blur(22px) saturate(120%);-webkit-backdrop-filter:blur(22px) saturate(120%);box-shadow:0 60px 120px -50px rgba(0,0,0,.7);position:relative;scroll-margin-top:30px}
-.f-head{padding:28px 34px 22px;border-bottom:1px solid var(--wline)}
-.f-head small{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
-.f-head h2{color:#fff;font-size:32px;margin-top:8px}
-.f-progress{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.6)}
-.bars{display:flex;gap:6px}
-.bars i{width:26px;height:2px;background:rgba(255,255,255,.22);transition:background .5s}
-.bars i.on{background:var(--gold)}
-.step{display:none;padding:26px 34px 30px}
-.step.on{display:block;animation:in .6s var(--ease)}
-@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.fld{display:grid;gap:4px;margin-bottom:20px}
-.fld label{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.6)}
-.fld input,.fld select{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.32);color:#fff;padding:10px 0 12px;font-family:var(--serif);font-size:23px;outline:none;border-radius:0;appearance:none;-webkit-appearance:none;transition:border-color .3s}
-.fld input::placeholder{color:rgba(255,255,255,.35)}
-.fld select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 10px) 55%,calc(100% - 5px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-right:24px;cursor:pointer}
-.fld select option{color:#111}
-.fld input:focus,.fld select:focus{border-color:var(--gold)}
-.fld.err input,.fld.err select{border-color:#e07a68}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.form .cta{width:100%;margin-top:6px}
-.micro{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:rgba(255,255,255,.62)}
-.micro span::before{content:"✦";color:var(--gold);margin-right:7px;font-size:9px}
-.back{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:16px}
-.back:hover{color:#fff}
-.consent{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:rgba(255,255,255,.62);margin:2px 0 18px;line-height:1.5}
-.consent input{margin-top:2px;accent-color:var(--gold);width:16px;height:16px;flex:none}
-.consent.err{color:#f0a493}
-.consent a{color:var(--gold)}
-.done{text-align:center;padding:6px 0 0}
-.done .big{font-family:var(--serif);font-size:72px;font-weight:300;line-height:1;color:#fff;margin-top:16px}
-.done .big small{font-size:22px;color:rgba(255,255,255,.6)}
-.done h3{color:var(--gold);font-size:28px;font-style:italic;margin:8px 0 12px}
-.done p{color:rgba(255,255,255,.72);font-size:15px;margin:0 auto 24px}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px;margin:28px 0 26px;font-size:15px;color:rgba(255,255,255,.85)}
+.checks li{list-style:none;display:flex;gap:12px;align-items:flex-start}
+.checks svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--mist)}
+.hero .note{color:rgba(255,255,255,.6)}
 
-.scroll{position:absolute;left:50%;bottom:26px;z-index:3;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.6)}
-.scroll i{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:drop 2.2s ease-in-out infinite}
-@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* ---------- COTIZADOR ---------- */
+.quote{background:var(--ivory);padding:70px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 30px 70px -40px rgba(10,17,48,.35);display:grid;grid-template-columns:1fr 1fr;gap:46px;padding:44px}
+.card>*,.row2>*{min-width:0}
+.fld input{min-width:0}
+.card h2{font-size:clamp(34px,3.6vw,46px);color:var(--night);margin:14px 0 14px}
+.card h2 .sc{font-size:1.25em;color:var(--navy)}
+.card p.lead{color:var(--muted);margin-bottom:22px}
+.steps li{list-style:none;display:flex;gap:14px;align-items:center;margin-bottom:12px;font-size:15px;color:#3b3f55}
+.steps b{width:28px;height:28px;border-radius:8px;background:var(--night);color:var(--mist);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:13.5px;font-weight:600;color:var(--night);margin-bottom:7px}
+.fld input,.fld select{width:100%;padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:var(--paper);font-size:16px;color:var(--night);outline:none;appearance:none;-webkit-appearance:none;transition:border-color .3s,box-shadow .3s}
+.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230A1130' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.fld input:focus,.fld select:focus{border-color:var(--navy);box-shadow:0 0 0 4px rgba(23,40,110,.08)}
+.fld.err input,.fld.err select{border-color:#C24A3A}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:8px 10px}
+.stepper button{width:34px;height:34px;border-radius:10px;background:#fff;border:1px solid var(--line);font-size:18px;color:var(--night)}
+.stepper span{font-weight:600}
 
-/* ---------- JUSTIFICACIÓN ---------- */
-.why{padding:clamp(90px,11vw,170px) 0}
-.why .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,120px);align-items:center}
-.frame{position:relative;aspect-ratio:4/5}
-.frame .ph{position:absolute;inset:0}
-.frame::before{content:"";position:absolute;inset:-22px 22px 22px -22px;border:1px solid var(--gold);opacity:.6}
-.frame .cap{position:absolute;right:-1px;bottom:-1px;background:var(--ivory);padding:18px 24px 0 26px;font-family:var(--serif);font-style:italic;font-size:22px;color:var(--navy)}
-.why h2{font-size:clamp(40px,4.6vw,68px);margin:22px 0 46px}
-.item{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:28px 0;border-top:1px solid var(--line)}
-.item:last-child{border-bottom:1px solid var(--line)}
-.item i{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--gold);line-height:1.2}
-.item h3{font-size:30px;font-weight:400;margin-bottom:8px}
-.item p{color:#55524c;font-size:15.5px}
+/* ---------- RAZONES ---------- */
+.why{background:var(--ivory);padding:10px 0 80px}
+.why h2,.stats h2,.faq h2{font-size:clamp(34px,4vw,50px);color:var(--night);margin:12px 0 30px}
+.why h2 .sc,.stats h2 .sc,.faq h2 .sc{font-size:1.25em;color:var(--navy)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 24px 28px}
+.rc .ic{width:52px;height:52px;border-radius:14px;background:var(--night);display:grid;place-items:center;margin-bottom:20px}
+.rc .ic svg{width:24px;height:24px;color:var(--mist)}
+.rc h3{font-size:17px;font-weight:700;color:var(--night);margin-bottom:6px}
+.rc p{font-size:15px;color:var(--muted)}
+.why .btn{max-width:420px;margin:30px auto 0}
 
-/* ---------- OBJECIONES ---------- */
-.faqs{position:relative;color:#fff;padding:clamp(90px,11vw,160px) 0;overflow:hidden}
-.faqs .bgimg{position:absolute;inset:0;opacity:.18}
-.faqs::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--ink) 0%,rgba(10,16,48,.88) 50%,var(--ink) 100%);z-index:1}
-.faqs .wrap{position:relative;z-index:2;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,7vw,120px)}
-.faqs .eyebrow{color:var(--gold)}
-.faqs h2{color:#fff;font-size:clamp(40px,4.6vw,66px);margin-top:22px}
-.faqs .note{margin-top:28px;color:rgba(255,255,255,.6);max-width:340px;font-size:15px}
-details{border-bottom:1px solid var(--wline)}
-details:first-of-type{border-top:1px solid var(--wline)}
-summary{list-style:none;cursor:pointer;padding:30px 54px 30px 0;font-family:var(--serif);font-weight:300;font-size:clamp(24px,2.4vw,32px);position:relative;line-height:1.2;transition:color .3s}
-summary:hover{color:var(--gold)}
+/* ---------- CIFRAS ---------- */
+.stats{padding:80px 0 70px;background:var(--paper)}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.num{border:1px solid var(--line);border-radius:var(--r);padding:30px 20px;text-align:center;background:#fff}
+.num b{display:block;font-family:var(--display);font-weight:400;font-size:58px;line-height:1;color:var(--navy)}
+.num span{font-size:14.5px;color:var(--muted)}
+.num.hl{background:radial-gradient(120% 120% at 50% 0%,#1A2A6A,var(--night));border-color:transparent;box-shadow:0 30px 50px -30px rgba(10,17,48,.8)}
+.num.hl b{color:#fff}
+.num.hl span{color:var(--mist)}
+.stats .cap{text-align:center;color:var(--muted);font-size:14px;margin-top:20px}
+
+/* ---------- BANDA CTA ---------- */
+.band{position:relative;color:#fff;text-align:center;padding:80px 0;overflow:hidden;background:var(--night)}
+.band .img{position:absolute;inset:0;background:var(--img) center/cover;opacity:.28}
+.band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,17,48,.6),rgba(10,17,48,.9))}
+.band .wrap{position:relative;z-index:2}
+.band h2{font-size:clamp(36px,5vw,60px);margin-bottom:28px}
+.band h2 .sc{font-size:1.3em;color:var(--mist)}
+.band .btn{max-width:440px;margin:0 auto}
+.band .note{color:rgba(255,255,255,.6)}
+
+/* ---------- FAQ ---------- */
+.faq{padding:80px 0 90px;background:var(--ivory)}
+details{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:10px;transition:box-shadow .3s}
+details[open]{box-shadow:0 20px 40px -30px rgba(10,17,48,.4)}
+summary{list-style:none;cursor:pointer;padding:20px 64px 20px 22px;font-weight:600;font-size:16px;color:var(--night);position:relative}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"";position:absolute;right:8px;top:50%;width:14px;height:14px;border-right:1px solid var(--gold);border-bottom:1px solid var(--gold);transform:translateY(-75%) rotate(45deg);transition:transform .4s var(--ease)}
-details[open] summary::after{transform:translateY(-25%) rotate(-135deg)}
-details p{padding:0 0 30px;color:rgba(255,255,255,.72);max-width:620px}
+summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--night);color:var(--mist);display:grid;place-items:center;font-size:18px;font-weight:400;transition:transform .3s}
+details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+details p{padding:0 22px 20px;color:var(--muted);font-size:15px}
+details p a{color:var(--navy);font-weight:600}
 
-/* ---------- PRUEBA SOCIAL ---------- */
-.proof{padding:clamp(90px,11vw,160px) 0 clamp(70px,8vw,120px)}
-.proof-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:60px}
-.proof-head h2{font-size:clamp(40px,4.6vw,68px);margin-top:22px}
-.proof-head p{max-width:360px;color:var(--muted)}
-.hotels{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.hcard{position:relative;aspect-ratio:3/4.1;overflow:hidden;color:#fff;display:flex;align-items:flex-end}
-.hcard .ph{position:absolute;inset:0;transition:transform 1.6s var(--ease)}
-.hcard:hover .ph{transform:scale(1.06)}
-.hcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(8,12,36,.88))}
-.hcard div{position:relative;z-index:2;padding:30px;width:100%}
-.hcard i{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:20px}
-.hcard b{display:block;font-family:var(--serif);font-weight:300;font-size:36px;line-height:1.05;margin:6px 0 10px}
-.hcard span{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.7)}
-.big61{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,60px);align-items:center;margin-top:clamp(70px,8vw,110px);padding-top:50px;border-top:1px solid var(--line)}
-.big61 b{font-family:var(--serif);font-weight:300;font-size:clamp(110px,15vw,220px);line-height:.8;color:var(--navy)}
-.big61 b em{color:var(--gold);font-style:normal}
-.big61 p{font-family:var(--serif);font-size:clamp(24px,2.6vw,36px);line-height:1.25;color:var(--navy);max-width:560px}
-.big61 p small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:18px}
-.testi{margin-top:70px;padding:44px clamp(24px,5vw,70px);border:1px dashed var(--gold);text-align:center;background:rgba(255,255,255,.4)}
-.testi p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(24px,2.6vw,34px);line-height:1.3;color:var(--navy)}
-.testi cite{display:block;margin-top:18px;font-style:normal;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-d)}
+footer{background:#060B22;color:rgba(255,255,255,.55);padding:44px 0 50px;font-size:13px}
+footer img{height:42px;width:auto;filter:brightness(0) invert(1);opacity:.9;margin-bottom:18px;display:block}
+footer a{color:rgba(255,255,255,.8)}
 
-/* ---------- CTA FINAL ---------- */
-.final{position:relative;color:#fff;text-align:center;padding:clamp(120px,15vw,220px) 0;overflow:hidden}
-.final .bgimg{position:absolute;inset:0}
-.final::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,rgba(8,12,36,.55),rgba(8,12,36,.9))}
-.final .wrap{position:relative;z-index:2}
-.final .eyebrow{color:var(--gold)}
-.final h2{color:#fff;font-size:clamp(44px,6vw,92px);max-width:980px;margin:24px auto 44px}
+/* CTA fija en móvil */
+.sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:50;transform:translateY(140%);transition:transform .5s var(--ease)}
+.sticky.on{transform:none}
+.sticky .btn{padding:16px 22px}
 
-footer{background:var(--ink);color:rgba(255,255,255,.6);padding:60px 0 50px;font-size:12px}
-footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
-footer img{height:44px;width:auto;filter:brightness(0) invert(1);opacity:.9}
-footer nav{display:flex;gap:26px;flex-wrap:wrap}
-footer a{color:rgba(255,255,255,.7);text-decoration:none;letter-spacing:.06em}
-footer a:hover{color:var(--gold)}
-footer p.legal{flex-basis:100%;font-size:11.5px;line-height:1.6;opacity:.75;padding-top:28px;border-top:1px solid rgba(255,255,255,.12)}
-
-/* ---------- NOTAS DEL MÉTODO (solo para la reunión) ---------- */
-.nt{position:fixed;right:18px;bottom:18px;z-index:60;background:var(--gold);color:var(--ink);border-radius:30px;padding:12px 20px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;box-shadow:0 14px 30px -12px rgba(0,0,0,.55);display:flex;gap:10px;align-items:center}
-.nt i{width:7px;height:7px;border-radius:50%;background:var(--ink)}
-.pin{display:none;position:absolute;z-index:20;height:26px;padding:0 11px;border-radius:13px;background:var(--gold);color:var(--ink);font:500 10.5px/26px var(--sans);letter-spacing:.06em;white-space:nowrap;box-shadow:0 0 0 4px rgba(195,164,110,.32);cursor:pointer}
-.notes .pin{display:block}
-.pin:hover{background:#fff}
-.pop{position:fixed;z-index:70;left:50%;bottom:74px;transform:translateX(-50%) translateY(20px);width:min(560px,calc(100% - 32px));background:var(--ivory);border:1px solid var(--line);box-shadow:0 40px 80px -30px rgba(0,0,0,.55);padding:24px 28px;opacity:0;visibility:hidden;transition:all .4s var(--ease)}
-.pop.on{opacity:1;visibility:visible;transform:translateX(-50%)}
-.pop small{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-d)}
-.pop h4{font-family:var(--serif);font-weight:400;font-size:27px;color:var(--navy);margin:6px 0 8px;line-height:1.12;padding-right:20px}
-.pop p{font-size:14px;color:#4a4842}
-.pop q{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;font-family:var(--serif);font-size:17px}
-.pop .x{position:absolute;right:14px;top:10px;font-size:22px;color:var(--muted)}
-.pop nav{display:flex;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy)}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:1060px){
-  .hero{padding:120px 0 80px}
-  .hero .wrap{grid-template-columns:1fr;grid-template-areas:"copy" "report" "form";max-width:640px}
-  .report{margin:32px 0 30px}
-  .scroll{display:none}
-  .why .wrap,.faqs .wrap{grid-template-columns:1fr}
-  .frame{max-width:520px;width:calc(100% - 22px);margin-left:22px}
-  .hotels{grid-template-columns:1fr;max-width:520px;margin:0 auto}
-  .hcard{aspect-ratio:4/3.4}
-  .big61{grid-template-columns:1fr}
+@media (max-width:860px){
+  .card{grid-template-columns:1fr;gap:28px;padding:28px 22px}
+  .cards,.nums{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr;gap:10px}
+  .media{aspect-ratio:4/5}
+  .media .welcome{top:12%}
+  .pill{grid-template-columns:1fr 1fr;border-radius:20px;padding:10px;gap:4px}
+  .pill .f{padding:8px 10px}
+  .pill .f:nth-child(3){border-left:0}
+  .pill .f:nth-child(3),.pill .f:nth-child(1){padding-left:8px}
+  .pill button{grid-column:1/-1;margin-top:4px}
+  .num b{font-size:50px}
 }
-@media (max-width:560px){
-  .top{padding:18px 0}
-  .top img{height:38px}
-  .top span{display:none}
-  .hero{padding:84px 0 56px}
-  .hero h1{font-size:40px;margin:14px 0 14px}
-  .f-head h2{display:none}
-  .f-progress{margin-top:10px}
-  .report .tag{font-size:8.5px;padding:4px 8px}
-  .report small{font-size:9px;letter-spacing:.22em;padding-right:70px}
-  .hero .eyebrow{font-size:10px;letter-spacing:.24em}
-  .hero .eyebrow::before{width:22px}
-  .sub{font-size:15.5px}
-  .report{gap:16px;padding:12px 16px;margin:20px 0 18px}
-  .report svg{width:84px}
-  .report b.nm{font-size:19px;margin:2px 0 4px}
-  .report .nums{font-size:26px}
-  .report .cap{display:none}
-  .f-head{padding:16px 20px 14px}
-  .f-head h2{font-size:26px}
-  .step{padding:18px 20px 22px}
-  .fld{margin-bottom:16px}
-  .fld input,.fld select{font-size:21px}
-  .row2{grid-template-columns:1fr;gap:0}
-  .item{grid-template-columns:44px 1fr}
-  .item h3{font-size:26px}
-  .faqs .note{display:none}
-  .testi{padding:30px 22px}
-  .nt span{display:none}
-  .nt{padding:13px;top:20px;bottom:auto;right:16px}
+@media (max-width:520px){
+  .bar{font-size:10px;letter-spacing:.16em}
+  .head .wrap{padding-top:16px;padding-bottom:14px}
+  .head img{height:38px}
+  .head a span{display:none}
+  .hero{padding:22px 0 54px}
+  .hero h1{font-size:38px;margin:14px 0 24px}
+  .media{aspect-ratio:4/4.6}
+  .pill .f:nth-child(2){border-left:1px solid rgba(255,255,255,.2)}
+  .quote{padding:50px 0}
+  .row2{grid-template-columns:1fr 1fr}
 }
+@media (min-width:861px){.sticky{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<header class="top">
+<div class="bar">Tarifa de reserva directa <b>Cupos limitados</b></div>
+<header class="head">
   <div class="wrap">
-    <img src="data:image/png;base64,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" alt="Sarasti Hospitality Group" width="220" height="106">
-    <span>Operadora hotelera · Bogotá</span>
+    <img src="data:image/png;base64,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" alt="Sarasti Hotels Bogotá" width="220" height="106">
+    <a href="#" class="js-wa" data-src="header"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg><span>Escríbenos</span></a>
   </div>
 </header>
 
 <main>
-<!-- ================= ABOVE THE FOLD ================= -->
-<section class="hero grain">
-  <div class="bg ph" style="--img:url(https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1920&q=70&auto=format&fit=crop)"></div>
-  <div class="wrap">
-    <div class="copy">
-      <div class="eyebrow" data-n="0">Para propietarios de hoteles en Bogotá</div>
-      <h1 data-n="1">Llevamos tu hotel al <em>61% de ocupación</em> sin que tengas que operarlo.</h1>
-      <p class="sub" data-n="2">Recibe gratis tu <b>Diagnóstico de Ocupación personalizado</b>: cuántas noches está dejando de vender tu hotel y el plan para recuperarlas. Responder toma menos de 30 segundos.</p>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap narrow">
+    <div class="eyebrow">Exclusivo para quien reserva directo</div>
+    <h1>Hospédate en Bogotá con una tarifa <span class="sc">exclusiva</span> que solo damos por WhatsApp</h1>
+
+    <div class="media">
+      <div class="img" style="--img:url(https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1600&q=70&auto=format&fit=crop)"></div>
+      <div class="welcome">Bienvenido a casa</div>
+      <form class="pill" onsubmit="return false">
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><div><label for="hIn">Llegada</label><input type="date" id="hIn"></div></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><div><label for="hOut">Salida</label><input type="date" id="hOut"></div></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/></svg><div><label for="hG">Huéspedes</label><select id="hG"><option>1 huésped</option><option selected>2 huéspedes</option><option>3 huéspedes</option><option>4 huéspedes</option><option>5+ huéspedes</option></select></div></div>
+        <button type="button" id="heroGo">Consultar tarifa</button>
+      </form>
     </div>
 
-    <div class="report" data-n="3" aria-hidden="true">
-      <span class="tag">Vista previa</span>
-      <svg viewBox="0 0 120 68">
-        <path d="M10 62a50 50 0 0 1 100 0" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="8"/>
-        <path d="M10 62a50 50 0 0 1 100 0" fill="none" stroke="#fff" stroke-width="8" pathLength="100" stroke-dasharray="46 200"/>
-        <path d="M10 62a50 50 0 0 1 100 0" fill="none" stroke="#C3A46E" stroke-width="8" pathLength="100" stroke-dasharray="0 46 15 200"/>
-      </svg>
+    <ul class="checks">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>3 hoteles en los barrios más deseados de Bogotá</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>Tarifa que no encuentras en apps de viaje</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>Te atiende una persona, no un bot</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>Un detalle de bienvenida al llegar</li>
+    </ul>
+    <a class="btn btn-light btn-wa" href="#cotiza" id="heroCta"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg>Consulta tu tarifa exclusiva →</a>
+    <div class="note"><i></i>Respuesta por WhatsApp inmediata</div>
+  </div>
+</section>
+
+<!-- ================= COTIZADOR ================= -->
+<section class="quote" id="cotiza">
+  <div class="wrap">
+    <div class="card reveal">
       <div>
-        <small>Diagnóstico de Ocupación</small>
-        <b class="nm" id="rName">Tu hotel</b>
-        <div class="nums">46% <em>→ 61%</em></div>
-        <div class="cap">Ocupación actual frente a la meta, con las 3 palancas para cerrar la brecha.</div>
+        <div class="kicker">Cotizador</div>
+        <h2>¿Hay cupo para tus fechas? Compruébalo en <span class="sc">30 segundos</span></h2>
+        <p class="lead">Déjanos tres datos y te enviamos por WhatsApp tu tarifa exclusiva.</p>
+        <ol class="steps">
+          <li><b>1</b>Elige el barrio donde te quieres quedar</li>
+          <li><b>2</b>Pon tus fechas y cuántos vienen</li>
+          <li><b>3</b>Te respondemos por WhatsApp con tu tarifa</li>
+        </ol>
       </div>
-    </div>
-
-    <form class="form" id="form" novalidate data-n="4">
-      <div class="f-head">
-        <small>Gratis · Sin compromiso</small>
-        <h2>Tu diagnóstico en 30 segundos</h2>
-        <div class="f-progress"><span id="stepLbl">Paso 1 de 3</span><div class="bars"><i class="on"></i><i></i><i></i></div></div>
-      </div>
-
-      <div class="step on" data-step="1">
-        <div class="fld"><label for="hotel">¿Cómo se llama tu hotel?</label><input id="hotel" name="hotel" placeholder="Hotel Andino 93" autocomplete="organization" required></div>
-        <button class="cta" type="button" data-next>Quiero mi diagnóstico gratis <span class="ar"></span></button>
-        <div class="micro"><span>Sin costo</span><span>Confidencial</span><span>Respuesta en 24 h</span></div>
-      </div>
-
-      <div class="step" data-step="2">
+      <form id="q" onsubmit="return false" novalidate>
+        <div class="fld"><label for="qH">¿Dónde te quieres quedar?</label>
+          <select id="qH" required>
+            <option value="">Selecciona un barrio</option>
+            <option value="Bogotá 100 Design Hotel (Usaquén · Calle 100)">Usaquén · Calle 100</option>
+            <option value="LIV Zona G (Chapinero Alto)">Zona G · Chapinero Alto</option>
+            <option value="BON 17 (Centro histórico)">Centro histórico</option>
+            <option value="el hotel que me recomienden">Recomiéndenme uno</option>
+          </select></div>
         <div class="row2">
-          <div class="fld"><label for="rooms">Habitaciones</label><select id="rooms" required><option value="">Selecciona</option><option value="20">Menos de 30</option><option value="45">30 a 60</option><option value="80">61 a 100</option><option value="130">Más de 100</option></select></div>
-          <div class="fld"><label for="occ">Ocupación hoy</label><select id="occ" required><option value="">Selecciona</option><option value="35">Menos de 40%</option><option value="45">40% a 50%</option><option value="55">50% a 60%</option><option value="65">Más de 60%</option><option value="45">No lo sé</option></select></div>
+          <div class="fld"><label for="qIn">Llegada</label><input type="date" id="qIn" required></div>
+          <div class="fld"><label for="qOut">Salida</label><input type="date" id="qOut" required></div>
         </div>
-        <div class="row2">
-          <div class="fld"><label for="zone">Ubicación</label><select id="zone" required><option value="">Selecciona</option><option>Norte de Bogotá</option><option>Chapinero / Zona G</option><option>Centro de Bogotá</option><option>Otra zona de Bogotá</option><option>Otra ciudad</option></select></div>
-          <div class="fld"><label for="role">Tú eres</label><select id="role" required><option value="">Selecciona</option><option>Propietario</option><option>Inversionista</option><option>Gerente general</option><option>Otro</option></select></div>
-        </div>
-        <button class="cta" type="button" data-next>Continuar <span class="ar"></span></button>
-        <button class="back" type="button" data-back>← Volver</button>
-      </div>
-
-      <div class="step" data-step="3">
-        <div class="fld"><label for="name">Nombre completo</label><input id="name" autocomplete="name" required></div>
-        <div class="row2">
-          <div class="fld"><label for="wa">WhatsApp</label><input id="wa" type="tel" inputmode="tel" placeholder="+57 300 000 0000" autocomplete="tel" required></div>
-          <div class="fld"><label for="mail">Correo</label><input id="mail" type="email" placeholder="nombre@hotel.com" autocomplete="email" required></div>
-        </div>
-        <label class="consent" id="consentL"><input type="checkbox" id="consent"> <span>Autorizo a Sarasti Hotels Group S.A.S. a tratar mis datos para enviarme el diagnóstico, según su <a href="#legal">Política de Tratamiento de Datos</a> (Ley 1581 de 2012).</span></label>
-        <button class="cta" type="button" data-next>Enviarme mi diagnóstico <span class="ar"></span></button>
-        <button class="back" type="button" data-back>← Volver</button>
-      </div>
-
-      <div class="step" data-step="4"><div class="done" id="done"></div></div>
-    </form>
-  </div>
-</section>
-
-<!-- ================= JUSTIFICACIÓN: 3 BULLETS ================= -->
-<section class="why" data-n="5">
-  <div class="wrap">
-    <div class="frame reveal"><div class="ph" style="--img:url(https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1100&q=70&auto=format&fit=crop)"></div><div class="cap">Cada noche cuenta.</div></div>
-    <div>
-      <div class="eyebrow reveal">Por qué vale la pena</div>
-      <h2 class="reveal">Lo que recibes en tu <em>diagnóstico</em></h2>
-      <div class="item reveal"><i>I.</i><div><h3>Tu número real frente al 61%</h3><p>Comparamos la ocupación de tu hotel con la de su zona y te decimos cuántas noches al mes te faltan para llegar a la meta.</p></div></div>
-      <div class="item reveal"><i>II.</i><div><h3>Dónde se está yendo el dinero</h3><p>Tarifas mal ajustadas, comisiones a OTAs y empresas que nadie está atendiendo: las fugas concretas que encontramos en tu caso.</p></div></div>
-      <div class="item reveal"><i>III.</i><div><h3>Un plan de 90 días</h3><p>Las tres palancas que más moverían tu ocupación, en orden de impacto. Puedes ejecutarlas con tu equipo o con nosotros.</p></div></div>
+        <div class="fld"><label>Huéspedes</label><div class="stepper"><button type="button" data-g="-1" aria-label="Menos">−</button><span id="qG">2 huéspedes</span><button type="button" data-g="1" aria-label="Más">+</button></div></div>
+        <button class="btn btn-dark btn-wa" type="button" id="qGo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg>Quiero mi tarifa →</button>
+        <div class="note"><i></i>Respuesta por WhatsApp inmediata</div>
+      </form>
     </div>
   </div>
 </section>
 
-<!-- ================= 3 OBJECIONES ================= -->
-<section class="faqs grain" data-n="6">
-  <div class="bgimg ph" style="--img:url(https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1600&q=60&auto=format&fit=crop)"></div>
+<!-- ================= 3 RAZONES ================= -->
+<section class="why">
   <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">Preguntas frecuentes</div>
-      <h2>Lo que los propietarios <em>nos preguntan</em></h2>
-      <p class="note">Las tres dudas que más escuchamos, de la más común a la menos común.</p>
+    <h2 class="reveal">Tres razones para reservar <span class="sc">directo</span></h2>
+    <div class="cards">
+      <div class="rc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div><h3>Tarifa que no publicamos</h3><p>Un precio exclusivo que no está en Booking ni en Expedia. Solo lo damos por WhatsApp.</p></div>
+      <div class="rc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="13" rx="1.5"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1.5S10 8 12 8zm0 0c2-4 6-4 6-1.5S14 8 12 8z"/></svg></div><h3>Un detalle al llegar</h3><p>Quien reserva directo recibe una sorpresa de bienvenida. Te contamos cuál por WhatsApp.</p></div>
+      <div class="rc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></div><h3>¡Pregunta ya!</h3><p>Las tarifas exclusivas tienen cupos limitados por fecha y se agotan primero los fines de semana.</p></div>
     </div>
-    <div class="reveal">
-      <details open><summary>¿Tengo que entregar el control de mi hotel?</summary><p>No. Sigues siendo el dueño del activo y de las decisiones grandes. Nosotros nos encargamos de la operación diaria, el área comercial y las finanzas, con metas acordadas contigo y un reporte transparente cada mes.</p></details>
-      <details><summary>¿Cuánto cuesta?</summary><p>El diagnóstico es gratis y no te compromete a nada. Si después quieres que operemos tu hotel, te presentamos una propuesta según su tamaño y su situación, y la conoces completa antes de decidir.</p></details>
-      <details><summary>¿Esto sirve para un hotel como el mío?</summary><p>Nos especializamos en hoteles corporativos y de diseño en Bogotá. Hoy operamos Bogotá 100 Design Hotel, LIV Zona G y BON 17. Si tu hotel está fuera de nuestro foco, te lo decimos en el diagnóstico.</p></details>
-    </div>
+    <a class="btn btn-dark btn-wa js-wa" href="#" data-src="razones"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg>Pregunta ya</a>
   </div>
 </section>
 
-<!-- ================= PRUEBA SOCIAL ================= -->
-<section class="proof" data-n="7">
+<!-- ================= CIFRAS ================= -->
+<section class="stats">
   <div class="wrap">
-    <div class="proof-head reveal">
-      <div><div class="eyebrow">Resultados, no promesas</div><h2>Hoteles que ya <em>operamos</em></h2></div>
-      <p>Tres hoteles en tres barrios distintos de Bogotá, operados con el mismo estándar.</p>
+    <div class="kicker reveal">Por qué nos eligen</div>
+    <h2 class="reveal">Bogotá, a nuestra <span class="sc">manera</span></h2>
+    <div class="nums">
+      <div class="num reveal"><b>3</b><span>hoteles en Bogotá</span></div>
+      <div class="num hl reveal"><b>24/7</b><span>atención por WhatsApp</span></div>
+      <div class="num reveal"><b>1</b><span>mensaje para reservar</span></div>
     </div>
-    <div class="hotels">
-      <div class="hcard reveal"><div class="ph" style="--img:url(https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=900&q=70&auto=format&fit=crop)"></div><div><i>I.</i><b>Bogotá 100<br>Design Hotel</b><span>Usaquén · Calle 100</span></div></div>
-      <div class="hcard reveal"><div class="ph" style="--img:url(https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900&q=70&auto=format&fit=crop)"></div><div><i>II.</i><b>LIV<br>Zona G</b><span>Chapinero Alto · 86 habitaciones</span></div></div>
-      <div class="hcard reveal"><div class="ph" style="--img:url(https://images.unsplash.com/photo-1590490360182-c33d57733427?w=900&q=70&auto=format&fit=crop)"></div><div><i>III.</i><b>BON 17<br>Hotel</b><span>Centro · Santa Fe</span></div></div>
-    </div>
-    <div class="big61 reveal">
-      <b>61<em>%</em></b>
-      <p>de ocupación es lo que hoy alcanzan los hoteles que operamos en Bogotá.<small>Portafolio Sarasti Hospitality Group</small></p>
-    </div>
-    <div class="testi reveal">
-      <p>“Aquí va el testimonio de un propietario: qué cambió en su hotel, con un número concreto, y en lo posible en video.”</p>
-      <cite>Espacio para testimonio real · Propietario de hotel operado</cite>
-    </div>
+    <p class="cap reveal">Viajeros de negocios, parejas y familias ya se hospedan con Sarasti.</p>
   </div>
 </section>
 
-<!-- ================= CTA FINAL ================= -->
-<section class="final grain">
-  <div class="bgimg ph" style="--img:url(https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=65&auto=format&fit=crop)"></div>
+<!-- ================= BANDA CTA ================= -->
+<section class="band">
+  <div class="img" style="--img:url(https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=60&auto=format&fit=crop)"></div>
   <div class="wrap">
-    <div class="eyebrow">Toma menos de 30 segundos</div>
-    <h2>Descubre cuántas noches puede vender <em>tu hotel</em></h2>
-    <a class="cta" href="#form" id="toForm">Quiero mi diagnóstico gratis <span class="ar"></span></a>
+    <h2 class="reveal">Toma <span class="sc">30 segundos</span> saber tu tarifa</h2>
+    <a class="btn btn-light btn-wa js-wa" href="#" data-src="banda"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg>Quiero mi tarifa →</a>
+    <div class="note"><i></i>Respuesta por WhatsApp inmediata</div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq">
+  <div class="wrap narrow">
+    <div class="kicker">Preguntas frecuentes</div>
+    <h2>Resolvemos tus <span class="sc">dudas</span></h2>
+    <details><summary>¿Dónde están ubicados los hoteles?</summary><p>Tenemos hoteles en Usaquén (Calle 100), en la Zona G y en el centro histórico. Dinos a qué vienes y te recomendamos el ideal. <a href="#" class="js-wa" data-src="faq">Escríbenos</a>.</p></details>
+    <details><summary>¿Por qué la tarifa exclusiva es solo por WhatsApp?</summary><p>Porque al reservar directo no pagamos comisiones a las apps de viaje, y ese ahorro te lo damos a ti.</p></details>
+    <details><summary>¿El desayuno está incluido?</summary><p>Depende del hotel y de la tarifa. Te lo confirmamos junto con tu cotización.</p></details>
+    <details><summary>¿Tienen tarifas para empresas?</summary><p>Sí, tenemos convenios corporativos. Escríbenos y te contamos cómo funcionan.</p></details>
+    <details><summary>¿Puedo cancelar o cambiar mis fechas?</summary><p>Cada tarifa tiene sus condiciones y te las enviamos claras antes de que confirmes.</p></details>
+    <details><summary>¿Cómo sé si hay disponibilidad para mis fechas?</summary><p>Usa el <a href="#cotiza">cotizador</a>: en 30 segundos te respondemos por WhatsApp.</p></details>
   </div>
 </section>
 </main>
 
-<!-- ================= LEGAL ================= -->
-<footer id="legal" data-n="8">
+<footer>
   <div class="wrap">
-    <img src="data:image/png;base64,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" alt="Sarasti Hospitality Group" width="220" height="106">
-    <nav><a href="#legal">Política de tratamiento de datos</a><a href="#legal">Términos y condiciones</a><a href="#legal">Aviso de privacidad</a></nav>
-    <p class="legal">© 2026 Sarasti Hotels Group S.A.S. · Calle 100 #14-26, Bogotá. Usamos los datos que nos compartes solo para preparar y enviarte tu diagnóstico y para contactarte sobre él, conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013. Puedes pedirnos en cualquier momento que los consultemos, corrijamos o eliminemos. El 61% es la ocupación que hoy alcanzan los hoteles operados por Sarasti; el resultado de cada hotel depende de su ubicación, su producto y su mercado.</p>
+    <img src="data:image/png;base64,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" alt="Sarasti Hotels" width="220" height="106">
+    <p>Tarifas sujetas a disponibilidad y a las condiciones de cada hotel. Al escribirnos aceptas nuestra <a href="#">Política de tratamiento de datos</a> (Ley 1581 de 2012).</p>
+    <p style="margin-top:8px">© 2026 Sarasti Hotels Group S.A.S. · Bogotá, Colombia</p>
   </div>
 </footer>
 
-<!-- ================= NOTAS DEL MÉTODO (solo para la reunión) ================= -->
-<button class="nt" id="nt"><i></i><span>Ver método 80/20</span></button>
-<div class="pop" id="pop"><button class="x" aria-label="Cerrar" id="popX">×</button><small id="popS"></small><h4 id="popT"></h4><p id="popD"></p><q id="popQ"></q><nav><button id="prev">← Anterior</button><button id="nxt">Siguiente →</button></nav></div>
+<div class="sticky" id="sticky"><a class="btn btn-dark btn-wa" href="#cotiza"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg>Consulta tu tarifa exclusiva →</a></div>
 
 <script>
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+/* Número de WhatsApp de reservas: reemplazar por el real (formato internacional sin +) */
+const WA_NUMBER="570000000000";
 
-/* aparición al hacer scroll */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
 $$(".reveal").forEach(el=>io.observe(el));
 
-/* ---------- formulario multipaso ---------- */
-let step=1;
-const bars=$$(".bars i"), steps=$$(".step");
-function go(n){
-  step=n; steps.forEach(s=>s.classList.toggle("on",+s.dataset.step===n));
-  bars.forEach((b,i)=>b.classList.toggle("on",i<Math.min(n,3)));
-  $("#stepLbl").textContent=n<4?`Paso ${n} de 3`:"Listo";
-  const f=$(`.step[data-step="${n}"] input, .step[data-step="${n}"] select`); if(f&&n>1)f.focus({preventScroll:true});
-  track("form_step_"+n);
-}
-function valid(n){
+/* fechas por defecto */
+const iso=d=>d.toISOString().slice(0,10), t=new Date(), a=new Date(t.getTime()+7*864e5), b=new Date(t.getTime()+9*864e5);
+[["#hIn",a],["#qIn",a],["#hOut",b],["#qOut",b]].forEach(([s,d])=>{$(s).value=iso(d);$(s).min=iso(t)});
+
+/* huéspedes */
+let g=2; const gl=n=>n>=5?"5+ huéspedes":n+(n===1?" huésped":" huéspedes");
+function setG(n){g=Math.max(1,Math.min(5,n));$("#qG").textContent=gl(g);$("#hG").selectedIndex=g-1}
+$$("[data-g]").forEach(x=>x.onclick=()=>setG(g+ +x.dataset.g));
+$("#hG").onchange=e=>setG(e.target.selectedIndex+1);
+
+/* la barra del hero se sincroniza con el cotizador */
+function syncFromHero(){$("#qIn").value=$("#hIn").value;$("#qOut").value=$("#hOut").value}
+$("#heroGo").onclick=()=>{syncFromHero();$("#cotiza").scrollIntoView({behavior:"smooth"});setTimeout(()=>$("#qH").focus({preventScroll:true}),700);track("hero_pill")};
+$("#heroCta").addEventListener("click",()=>{syncFromHero();track("hero_cta")});
+["#hIn","#qIn"].forEach(s=>$(s).addEventListener("change",e=>{const o=s==="#hIn"?"#hOut":"#qOut";if($(o).value<=e.target.value)$(o).value=iso(new Date(new Date(e.target.value).getTime()+864e5))}));
+
+/* WhatsApp */
+const fmt=v=>new Date(v+"T12:00").toLocaleDateString("es-CO",{day:"numeric",month:"long"});
+function openWA(msg,src){track("whatsapp_"+src);window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank","noopener")}
+$("#qGo").onclick=()=>{
   let ok=true;
-  $$(`.step[data-step="${n}"] [required]`).forEach(el=>{
-    let good=el.value.trim()!=="";
-    if(el.type==="email")good=/^\S+@\S+\.\S+$/.test(el.value);
-    if(el.type==="tel")good=el.value.replace(/\D/g,"").length>=7;
-    el.closest(".fld").classList.toggle("err",!good); if(!good&&ok){el.focus();ok=false}
-  });
-  if(n===3){const c=$("#consent").checked;$("#consentL").classList.toggle("err",!c);if(!c)ok=false}
-  return ok;
-}
-$$("[data-next]").forEach(b=>b.onclick=()=>{ if(!valid(step))return; if(step===3)result(); go(step+1); });
-$$("[data-back]").forEach(b=>b.onclick=()=>go(step-1));
-$("#form").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type!=="checkbox"){e.preventDefault();$(`.step[data-step="${step}"] [data-next]`)?.click()}});
-$$(".fld input,.fld select").forEach(el=>el.addEventListener("input",()=>el.closest(".fld").classList.remove("err")));
-$("#toForm").addEventListener("click",()=>setTimeout(()=>{const f=$(`.step[data-step="${step}"] input, .step[data-step="${step}"] select`);f&&f.focus({preventScroll:true})},700));
+  ["#qH","#qIn","#qOut"].forEach(s=>{const good=!!$(s).value;$(s).closest(".fld").classList.toggle("err",!good);if(!good&&ok){$(s).focus();ok=false}});
+  if(!ok)return;
+  openWA(`Hola Sarasti, quiero mi tarifa exclusiva en ${$("#qH").value}, del ${fmt($("#qIn").value)} al ${fmt($("#qOut").value)}, para ${gl(g)}.`,"cotizador");
+};
+$$("#q select,#q input").forEach(el=>el.addEventListener("change",()=>el.closest(".fld").classList.remove("err")));
+$$(".js-wa").forEach(x=>x.addEventListener("click",e=>{e.preventDefault();openWA("Hola Sarasti, quiero conocer la tarifa exclusiva de reserva directa.",x.dataset.src)}));
 
-/* el nombre del hotel personaliza la vista previa en vivo */
-$("#hotel").addEventListener("input",e=>{$("#rName").textContent=e.target.value.trim()||"Tu hotel"});
+/* CTA fija en móvil después del hero */
+const st=$("#sticky");
+addEventListener("scroll",()=>{const h=$(".hero").getBoundingClientRect().bottom<0, q=$("#cotiza").getBoundingClientRect(), inQ=q.top<innerHeight&&q.bottom>0;st.classList.toggle("on",h&&!inQ)},{passive:true});
 
-/* resultado preliminar instantáneo */
-const esc=s=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function result(){
-  const rooms=+$("#rooms").value, occ=+$("#occ").value, hotel=esc($("#hotel").value.trim()), name=esc($("#name").value.trim().split(" ")[0]);
-  const gap=Math.max(0,Math.round(rooms*30*(61-occ)/100));
-  const cta=`<a class="cta" href="#" style="width:100%">Agendar mi llamada de 15 min <span class="ar"></span></a>`;
-  $("#done").innerHTML = gap>0
-    ? `<div class="eyebrow" style="color:var(--gold)">Resultado preliminar</div>
-       <div class="big">≈ ${gap.toLocaleString("es-CO")} <small>noches / mes</small></div>
-       <h3>que ${hotel} podría estar dejando de vender</h3>
-       <p>${name}, con tus datos estimamos cuánto le falta a tu hotel para llegar al 61%. En las próximas 24 horas te escribimos por WhatsApp con el diagnóstico completo.</p>${cta}`
-    : `<div class="eyebrow" style="color:var(--gold)">Resultado preliminar</div>
-       <h3 style="margin-top:16px">${hotel} ya está por encima del 61%</h3>
-       <p>${name}, en tu diagnóstico nos enfocaremos en tarifa promedio y rentabilidad por habitación. Te escribimos por WhatsApp en las próximas 24 horas.</p>${cta}`;
-  track("lead_submit");
-}
-function track(ev){ /* conectar aquí GA4, Meta Pixel y el CRM: gtag('event',ev); fbq('trackCustom',ev); */ }
-
-/* ---------- notas del método (solo para la presentación) ---------- */
-const N=[
- {s:"0 · Pre-titular",t:"Le habla a una sola persona",d:"Filtra desde la primera línea: esta página es para propietarios de hoteles en Bogotá. Quien no lo es deja de leer, y eso está bien.",q:"Cada elemento existe para que la persona correcta convierta."},
- {s:"1 · Titular",t:"Detiene y promete un resultado claro",d:"Un solo resultado medible (61% de ocupación) y, en la misma frase, la respuesta a la objeción más grande: “sin que tengas que operarlo”.",q:"“El titular tiene que detener a la persona y prometer un resultado claro.”"},
- {s:"2 · Subtítulo",t:"Aclara la promesa del titular",d:"Funciona como el título y la miniatura de YouTube: añade contexto. Dice qué recibes (el diagnóstico), qué contiene y cuánto te cuesta (30 segundos).",q:"“El subtítulo aclara esa promesa. Es la relación entre las dos cosas.”"},
- {s:"3 · Imagen hero",t:"Muestra lo que vas a recibir",d:"La fotografía crea el deseo y la vista previa del diagnóstico es la prueba: se personaliza en vivo con el nombre del hotel que la persona escribe.",q:"“La imagen hero debe añadir prueba: mostrarte visualmente lo que vas a recibir.”"},
- {s:"4 · CTA + formulario",t:"Lo mínimo para un lead calificado",d:"Tiene diseño de widget de reservas de lujo. El botón dice qué recibes y cómo. Son 8 datos en 3 pasos, nunca más de 4 por pantalla. El primer paso pide solo el nombre del hotel: es un compromiso pequeño que sube el opt-in. Al final la persona recibe un resultado instantáneo.",q:"“Si tienes más de 5 campos, divídelos en varios pasos.”"},
- {s:"5 · Justificación",t:"¿Por qué debería darte mis datos?",d:"Tres bullets debajo del fold responden justo esa pregunta, con lo concreto que contiene el diagnóstico.",q:"“Todo el propósito es responder: ¿por qué debería darte mi correo?”"},
- {s:"6 · Objeciones",t:"Las 3 objeciones más grandes, en orden",d:"Control del hotel, costo y encaje, de la más común a la menos común. Se ajustan con las preguntas reales que hagan los prospectos.",q:"“Las 3 objeciones más grandes, de la más común a la menos común.”"},
- {s:"7 · Prueba social",t:"Va debajo y no compite con el CTA",d:"Muestra los hoteles operados y el 61%. El espacio del testimonio se llena con un propietario real, idealmente en video y con un número.",q:"“Más prueba social, debajo.”"},
- {s:"8 · Legal + la navaja",t:"Sin menú, rápida y en regla",d:"No hay menú ni enlaces que distraigan. Las fotos van comprimidas y el diseño está pensado primero para celular. El consentimiento sigue la Ley 1581 y los textos legales van al pie. Regla final: lo que no sube el % de leads calificados, se corta.",q:"“Si no aumenta el porcentaje de opt-in de leads calificados, córtalo.”"}
-];
-const POS={0:"left:0;top:-38px",1:"right:0;top:-10px",2:"right:0;top:-32px",3:"right:-10px;top:-38px",4:"left:-10px;top:-13px",5:"right:var(--g);top:30px",6:"right:var(--g);top:30px",7:"right:var(--g);top:30px",8:"right:var(--g);top:-13px"};
-$$("[data-n]").forEach(el=>{
-  const i=+el.dataset.n, p=document.createElement("button");
-  p.className="pin"; p.type="button"; p.textContent=N[i].s;
-  if(getComputedStyle(el).position==="static")el.style.position="relative";
-  p.style.cssText=POS[i];
-  p.onclick=e=>{e.preventDefault();e.stopPropagation();show(i)};
-  el.appendChild(p);
-});
-let cur=0;
-function show(i){cur=i;const n=N[i];$("#popS").textContent=n.s;$("#popT").textContent=n.t;$("#popD").textContent=n.d;$("#popQ").textContent=n.q;$("#pop").classList.add("on");$(`[data-n="${i}"]`).scrollIntoView({behavior:"smooth",block:"center"})}
-$("#popX").onclick=()=>$("#pop").classList.remove("on");
-$("#prev").onclick=()=>show((cur+N.length-1)%N.length);
-$("#nxt").onclick=()=>show((cur+1)%N.length);
-const nt=$("#nt");
-nt.onclick=()=>{const on=document.body.classList.toggle("notes");nt.querySelector("span").textContent=on?"Ocultar método":"Ver método 80/20";if(on)show(0);else $("#pop").classList.remove("on")};
+function track(ev){ /* conectar GA4 / Meta Pixel: gtag('event',ev); fbq('track','Contact') */ }
 </script>
 </body>
 </html>
