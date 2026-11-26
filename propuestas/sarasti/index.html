@@ -8,14 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Pinyon+Script&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --night:#0A1130; --night-2:#111C4A; --navy:#17286E; --mist:#B9C6EA; --mist-2:#DCE3F5;
   --ivory:#F3EFE6; --paper:#FAF8F3; --line:#E3DED2; --text:#141A33; --muted:#5F6274;
   --wa:#25D366;
-  --display:"Italiana","Didot","Bodoni 72",serif;
-  --script:"Pinyon Script",cursive;
+  --display:"Instrument Serif","Times New Roman",serif;
   --sans:"Manrope","Helvetica Neue",Arial,sans-serif;
   --r:22px; --ease:cubic-bezier(.2,.7,.1,1);
 }
@@ -28,8 +27,8 @@ a{color:inherit}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 .narrow{max-width:860px}
 .kicker{font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--navy)}
-h1,h2{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing:.005em}
-.sc{font-family:var(--script);font-weight:400;letter-spacing:0;line-height:.9}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.05;letter-spacing:-.01em}
+.sc{font-family:var(--display);font-style:italic;font-weight:400}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 
@@ -59,15 +58,14 @@ h1,h2{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing
 .hero{background:radial-gradient(120% 70% at 85% 0%,#1A2A6A 0%,transparent 60%),linear-gradient(180deg,var(--night) 0%,#0C1538 100%);color:#fff;padding:34px 0 70px;position:relative;overflow:hidden}
 .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
 .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--mist);box-shadow:0 0 0 4px rgba(185,198,234,.18)}
-.hero h1{font-size:clamp(38px,5.2vw,64px);margin:18px 0 30px;max-width:880px}
-.hero h1 .sc{font-size:1.32em;color:var(--mist);display:inline-block;transform:translateY(.06em);padding:0 .04em}
+.hero h1{font-size:clamp(44px,6vw,76px);margin:16px 0 30px;max-width:880px}
+.hero h1 .sc{color:var(--mist)}
 
 .media{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:16/9;background:#0F1A45 center/cover;box-shadow:0 50px 90px -40px rgba(0,0,0,.8)}
-.media .img{position:absolute;inset:0;background:var(--img) center/cover;transform:scale(1.06);animation:z 12s var(--ease) forwards}
-@keyframes z{to{transform:scale(1)}}
-.media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,12,36,.15) 0%,rgba(8,12,36,.05) 40%,rgba(8,12,36,.7) 100%)}
-.media .welcome{position:absolute;z-index:2;left:0;right:0;top:15%;text-align:center;font-family:var(--script);font-size:clamp(40px,6vw,74px);color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.45)}
-.pill{position:absolute;z-index:3;left:4%;right:4%;bottom:6%;display:grid;grid-template-columns:1fr 1fr 1fr auto;align-items:center;background:rgba(18,26,66,.38);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%);border-radius:999px;padding:8px 8px 8px 12px}
+.hmedia{position:relative}
+.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,12,36,.6) 100%);pointer-events:none}
+.pill{position:absolute;z-index:3;left:4%;right:4%;bottom:5%;display:grid;grid-template-columns:1fr 1fr 1fr auto;align-items:center;background:rgba(12,20,56,.55);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%);border-radius:999px;padding:8px 8px 8px 12px}
 .pill .f{display:flex;align-items:center;gap:12px;padding:6px 18px;min-width:0}
 .pill .f+.f{border-left:1px solid rgba(255,255,255,.2)}
 .pill svg{width:18px;height:18px;flex:none;color:var(--mist)}
@@ -88,7 +86,7 @@ h1,h2{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing
 .card>*,.row2>*{min-width:0}
 .fld input{min-width:0}
 .card h2{font-size:clamp(34px,3.6vw,46px);color:var(--night);margin:14px 0 14px}
-.card h2 .sc{font-size:1.25em;color:var(--navy)}
+.card h2 .sc{color:var(--navy)}
 .card p.lead{color:var(--muted);margin-bottom:22px}
 .steps li{list-style:none;display:flex;gap:14px;align-items:center;margin-bottom:12px;font-size:15px;color:#3b3f55}
 .steps b{width:28px;height:28px;border-radius:8px;background:var(--night);color:var(--mist);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
@@ -106,7 +104,7 @@ h1,h2{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing
 /* ---------- RAZONES ---------- */
 .why{background:var(--ivory);padding:10px 0 80px}
 .why h2,.stats h2,.faq h2{font-size:clamp(34px,4vw,50px);color:var(--night);margin:12px 0 30px}
-.why h2 .sc,.stats h2 .sc,.faq h2 .sc{font-size:1.25em;color:var(--navy)}
+.why h2 .sc,.stats h2 .sc,.faq h2 .sc{color:var(--navy)}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .rc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 24px 28px}
 .rc .ic{width:52px;height:52px;border-radius:14px;background:var(--night);display:grid;place-items:center;margin-bottom:20px}
@@ -132,7 +130,7 @@ h1,h2{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing
 .band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,17,48,.6),rgba(10,17,48,.9))}
 .band .wrap{position:relative;z-index:2}
 .band h2{font-size:clamp(36px,5vw,60px);margin-bottom:28px}
-.band h2 .sc{font-size:1.3em;color:var(--mist)}
+.band h2 .sc{color:var(--mist)}
 .band .btn{max-width:440px;margin:0 auto}
 .band .note{color:rgba(255,255,255,.6)}
 
@@ -160,9 +158,8 @@ footer a{color:rgba(255,255,255,.8)}
   .card{grid-template-columns:1fr;gap:28px;padding:28px 22px}
   .cards,.nums{grid-template-columns:1fr}
   .checks{grid-template-columns:1fr;gap:10px}
-  .media{aspect-ratio:4/5}
-  .media .welcome{top:12%}
-  .pill{grid-template-columns:1fr 1fr;border-radius:20px;padding:10px;gap:4px}
+  .media{aspect-ratio:16/11}
+  .pill{position:relative;left:auto;right:auto;bottom:auto;margin-top:12px;grid-template-columns:1fr 1fr;border-radius:20px;padding:10px;gap:4px;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16)}
   .pill .f{padding:8px 10px}
   .pill .f:nth-child(3){border-left:0}
   .pill .f:nth-child(3),.pill .f:nth-child(1){padding-left:8px}
@@ -175,8 +172,8 @@ footer a{color:rgba(255,255,255,.8)}
   .head img{height:38px}
   .head a span{display:none}
   .hero{padding:22px 0 54px}
-  .hero h1{font-size:38px;margin:14px 0 24px}
-  .media{aspect-ratio:4/4.6}
+  .hero h1{font-size:44px;margin:12px 0 22px}
+  .media{aspect-ratio:4/3.4}
   .pill .f:nth-child(2){border-left:1px solid rgba(255,255,255,.2)}
   .quote{padding:50px 0}
   .row2{grid-template-columns:1fr 1fr}
@@ -200,11 +197,12 @@ footer a{color:rgba(255,255,255,.8)}
 <section class="hero">
   <div class="wrap narrow">
     <div class="eyebrow">Exclusivo para quien reserva directo</div>
-    <h1>Hospédate en Bogotá con una tarifa <span class="sc">exclusiva</span> que solo damos por WhatsApp</h1>
+    <h1>Hospédate en Bogotá con una tarifa <span class="sc">exclusiva</span></h1>
 
+    <div class="hmedia">
     <div class="media">
-      <div class="img" style="--img:url(https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1600&q=70&auto=format&fit=crop)"></div>
-      <div class="welcome">Bienvenido a casa</div>
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-label="Video del hotel Bogotá 100 en la Calle 100"><source src="assets/hero-bogota100.mp4" type="video/mp4"></video>
+    </div>
       <form class="pill" onsubmit="return false">
         <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><div><label for="hIn">Llegada</label><input type="date" id="hIn"></div></div>
         <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><div><label for="hOut">Salida</label><input type="date" id="hOut"></div></div>
